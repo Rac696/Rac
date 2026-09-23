@@ -7,7 +7,7 @@
 <style>
 :root{--bg:#090b0e;--card:#15191e;--card2:#1b2128;--line:#2c3540;--text:#f5f7fa;--muted:#aab4be;--live:#e5484d;--ok:#65c18c}
 *{box-sizing:border-box}html,body{margin:0;background:linear-gradient(180deg,#080a0d,#10151b);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;min-height:100%}
-.wrap{max-width:760px;margin:auto;padding:18px 14px 50px}.brand{font-size:11px;letter-spacing:.14em;color:#c5ccd3}.pill{display:inline-block;font-size:10px;font-weight:800;padding:5px 8px;border-radius:999px;background:#fff;color:#111;margin-left:8px}h1{font-size:26px;margin:8px 0 6px}.sub{font-size:13px;line-height:1.7;color:var(--muted)}.card{margin-top:16px;background:rgba(21,25,30,.98);border:1px solid var(--line);border-radius:18px;padding:16px;box-shadow:0 18px 50px rgba(0,0,0,.28)}.job{font-size:20px;font-weight:800}.company{font-size:13px;color:#c2cad2;margin-top:3px}.note{margin-top:13px;padding:12px;border-radius:12px;background:#0f1419;border:1px solid #29313a;color:#c6ced6;font-size:12px;line-height:1.7}.field{margin-top:14px}label{display:block;font-size:12px;margin-bottom:7px;color:#d7dde3}input,select,textarea{width:100%;padding:13px 14px;border-radius:12px;border:1px solid #343e49;background:#0f1419;color:#fff;font-size:16px}textarea{min-height:100px;resize:vertical;line-height:1.6}.consent{display:flex;gap:9px;margin:14px 0;font-size:12px;line-height:1.6;color:#d8dee4}.consent input{width:18px;height:18px;margin:1px 0 0}.btn{width:100%;padding:15px;border:0;border-radius:13px;font-size:16px;font-weight:800;cursor:pointer}.primary{background:#fff;color:#111}.secondary{margin-top:10px;background:#242b32;color:#fff;border:1px solid #36414b}.danger{background:#3b1719;color:#ffd7d9;border:1px solid #6b2529}.hidden{display:none!important}.statusbar{display:flex;align-items:center;gap:9px;margin-bottom:12px}.dot{width:10px;height:10px;border-radius:50%;background:#68737e}.dot.live{background:var(--live);box-shadow:0 0 0 6px rgba(229,72,77,.13);animation:pulse 1.4s infinite}.dot.ok{background:var(--ok)}@keyframes pulse{50%{opacity:.5}}.orb{width:112px;height:112px;margin:22px auto;border-radius:50%;background:radial-gradient(circle at 35% 30%,#3a4652,#171c22 58%,#0d1115);border:1px solid #38434e;display:flex;align-items:center;justify-content:center;box-shadow:0 15px 45px rgba(0,0,0,.32)}.orb.live:after{content:"";width:18px;height:18px;border-radius:50%;background:var(--live);box-shadow:0 0 0 10px rgba(229,72,77,.12)}.question{font-size:17px;line-height:1.7;text-align:center;min-height:60px;padding:8px}.hint{text-align:center;color:#8e99a4;font-size:11px;line-height:1.6;margin-top:8px}.transcript{margin-top:16px;max-height:270px;overflow:auto;background:#0d1216;border:1px solid #27313a;border-radius:13px;padding:12px}.msg{margin:8px 0;padding:10px 11px;border-radius:11px;font-size:12px;line-height:1.6}.ai{background:#192029}.candidate{background:#232a22}.speaker{font-size:10px;color:#9aa5af;margin-bottom:3px;font-weight:800}.summary{margin-top:12px;padding:13px;background:#10151a;border:1px solid #29323a;border-radius:13px}.summary h3{font-size:13px;margin:0 0 8px}.summary ul{margin:6px 0 0;padding-left:19px}.summary li{font-size:12px;line-height:1.6;margin:5px 0}.error{margin-top:10px;color:#ffb9bc;font-size:12px;line-height:1.6}.small{font-size:10px;color:#818c96;line-height:1.7;margin-top:12px}.planbox{margin-top:12px;padding:12px;border:1px solid #34404a;border-radius:12px;background:#10161b}.planbox h3{font-size:13px;margin:0 0 8px}.planbox li{font-size:12px;line-height:1.5;margin:4px 0}.loading{opacity:.8}
+.wrap{max-width:760px;margin:auto;padding:18px 14px 50px}.brand{font-size:11px;letter-spacing:.14em;color:#c5ccd3}.pill{display:inline-block;font-size:10px;font-weight:800;padding:5px 8px;border-radius:999px;background:#fff;color:#111;margin-left:8px}h1{font-size:26px;margin:8px 0 6px}.sub{font-size:13px;line-height:1.7;color:var(--muted)}.card{margin-top:16px;background:rgba(21,25,30,.98);border:1px solid var(--line);border-radius:18px;padding:16px;box-shadow:0 18px 50px rgba(0,0,0,.28)}.job{font-size:20px;font-weight:800}.company{font-size:13px;color:#c2cad2;margin-top:3px}.note{margin-top:13px;padding:12px;border-radius:12px;background:#0f1419;border:1px solid #29313a;color:#c6ced6;font-size:12px;line-height:1.7}.field{margin-top:14px}label{display:block;font-size:12px;margin-bottom:7px;color:#d7dde3}input,select,textarea{width:100%;padding:13px 14px;border-radius:12px;border:1px solid #343e49;background:#0f1419;color:#fff;font-size:16px}input[type=file]{padding:10px;font-size:13px}textarea{min-height:100px;resize:vertical;line-height:1.6}.consent{display:flex;gap:9px;margin:14px 0;font-size:12px;line-height:1.6;color:#d8dee4}.consent input{width:18px;height:18px;margin:1px 0 0}.btn{width:100%;padding:15px;border:0;border-radius:13px;font-size:16px;font-weight:800;cursor:pointer}.primary{background:#fff;color:#111}.secondary{margin-top:10px;background:#242b32;color:#fff;border:1px solid #36414b}.danger{background:#3b1719;color:#ffd7d9;border:1px solid #6b2529}.hidden{display:none!important}.statusbar{display:flex;align-items:center;gap:9px;margin-bottom:12px}.dot{width:10px;height:10px;border-radius:50%;background:#68737e}.dot.live{background:var(--live);box-shadow:0 0 0 6px rgba(229,72,77,.13);animation:pulse 1.4s infinite}.dot.ok{background:var(--ok)}@keyframes pulse{50%{opacity:.5}}.orb{width:112px;height:112px;margin:22px auto;border-radius:50%;background:radial-gradient(circle at 35% 30%,#3a4652,#171c22 58%,#0d1115);border:1px solid #38434e;display:flex;align-items:center;justify-content:center;box-shadow:0 15px 45px rgba(0,0,0,.32)}.orb.live:after{content:"";width:18px;height:18px;border-radius:50%;background:var(--live);box-shadow:0 0 0 10px rgba(229,72,77,.12)}.question{font-size:17px;line-height:1.7;text-align:center;min-height:60px;padding:8px}.hint{text-align:center;color:#8e99a4;font-size:11px;line-height:1.6;margin-top:8px}.transcript{margin-top:16px;max-height:270px;overflow:auto;background:#0d1216;border:1px solid #27313a;border-radius:13px;padding:12px}.msg{margin:8px 0;padding:10px 11px;border-radius:11px;font-size:12px;line-height:1.6}.ai{background:#192029}.candidate{background:#232a22}.speaker{font-size:10px;color:#9aa5af;margin-bottom:3px;font-weight:800}.summary{margin-top:12px;padding:13px;background:#10151a;border:1px solid #29323a;border-radius:13px}.summary h3{font-size:13px;margin:0 0 8px}.summary ul{margin:6px 0 0;padding-left:19px}.summary li{font-size:12px;line-height:1.6;margin:5px 0}.error{margin-top:10px;color:#ffb9bc;font-size:12px;line-height:1.6}.small{font-size:10px;color:#818c96;line-height:1.7;margin-top:12px}.planbox{margin-top:12px;padding:12px;border:1px solid #34404a;border-radius:12px;background:#10161b}.planbox h3{font-size:13px;margin:0 0 8px}.planbox li{font-size:12px;line-height:1.5;margin:4px 0}.filelist{margin-top:8px;font-size:11px;color:#9ca7b1;line-height:1.6}
 </style>
 </head>
 <body>
@@ -20,18 +20,19 @@
     <div class="field"><label>会社・求人</label><select id="jobSelect"><option>読み込み中…</option></select></div>
     <div class="field"><label>応募者名</label><input id="name" placeholder="例：山田 太郎" autocomplete="name"></div>
 
-    <div class="note">以下は任意です。実際の履歴書・職務経歴書・適性診断・応募メッセージの要点を貼り付けると、この応募者専用の質問設計になります。</div>
+    <div class="note">履歴書・職務経歴書・適性診断結果をそのまま選択できます。PDF・Word等の内容をAIが読み、求人ごとの確認軸と照合して質問を組みます。</div>
+    <div class="field"><label>応募者資料（最大3ファイル）</label><input id="files" type="file" multiple accept=".pdf,.doc,.docx,.rtf,.txt,.md"><div id="fileList" class="filelist">未選択</div></div>
 
-    <div class="field"><label>履歴書・基本情報の要約</label><textarea id="resume" placeholder="例：普通免許あり。前職は製造業3年。建設経験なし。希望勤務地…"></textarea></div>
-    <div class="field"><label>職務経歴書の要約</label><textarea id="career" placeholder="例：2022年4月〜2025年6月 ○○株式会社。担当業務、退職理由、実績等"></textarea></div>
-    <div class="field"><label>適性診断結果</label><textarea id="assessment" placeholder="例：慎重性は高め、自己主張は低め、ストレス耐性は標準… ※診断結果は仮説として面接で確認します"></textarea></div>
-    <div class="field"><label>応募時メッセージ・本人コメント</label><textarea id="applicationMessage" placeholder="例：未経験ですが体を動かす仕事に挑戦したいです。"></textarea></div>
+    <div class="field"><label>履歴書・基本情報の補足（任意）</label><textarea id="resume" placeholder="ファイルにない情報や補足があれば入力"></textarea></div>
+    <div class="field"><label>職務経歴の補足（任意）</label><textarea id="career" placeholder="担当業務、退職理由、実績等の補足"></textarea></div>
+    <div class="field"><label>適性診断の補足（任意）</label><textarea id="assessment" placeholder="診断結果の補足。結果は仮説として面接で確認します"></textarea></div>
+    <div class="field"><label>応募時メッセージ・本人コメント（任意）</label><textarea id="applicationMessage" placeholder="応募時の文章や本人メッセージ"></textarea></div>
 
     <label class="consent"><input type="checkbox" id="consent"><span>AI音声面接を実施し、事前資料と会話内容を選考の参考情報として整理することに同意します。</span></label>
-    <button class="btn primary" id="startBtn" onclick="prepareAndStart()">面接設計を作成して開始</button>
+    <button class="btn primary" id="startBtn" onclick="prepareAndStart()">資料を読み込んで面接開始</button>
     <div id="startError" class="error"></div>
     <div id="planPreview" class="planbox hidden"></div>
-    <div class="small">iPhoneではSafari推奨。開始時にマイク利用の許可が表示されます。</div>
+    <div class="small">試作版は通信量と安定性のため、添付ファイル合計2.5MBまで。iPhoneではSafari推奨です。</div>
   </section>
 
   <section id="liveCard" class="card hidden">
@@ -49,7 +50,7 @@
 
   <section id="doneCard" class="card hidden">
     <div class="job">AI一次面接 終了</div>
-    <div class="sub" id="doneText">ご回答ありがとうございました。</div>
+    <div class="sub">ご回答ありがとうございました。</div>
     <div id="analysisLoading" class="note">事前資料と面接内容を照合しています…</div>
     <div id="analysis"></div>
     <button class="btn secondary" onclick="location.reload()">別の面接を試す</button>
@@ -61,172 +62,50 @@ let jobs=[];
 let pc=null,dc=null,localStream=null,muted=false,finished=false;
 let transcript=[],interviewPlan=null,currentAiText='',currentCandidateText='';
 const $=id=>document.getElementById(id);
-
-window.addEventListener('load',loadJobs);
+window.addEventListener('load',()=>{loadJobs();$('files').addEventListener('change',renderFileList)});
 
 async function loadJobs(){
-  try{
-    const r=await fetch('/api/jobs');
-    const d=await r.json();
-    jobs=d.jobs||[];
-    $('jobSelect').innerHTML=jobs.map(j=>`<option value="${escAttr(j.key)}">${esc(j.company)}｜${esc(j.position)}</option>`).join('');
-  }catch(e){$('jobSelect').innerHTML='<option value="nanshu_worker">南州建設株式会社｜土木作業員</option>'}
+  try{const r=await fetch('/api/jobs');const d=await r.json();jobs=d.jobs||[];$('jobSelect').innerHTML=jobs.map(j=>`<option value="${escAttr(j.key)}">${esc(j.company)}｜${esc(j.position)}</option>`).join('')}
+  catch(e){$('jobSelect').innerHTML='<option value="nanshu_worker">南州建設株式会社｜土木作業員</option>'}
 }
-
-function selectedJob(){
-  const key=$('jobSelect').value||'nanshu_worker';
-  return jobs.find(j=>j.key===key)||{key,company:'',position:''};
-}
+function selectedJob(){const key=$('jobSelect').value||'nanshu_worker';return jobs.find(j=>j.key===key)||{key,company:'',position:''}}
+function renderFileList(){const fs=[...$('files').files];$('fileList').textContent=fs.length?fs.map(f=>`${f.name}（${Math.round(f.size/1024)}KB）`).join(' / '):'未選択'}
+function fileToDataURL(file){return new Promise((resolve,reject)=>{const r=new FileReader();r.onload=()=>resolve({name:file.name,type:file.type,data:r.result});r.onerror=reject;r.readAsDataURL(file)})}
+async function collectFiles(){const fs=[...$('files').files].slice(0,3);const total=fs.reduce((s,f)=>s+f.size,0);if(total>2.5*1024*1024)throw new Error('添付ファイル合計は2.5MB以下にしてください。');return Promise.all(fs.map(fileToDataURL))}
 
 async function prepareAndStart(){
-  $('startError').textContent='';
-  const candidateName=$('name').value.trim();
-  if(!candidateName){$('startError').textContent='応募者名を入力してください。';return}
-  if(!$('consent').checked){$('startError').textContent='同意欄にチェックしてください。';return}
-
-  $('startBtn').disabled=true;
-  $('startBtn').textContent='応募者専用の面接設計を作成中…';
-  $('planPreview').classList.add('hidden');
-
+  $('startError').textContent='';const candidateName=$('name').value.trim();if(!candidateName){$('startError').textContent='応募者名を入力してください。';return}if(!$('consent').checked){$('startError').textContent='同意欄にチェックしてください。';return}
+  $('startBtn').disabled=true;$('startBtn').textContent='応募者資料を読み取り中…';$('planPreview').classList.add('hidden');
   try{
-    const job=selectedJob();
-    const payload={
-      jobKey:job.key,
-      candidateName,
-      resume:$('resume').value.trim(),
-      career:$('career').value.trim(),
-      assessment:$('assessment').value.trim(),
-      applicationMessage:$('applicationMessage').value.trim()
-    };
-    const r=await fetch('/api/plan',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
-    if(!r.ok)throw new Error(await r.text());
-    const d=await r.json();
-    interviewPlan=d.plan;
-    renderPlanPreview(d);
-    $('startBtn').textContent='マイク接続中…';
-    await startRealtime(candidateName,job);
-  }catch(e){
-    console.error(e);
-    $('startBtn').disabled=false;
-    $('startBtn').textContent='面接設計を作成して開始';
-    $('startError').textContent='面接設計または音声接続に失敗しました。VercelのOPENAI_API_KEY設定とSafariのマイク許可を確認してください。';
-    stopMedia();
-  }
+    const job=selectedJob();const fileData=await collectFiles();
+    const payload={jobKey:job.key,candidateName,files:fileData,resume:$('resume').value.trim(),career:$('career').value.trim(),assessment:$('assessment').value.trim(),applicationMessage:$('applicationMessage').value.trim()};
+    const r=await fetch('/api/plan',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});if(!r.ok)throw new Error(await r.text());
+    const d=await r.json();interviewPlan=d.plan;renderPlanPreview(d);$('startBtn').textContent='マイク接続中…';await startRealtime(candidateName,job);
+  }catch(e){console.error(e);$('startBtn').disabled=false;$('startBtn').textContent='資料を読み込んで面接開始';$('startError').textContent=e.message&&e.message.includes('2.5MB')?e.message:'面接設計または音声接続に失敗しました。VercelのOPENAI_API_KEY設定とSafariのマイク許可を確認してください。';stopMedia()}
 }
 
-function renderPlanPreview(d){
-  const p=d.plan||{};
-  $('planPreview').innerHTML=`<h3>応募者専用 面接設計</h3><div class="sub">${esc(d.company||'')}｜${esc(d.position||'')}</div>${sectionMini('書類から確認した事実',p.document_facts)}${sectionMini('面接で確認する差異・不足',p.inconsistencies_or_gaps)}${sectionMini('この応募者向け質問候補',p.tailored_questions)}`;
-  $('planPreview').classList.remove('hidden');
-}
-
-function compactPlanForHeader(p){
-  if(!p)return{};
-  const c={
-    candidate_brief:String(p.candidate_brief||'').slice(0,900),
-    inconsistencies_or_gaps:(p.inconsistencies_or_gaps||[]).slice(0,6),
-    assessment_hypotheses_to_verify:(p.assessment_hypotheses_to_verify||[]).slice(0,6),
-    must_confirm:(p.must_confirm||[]).slice(0,8),
-    tailored_questions:(p.tailored_questions||[]).slice(0,10)
-  };
-  return c;
-}
+function renderPlanPreview(d){const p=d.plan||{};$('planPreview').innerHTML=`<h3>応募者専用 面接設計</h3><div class="sub">${esc(d.company||'')}｜${esc(d.position||'')}</div>${d.filesRead?.length?`<div class="filelist">読込済: ${d.filesRead.map(esc).join(' / ')}</div>`:''}${sectionMini('書類から確認した事実',p.document_facts)}${sectionMini('面接で確認する差異・不足',p.inconsistencies_or_gaps)}${sectionMini('適性診断から面接で確認する仮説',p.assessment_hypotheses_to_verify)}${sectionMini('この応募者向け質問候補',p.tailored_questions)}`;$('planPreview').classList.remove('hidden')}
+function compactPlanForHeader(p){if(!p)return{};return{candidate_brief:String(p.candidate_brief||'').slice(0,900),inconsistencies_or_gaps:(p.inconsistencies_or_gaps||[]).slice(0,6),assessment_hypotheses_to_verify:(p.assessment_hypotheses_to_verify||[]).slice(0,6),must_confirm:(p.must_confirm||[]).slice(0,8),tailored_questions:(p.tailored_questions||[]).slice(0,10)}}
 
 async function startRealtime(candidateName,job){
-  localStream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true,autoGainControl:true}});
-  pc=new RTCPeerConnection();
-  $('remoteAudio').srcObject=null;
-  pc.ontrack=e=>{$('remoteAudio').srcObject=e.streams[0]};
-  localStream.getTracks().forEach(track=>pc.addTrack(track,localStream));
-
-  dc=pc.createDataChannel('oai-events');
-  dc.onopen=()=>{
-    setStatus('AI面接官に接続しました',true);
-    $('startCard').classList.add('hidden');
-    $('liveCard').classList.remove('hidden');
-    $('liveJob').textContent=`${job.company}｜${job.position}`;
-    dc.send(JSON.stringify({type:'response.create',response:{instructions:'面接を開始してください。応募者の事前資料と面接計画を踏まえ、最も重要な最初の質問を1つだけしてください。'}}));
-  };
-  dc.onmessage=e=>{try{handleEvent(JSON.parse(e.data))}catch(_){}};
-  dc.onerror=()=>showLiveError('AIとの通信でエラーが発生しました。');
-
-  const offer=await pc.createOffer();
-  await pc.setLocalDescription(offer);
-  const planHeader=encodeURIComponent(JSON.stringify(compactPlanForHeader(interviewPlan)));
-  const r=await fetch('/api/session',{
-    method:'POST',
-    headers:{
-      'Content-Type':'application/sdp',
-      'X-Candidate-Name':encodeURIComponent(candidateName),
-      'X-Job-Key':encodeURIComponent(job.key),
-      'X-Interview-Plan':planHeader
-    },
-    body:offer.sdp
-  });
-  if(!r.ok)throw new Error(await r.text());
-  await pc.setRemoteDescription({type:'answer',sdp:await r.text()});
+  localStream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true,autoGainControl:true}});pc=new RTCPeerConnection();$('remoteAudio').srcObject=null;pc.ontrack=e=>{$('remoteAudio').srcObject=e.streams[0]};localStream.getTracks().forEach(track=>pc.addTrack(track,localStream));
+  dc=pc.createDataChannel('oai-events');dc.onopen=()=>{setStatus('AI面接官に接続しました',true);$('startCard').classList.add('hidden');$('liveCard').classList.remove('hidden');$('liveJob').textContent=`${job.company}｜${job.position}`;dc.send(JSON.stringify({type:'response.create',response:{instructions:'面接を開始してください。応募者の事前資料と面接計画を踏まえ、最も重要な最初の質問を1つだけしてください。'}}))};dc.onmessage=e=>{try{handleEvent(JSON.parse(e.data))}catch(_){}};dc.onerror=()=>showLiveError('AIとの通信でエラーが発生しました。');
+  const offer=await pc.createOffer();await pc.setLocalDescription(offer);const planHeader=encodeURIComponent(JSON.stringify(compactPlanForHeader(interviewPlan)));
+  const r=await fetch('/api/session',{method:'POST',headers:{'Content-Type':'application/sdp','X-Candidate-Name':encodeURIComponent(candidateName),'X-Job-Key':encodeURIComponent(job.key),'X-Interview-Plan':planHeader},body:offer.sdp});if(!r.ok)throw new Error(await r.text());await pc.setRemoteDescription({type:'answer',sdp:await r.text()});
 }
 
-function handleEvent(ev){
-  const t=ev.type||'';
-  if(t==='response.created'||t.includes('output_audio.delta')||t==='response.audio.delta'){setStatus('AIが話しています…',true);$('orb').classList.add('live')}
-  if(t==='input_audio_buffer.speech_started'){setStatus('回答を聞いています…',true);$('orb').classList.add('live');currentCandidateText=''}
-  if(t==='input_audio_buffer.speech_stopped'){setStatus('回答内容を理解しています…');$('orb').classList.remove('live')}
-
-  if(t==='conversation.item.input_audio_transcription.delta'&&ev.delta){currentCandidateText+=ev.delta;$('question').textContent='あなた：'+currentCandidateText}
-  if(t==='conversation.item.input_audio_transcription.completed'){
-    const txt=(ev.transcript||currentCandidateText||'').trim();
-    if(txt)pushTranscript('candidate',txt);
-    currentCandidateText='';
-  }
-
-  if((t==='response.output_audio_transcript.delta'||t==='response.audio_transcript.delta')&&ev.delta){currentAiText+=ev.delta;$('question').textContent=currentAiText}
-  if(t==='response.output_audio_transcript.done'||t==='response.audio_transcript.done'){
-    const txt=(ev.transcript||currentAiText||'').trim();
-    if(txt){pushTranscript('ai',txt);$('question').textContent=txt;if(txt.includes('以上でAI一次面接を終了します'))setTimeout(finishInterview,1800)}
-    currentAiText='';
-  }
-  if(t==='response.done'){setStatus('あなたの回答を待っています',false,true);$('orb').classList.remove('live')}
-  if(t==='error'){console.error(ev);showLiveError('AI通信エラーが発生しました。')}
-}
-
-function pushTranscript(role,text){
-  if(!text)return;
-  const last=transcript[transcript.length-1];
-  if(last&&last.role===role&&last.text===text)return;
-  transcript.push({role,text});renderTranscript();
-}
-function renderTranscript(){
-  const box=$('transcript');
-  box.innerHTML=transcript.map(x=>`<div class="msg ${x.role==='candidate'?'candidate':'ai'}"><div class="speaker">${x.role==='candidate'?'応募者':'AI面接官'}</div>${esc(x.text)}</div>`).join('');
-  box.scrollTop=box.scrollHeight;
-}
+function handleEvent(ev){const t=ev.type||'';if(t==='response.created'||t.includes('output_audio.delta')||t==='response.audio.delta'){setStatus('AIが話しています…',true);$('orb').classList.add('live')}if(t==='input_audio_buffer.speech_started'){setStatus('回答を聞いています…',true);$('orb').classList.add('live');currentCandidateText=''}if(t==='input_audio_buffer.speech_stopped'){setStatus('回答内容を理解しています…');$('orb').classList.remove('live')}if(t==='conversation.item.input_audio_transcription.delta'&&ev.delta){currentCandidateText+=ev.delta;$('question').textContent='あなた：'+currentCandidateText}if(t==='conversation.item.input_audio_transcription.completed'){const txt=(ev.transcript||currentCandidateText||'').trim();if(txt)pushTranscript('candidate',txt);currentCandidateText=''}if((t==='response.output_audio_transcript.delta'||t==='response.audio_transcript.delta')&&ev.delta){currentAiText+=ev.delta;$('question').textContent=currentAiText}if(t==='response.output_audio_transcript.done'||t==='response.audio_transcript.done'){const txt=(ev.transcript||currentAiText||'').trim();if(txt){pushTranscript('ai',txt);$('question').textContent=txt;if(txt.includes('以上でAI一次面接を終了します'))setTimeout(finishInterview,1800)}currentAiText=''}if(t==='response.done'){setStatus('あなたの回答を待っています',false,true);$('orb').classList.remove('live')}if(t==='error'){console.error(ev);showLiveError('AI通信エラーが発生しました。')}}
+function pushTranscript(role,text){if(!text)return;const last=transcript[transcript.length-1];if(last&&last.role===role&&last.text===text)return;transcript.push({role,text});renderTranscript()}
+function renderTranscript(){const box=$('transcript');box.innerHTML=transcript.map(x=>`<div class="msg ${x.role==='candidate'?'candidate':'ai'}"><div class="speaker">${x.role==='candidate'?'応募者':'AI面接官'}</div>${esc(x.text)}</div>`).join('');box.scrollTop=box.scrollHeight}
 function setStatus(text,live=false,ok=false){$('status').textContent=text;$('dot').className='dot'+(live?' live':ok?' ok':'')}
 function showLiveError(text){$('liveError').textContent=text}
-function toggleMute(){
-  if(!localStream)return;muted=!muted;localStream.getAudioTracks().forEach(t=>t.enabled=!muted);
-  $('muteBtn').textContent=muted?'マイクを再開':'マイクを一時停止';setStatus(muted?'マイク停止中':'あなたの回答を待っています',false,!muted);
-}
-
-async function finishInterview(){
-  if(finished)return;finished=true;stopMedia();$('liveCard').classList.add('hidden');$('doneCard').classList.remove('hidden');await analyzeInterview();
-}
+function toggleMute(){if(!localStream)return;muted=!muted;localStream.getAudioTracks().forEach(t=>t.enabled=!muted);$('muteBtn').textContent=muted?'マイクを再開':'マイクを一時停止';setStatus(muted?'マイク停止中':'あなたの回答を待っています',false,!muted)}
+async function finishInterview(){if(finished)return;finished=true;stopMedia();$('liveCard').classList.add('hidden');$('doneCard').classList.remove('hidden');await analyzeInterview()}
 function stopMedia(){try{if(dc)dc.close()}catch(e){}try{if(pc)pc.close()}catch(e){}try{if(localStream)localStream.getTracks().forEach(t=>t.stop())}catch(e){}}
-
-async function analyzeInterview(){
-  try{
-    const job=selectedJob();
-    const r=await fetch('/api/analyze',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({candidateName:$('name').value.trim(),jobKey:job.key,plan:interviewPlan,transcript})});
-    if(!r.ok)throw new Error(await r.text());
-    const d=await r.json();$('analysisLoading').classList.add('hidden');
-    $('analysis').innerHTML=`<div class="summary"><h3>面接内容の要約</h3><div class="sub">${esc(d.summary||'')}</div></div>${section('確認できた事実',d.confirmed_facts)}${section('書類と面接回答の差異・追加確認',d.document_interview_differences)}${section('未確認・追加確認事項',d.unresolved_points)}${section('人間面接での追加質問',d.follow_up_questions)}${section('本人が述べた条件',d.conditions_mentioned)}${section('適性診断の仮説について面接で確認できたこと',d.assessment_hypotheses_checked)}`;
-  }catch(e){console.error(e);$('analysisLoading').textContent='面接は終了しました。要約処理のみ失敗しました。会話記録はこの画面で確認できます。'}
-}
-
+async function analyzeInterview(){try{const job=selectedJob();const r=await fetch('/api/analyze',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({candidateName:$('name').value.trim(),jobKey:job.key,plan:interviewPlan,transcript})});if(!r.ok)throw new Error(await r.text());const d=await r.json();$('analysisLoading').classList.add('hidden');$('analysis').innerHTML=`<div class="summary"><h3>面接内容の要約</h3><div class="sub">${esc(d.summary||'')}</div></div>${section('確認できた事実',d.confirmed_facts)}${section('書類と面接回答の差異・追加確認',d.document_interview_differences)}${section('未確認・追加確認事項',d.unresolved_points)}${section('人間面接での追加質問',d.follow_up_questions)}${section('本人が述べた条件',d.conditions_mentioned)}${section('適性診断の仮説について面接で確認できたこと',d.assessment_hypotheses_checked)}`}catch(e){console.error(e);$('analysisLoading').textContent='面接は終了しました。要約処理のみ失敗しました。'}}
 function section(title,items){const arr=Array.isArray(items)?items:[];if(!arr.length)return'';return `<div class="summary"><h3>${esc(title)}</h3><ul>${arr.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>`}
 function sectionMini(title,items){const arr=Array.isArray(items)?items:[];if(!arr.length)return'';return `<h3 style="margin-top:12px">${esc(title)}</h3><ul>${arr.slice(0,12).map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`}
-function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-function escAttr(s){return esc(s)}
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}function escAttr(s){return esc(s)}
 </script>
 </body>
 </html>
