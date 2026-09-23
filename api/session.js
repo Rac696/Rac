@@ -16,7 +16,9 @@ export default async function handler(req, res) {
 
   try {
     const sdp = await readRaw(req);
-    const candidateName = String(req.headers['x-candidate-name'] || '').slice(0, 80);
+    let candidateName = String(req.headers['x-candidate-name'] || '').slice(0, 240);
+    try { candidateName = decodeURIComponent(candidateName); } catch (_) {}
+    candidateName = candidateName.slice(0, 80);
 
     const instructions = `
 あなたは株式会社Rac solutionが運用するAI一次面接官です。
@@ -66,7 +68,12 @@ export default async function handler(req, res) {
             prompt: '日本の建設会社の採用面接。土木作業員、道路、河川、舗装、安全、報連相、通勤、入社時期について話す。',
             keywords: ['南州建設', '土木作業員', '道路', '河川', '舗装', '安全', '報連相']
           },
-          turn_detection: { type: 'semantic_vad' }
+          turn_detection: {
+            type: 'semantic_vad',
+            eagerness: 'low',
+            create_response: true,
+            interrupt_response: true
+          }
         },
         output: { voice: 'marin' }
       }
