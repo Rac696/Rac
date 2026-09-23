@@ -1,21 +1,26 @@
+import crypto from 'node:crypto';
 import { getJob } from '../lib/jobs.js';
 
-export const config = { api: { bodyParser: false } };
+async function readJsonBody(req) {
+  if (req.body && typeof req.body === 'object') return req.body;
+  if (typeof req.body === 'string' && req.body.trim()) return JSON.parse(req.body);
 
-function readRaw(req) {
-  return new Promise((resolve, reject) => {
+  return await new Promise((resolve, reject) => {
     let data = '';
     req.setEncoding('utf8');
     req.on('data', chunk => data += chunk);
-    req.on('end', () => resolve(data));
+    req.on('end', () => {
+      try { resolve(data ? JSON.parse(data) : {}); }
+      catch (e) { reject(e); }
+    });
     req.on('error', reject);
   });
 }
 
-function decodeHeader(value, max = 12000) {
-  let s = String(value || '').slice(0, max);
-  try { s = decodeURIComponent(s); } catch (_) {}
-  return s;
+function safeArray(value, maxItems = 10, maxLen = 500) {
+  return Array.isArray(value)
+    ? value.slice(0, maxItems).map(v => String(v || '').slice(0, maxLen)).filter(Boolean)
+    : [];
 }
 
 export default async function handler(req, res) {
@@ -23,22 +28,20 @@ export default async function handler(req, res) {
   if (!process.env.OPENAI_API_KEY) return res.status(500).send('OPENAI_API_KEY is not configured');
 
   try {
-    const sdp = await readRaw(req);
-    const candidateName = decodeHeader(req.headers['x-candidate-name'], 240).slice(0, 80);
-    const jobKey = decodeHeader(req.headers['x-job-key'], 120) || 'nanshu_worker';
+    const payload = await readJsonBody(req);
+    const sdp = String(payload?.sdp || '');
+    if (!sdp.trim()) return res.status(400).send('SDP is required');
+
+    const candidateName = String(payload?.candidateName || '').slice(0, 80);
+    const jobKey = String(payload?.jobKey || 'nanshu_worker').slice(0, 120);
     const job = getJob(jobKey);
+    const plan = payload?.plan && typeof payload.plan === 'object' ? payload.plan : null;
 
-    let plan = null;
-    const rawPlan = decodeHeader(req.headers['x-interview-plan'], 12000);
-    if (rawPlan) {
-      try { plan = JSON.parse(rawPlan); } catch (_) { plan = null; }
-    }
-
-    const candidateBrief = String(plan?.candidate_brief || '').slice(0, 1400);
-    const gaps = Array.isArray(plan?.inconsistencies_or_gaps) ? plan.inconsistencies_or_gaps.slice(0, 8) : [];
-    const hypotheses = Array.isArray(plan?.assessment_hypotheses_to_verify) ? plan.assessment_hypotheses_to_verify.slice(0, 8) : [];
-    const mustConfirm = Array.isArray(plan?.must_confirm) ? plan.must_confirm.slice(0, 10) : [];
-    const tailored = Array.isArray(plan?.tailored_questions) ? plan.tailored_questions.slice(0, 12) : [];
+    const candidateBrief = String(plan?.candidate_brief || '').slice(0, 1800);
+    const gaps = safeArray(plan?.inconsistencies_or_gaps, 8, 600);
+    const hypotheses = safeArray(plan?.assessment_hypotheses_to_verify, 8, 600);
+    const mustConfirm = safeArray(plan?.must_confirm, 10, 500);
+    const tailored = safeArray(plan?.tailored_questions, 12, 800);
 
     const preContext = plan ? `
 【事前資料からの応募者概要】
@@ -90,7 +93,11 @@ ${preContext}
 必要事項が十分に揃ったら「以上でAI一次面接を終了します。ご回答ありがとうございました。担当者が内容を確認します。」と伝え、それ以上質問しない。
 `;
 
-    const keywords = [job.company, job.position, ...job.coreFocus].slice(0, 16);
+    const keywords = [job.company, job.position, ...job.coreFocus]
+      .map(v => String(v).replace(/[<>\r\n]/g, ' ').slice(0, 80))
+      .filter(Boolean)
+      .slice(0, 16);
+
     const sessionConfig = JSON.stringify({
       type: 'realtime',
       model: 'gpt-realtime-2.1',
@@ -120,9 +127,17 @@ ${preContext}
     fd.set('sdp', sdp);
     fd.set('session', sessionConfig);
 
+    const safetyId = crypto
+      .createHash('sha256')
+      .update(`${jobKey}:${candidateName || 'anonymous'}`)
+      .digest('hex');
+
     const r = await fetch('https://api.openai.com/v1/realtime/calls', {
       method: 'POST',
-      headers: { Authorization: `Bearer ${process.env.OPENAI_API_KEY}` },
+      headers: {
+        Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+        'OpenAI-Safety-Identifier': safetyId
+      },
       body: fd
     });
 
