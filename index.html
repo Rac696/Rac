@@ -1,1 +1,222 @@
-<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Rac AI音声面接デモ</title><style>body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;max-width:680px;margin:auto;padding:18px;background:#0b0d10;color:#fff}h1{font-size:26px;margin:8px 0}.sub{color:#aeb7c0;font-size:13px;line-height:1.7}.card{background:#15191e;border:1px solid #2b333d;border-radius:18px;padding:16px;margin-top:16px}.q{padding:16px;background:#1c2229;border-radius:14px;line-height:1.7;font-size:17px}.status{margin:12px 0;color:#b9c3cc;font-size:13px}.mic{width:100%;padding:15px;border:0;border-radius:13px;font-size:17px;font-weight:800;background:#fff;color:#111}.mic.on{background:#b42318;color:#fff}.send{width:100%;padding:14px;border:1px solid #38434d;border-radius:13px;font-size:16px;font-weight:700;background:#242b32;color:#fff;margin-top:10px}.send:disabled{opacity:.45}.answer{margin-top:12px;padding:14px;background:#0f1419;border:1px solid #29323a;border-radius:12px;min-height:64px;line-height:1.7}.hidden{display:none}.small{font-size:11px;color:#89949e;line-height:1.6;margin-top:10px}input{width:100%;padding:13px;font-size:16px;border-radius:12px;border:1px solid #333;background:#0f1419;color:#fff;box-sizing:border-box}.start{width:100%;padding:15px;margin-top:12px;border:0;border-radius:13px;font-size:17px;font-weight:800;background:#fff;color:#111}</style></head><body><div style="font-size:11px;letter-spacing:.12em;color:#bbc3ca">RAC SOLUTION / VOICE INTERVIEW</div><h1>AI音声一次面接</h1><div class="sub">AIが質問を読み上げます。応募者はマイクに向かって回答してください。試作版のため回答内容は外部へ送信しません。</div><div id="start" class="card"><div style="font-weight:800;font-size:20px">土木作業員</div><div class="sub">南州建設株式会社</div><input id="name" placeholder="お名前"><button class="start" onclick="begin()">音声面接を開始</button><div class="small">iPhoneではSafariで開いてください。初回はマイク利用の許可が表示されます。</div></div><div id="interview" class="card hidden"><div id="count" class="sub"></div><div id="question" class="q"></div><div id="status" class="status">質問を読み上げています…</div><button id="mic" class="mic" onclick="toggleMic()">🎙 話して回答</button><div id="answer" class="answer">ここに音声認識した回答が表示されます。</div><button id="send" class="send" onclick="next()" disabled>この回答で次へ</button><button class="send" onclick="speakCurrent()">🔊 質問をもう一度聞く</button><div class="small">音声認識が使えない場合は、Safariのマイク許可とSiriが有効か確認してください。</div></div><div id="done" class="card hidden"><h2>面接終了</h2><p class="sub">ご回答ありがとうございました。試作版ではここまでです。本番版では回答をAIが分析し、内容に応じて追加質問を生成します。</p><div id="summary"></div></div><script>const qs=['まず、南州建設株式会社の土木作業員に応募しようと思った理由を教えてください。','これまでの仕事経験について教えてください。現場作業や体を動かす仕事の経験があれば、その内容もお願いします。','朝が早い勤務や、暑さ寒さのある屋外作業について、どのように考えていますか？','現場では安全ルールや上司の指示が重要です。納得できない指示があった場合、あなたならどうしますか？','通勤方法と通勤時間、入社できる時期を教えてください。'];let i=0,answers=[],rec=null,listening=false,latest='';function begin(){if(!document.getElementById('name').value.trim())return alert('お名前を入力してください');document.getElementById('start').classList.add('hidden');document.getElementById('interview').classList.remove('hidden');setupRecognition();render();setTimeout(speakCurrent,300)}function setupRecognition(){const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){document.getElementById('status').textContent='このブラウザでは音声認識が利用できません。Safariで開いてください。';document.getElementById('mic').disabled=true;return}rec=new SR();rec.lang='ja-JP';rec.interimResults=true;rec.continuous=false;rec.onstart=()=>{listening=true;document.getElementById('mic').classList.add('on');document.getElementById('mic').textContent='● 聞き取り中… タップで終了';document.getElementById('status').textContent='話してください';latest=''};rec.onresult=e=>{let finalText='',interim='';for(let k=e.resultIndex;k<e.results.length;k++){let t=e.results[k][0].transcript;if(e.results[k].isFinal)finalText+=t;else interim+=t}latest=(finalText||latest)+interim;document.getElementById('answer').textContent=latest||'聞き取っています…';document.getElementById('send').disabled=!latest.trim()};rec.onend=()=>{listening=false;document.getElementById('mic').classList.remove('on');document.getElementById('mic').textContent='🎙 もう一度話す';document.getElementById('status').textContent=latest?'回答を確認してください':'音声をうまく認識できませんでした。もう一度お試しください。'};rec.onerror=e=>{document.getElementById('status').textContent='音声認識エラー: '+e.error}}function render(){document.getElementById('count').textContent='質問 '+(i+1)+' / '+qs.length;document.getElementById('question').textContent=qs[i];document.getElementById('answer').textContent='ここに音声認識した回答が表示されます。';document.getElementById('send').disabled=true;latest=''}function speakCurrent(){speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(qs[i]);u.lang='ja-JP';u.rate=.95;u.pitch=1;u.onstart=()=>document.getElementById('status').textContent='AIが質問を読み上げています…';u.onend=()=>document.getElementById('status').textContent='「話して回答」を押して、マイクに向かってお答えください。';speechSynthesis.speak(u)}function toggleMic(){if(!rec)return;if(listening){rec.stop();return}speechSynthesis.cancel();try{rec.start()}catch(e){}}function next(){if(!latest.trim())return;answers.push(latest.trim());i++;if(i<qs.length){render();setTimeout(speakCurrent,250)}else finish()}function finish(){speechSynthesis.cancel();document.getElementById('interview').classList.add('hidden');document.getElementById('done').classList.remove('hidden');document.getElementById('summary').innerHTML=answers.map((a,j)=>'<div class="answer"><b>Q'+(j+1)+'</b><br>'+esc(a)+'</div>').join('');let u=new SpeechSynthesisUtterance('以上で一次面接は終了です。ご回答ありがとうございました。');u.lang='ja-JP';speechSynthesis.speak(u)}function esc(s){return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}</script></body></html>
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Rac AI音声一次面接</title>
+<style>
+:root{--bg:#090b0e;--card:#15191e;--card2:#1b2128;--line:#2c3540;--text:#f5f7fa;--muted:#aab4be;--live:#e5484d;--ok:#65c18c}
+*{box-sizing:border-box}html,body{margin:0;background:linear-gradient(180deg,#080a0d,#10151b);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;min-height:100%}
+.wrap{max-width:720px;margin:auto;padding:18px 14px 50px}.brand{font-size:11px;letter-spacing:.14em;color:#c5ccd3}.pill{display:inline-block;font-size:10px;font-weight:800;padding:5px 8px;border-radius:999px;background:#fff;color:#111;margin-left:8px}h1{font-size:26px;margin:8px 0 6px}.sub{font-size:13px;line-height:1.7;color:var(--muted)}.card{margin-top:16px;background:rgba(21,25,30,.98);border:1px solid var(--line);border-radius:18px;padding:16px;box-shadow:0 18px 50px rgba(0,0,0,.28)}.job{font-size:20px;font-weight:800}.company{font-size:13px;color:#c2cad2;margin-top:3px}.note{margin-top:13px;padding:12px;border-radius:12px;background:#0f1419;border:1px solid #29313a;color:#c6ced6;font-size:12px;line-height:1.7}.field{margin-top:14px}label{display:block;font-size:12px;margin-bottom:7px;color:#d7dde3}input{width:100%;padding:13px 14px;border-radius:12px;border:1px solid #343e49;background:#0f1419;color:#fff;font-size:16px}.consent{display:flex;gap:9px;margin:14px 0;font-size:12px;line-height:1.6;color:#d8dee4}.consent input{width:18px;height:18px;margin:1px 0 0}.btn{width:100%;padding:15px;border:0;border-radius:13px;font-size:16px;font-weight:800;cursor:pointer}.primary{background:#fff;color:#111}.secondary{margin-top:10px;background:#242b32;color:#fff;border:1px solid #36414b}.danger{background:#3b1719;color:#ffd7d9;border:1px solid #6b2529}.hidden{display:none!important}.statusbar{display:flex;align-items:center;gap:9px;margin-bottom:12px}.dot{width:10px;height:10px;border-radius:50%;background:#68737e}.dot.live{background:var(--live);box-shadow:0 0 0 6px rgba(229,72,77,.13);animation:pulse 1.4s infinite}.dot.ok{background:var(--ok)}@keyframes pulse{50%{opacity:.5}}.status{font-size:12px;color:#b9c3cc}.orb{width:112px;height:112px;margin:22px auto;border-radius:50%;background:radial-gradient(circle at 35% 30%,#3a4652,#171c22 58%,#0d1115);border:1px solid #38434e;display:flex;align-items:center;justify-content:center;box-shadow:0 15px 45px rgba(0,0,0,.32)}.orb.live:after{content:"";width:18px;height:18px;border-radius:50%;background:var(--live);box-shadow:0 0 0 10px rgba(229,72,77,.12)}.question{font-size:17px;line-height:1.7;text-align:center;min-height:60px;padding:8px}.hint{text-align:center;color:#8e99a4;font-size:11px;line-height:1.6;margin-top:8px}.transcript{margin-top:16px;max-height:270px;overflow:auto;background:#0d1216;border:1px solid #27313a;border-radius:13px;padding:12px}.msg{margin:8px 0;padding:10px 11px;border-radius:11px;font-size:12px;line-height:1.6}.ai{background:#192029}.candidate{background:#232a22}.speaker{font-size:10px;color:#9aa5af;margin-bottom:3px;font-weight:800}.summary{margin-top:12px;padding:13px;background:#10151a;border:1px solid #29323a;border-radius:13px}.summary h3{font-size:13px;margin:0 0 8px}.summary ul{margin:6px 0 0;padding-left:19px}.summary li{font-size:12px;line-height:1.6;margin:5px 0}.error{margin-top:10px;color:#ffb9bc;font-size:12px;line-height:1.6}.small{font-size:10px;color:#818c96;line-height:1.7;margin-top:12px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div><span class="brand">RAC SOLUTION / REALTIME INTERVIEW</span><span class="pill">AI音声面接</span></div>
+  <h1>AI一次面接</h1>
+  <div class="sub">AIと普通に会話してください。回答内容を理解して、必要に応じてその場で質問を深掘りします。</div>
+
+  <section id="startCard" class="card">
+    <div class="job">土木作業員</div>
+    <div class="company">南州建設株式会社</div>
+    <div class="note">面接は音声で行います。AIは回答内容を整理しますが、AIだけで採用・不採用を決めません。声質・アクセント・話し方なども評価対象にしません。</div>
+    <div class="field"><label>お名前</label><input id="name" placeholder="例：山田 太郎" autocomplete="name"></div>
+    <label class="consent"><input type="checkbox" id="consent"><span>AI音声面接を実施し、会話内容を選考の参考情報として整理することに同意します。</span></label>
+    <button class="btn primary" id="startBtn" onclick="startInterview()">🎙 AI音声面接を開始</button>
+    <div id="startError" class="error"></div>
+    <div class="small">iPhoneではSafari推奨。開始時にマイクの利用許可が表示されます。</div>
+  </section>
+
+  <section id="liveCard" class="card hidden">
+    <div class="statusbar"><span id="dot" class="dot"></span><span id="status" class="status">接続準備中…</span></div>
+    <div id="orb" class="orb"></div>
+    <div id="question" class="question">AI面接官を接続しています…</div>
+    <div class="hint">質問が終わったら、そのまま話してください。回答が終わるとAIが自動で次の質問を返します。</div>
+    <button class="btn secondary" id="muteBtn" onclick="toggleMute()">マイクを一時停止</button>
+    <button class="btn secondary danger" onclick="finishInterview()">面接を終了する</button>
+    <div id="liveError" class="error"></div>
+    <div class="transcript" id="transcript"><div class="small">ここに会話の文字起こしが表示されます。</div></div>
+    <audio id="remoteAudio" autoplay playsinline></audio>
+  </section>
+
+  <section id="doneCard" class="card hidden">
+    <div class="job">AI一次面接 終了</div>
+    <div class="sub" id="doneText">ご回答ありがとうございました。</div>
+    <div id="analysisLoading" class="note">面接内容を整理しています…</div>
+    <div id="analysis"></div>
+    <button class="btn secondary" onclick="location.reload()">もう一度試す</button>
+  </section>
+</div>
+
+<script>
+let pc=null,dc=null,localStream=null,muted=false,finished=false;
+let transcript=[];
+let currentAiText='';
+let currentCandidateText='';
+
+const $=id=>document.getElementById(id);
+
+async function startInterview(){
+  $('startError').textContent='';
+  const name=$('name').value.trim();
+  if(!name){$('startError').textContent='お名前を入力してください。';return}
+  if(!$('consent').checked){$('startError').textContent='同意欄にチェックしてください。';return}
+  $('startBtn').disabled=true;
+  $('startBtn').textContent='接続しています…';
+
+  try{
+    localStream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true,autoGainControl:true}});
+    pc=new RTCPeerConnection();
+    const audio=$('remoteAudio');
+    pc.ontrack=e=>{audio.srcObject=e.streams[0]};
+    localStream.getTracks().forEach(track=>pc.addTrack(track,localStream));
+
+    dc=pc.createDataChannel('oai-events');
+    dc.onopen=()=>{
+      setStatus('AI面接官に接続しました',true);
+      $('startCard').classList.add('hidden');
+      $('liveCard').classList.remove('hidden');
+      dc.send(JSON.stringify({type:'response.create',response:{instructions:'面接を開始してください。最初の挨拶のあと、応募理由を1つだけ質問してください。'}}));
+    };
+    dc.onmessage=e=>handleEvent(JSON.parse(e.data));
+    dc.onerror=()=>showLiveError('AIとの通信でエラーが発生しました。');
+
+    const offer=await pc.createOffer();
+    await pc.setLocalDescription(offer);
+    const r=await fetch('/api/session',{
+      method:'POST',
+      headers:{'Content-Type':'application/sdp','X-Candidate-Name':encodeURIComponent(name)},
+      body:offer.sdp
+    });
+    if(!r.ok)throw new Error(await r.text());
+    const answerSdp=await r.text();
+    await pc.setRemoteDescription({type:'answer',sdp:answerSdp});
+  }catch(err){
+    console.error(err);
+    $('startBtn').disabled=false;
+    $('startBtn').textContent='🎙 AI音声面接を開始';
+    $('startError').textContent='接続できませんでした。Safariのマイク許可と、Vercel側のAPI設定を確認してください。';
+    stopMedia();
+  }
+}
+
+function handleEvent(ev){
+  const t=ev.type||'';
+  if(t==='response.created'||t==='response.output_audio.delta'||t==='response.audio.delta'){
+    setStatus('AIが話しています…',true);
+    $('orb').classList.add('live');
+  }
+  if(t==='input_audio_buffer.speech_started'){
+    setStatus('回答を聞いています…',true);
+    $('orb').classList.add('live');
+    currentCandidateText='';
+  }
+  if(t==='input_audio_buffer.speech_stopped'){
+    setStatus('回答内容を理解しています…',false);
+    $('orb').classList.remove('live');
+  }
+
+  if(t==='conversation.item.input_audio_transcription.delta'&&ev.delta){
+    currentCandidateText+=ev.delta;
+    $('question').textContent='あなた：'+currentCandidateText;
+  }
+  if(t==='conversation.item.input_audio_transcription.completed'){
+    const txt=(ev.transcript||currentCandidateText||'').trim();
+    if(txt){pushTranscript('candidate',txt)}
+    currentCandidateText='';
+  }
+
+  if((t==='response.output_audio_transcript.delta'||t==='response.audio_transcript.delta')&&ev.delta){
+    currentAiText+=ev.delta;
+    $('question').textContent=currentAiText;
+  }
+  if(t==='response.output_audio_transcript.done'||t==='response.audio_transcript.done'){
+    const txt=(ev.transcript||currentAiText||'').trim();
+    if(txt){pushTranscript('ai',txt);$('question').textContent=txt}
+    currentAiText='';
+  }
+  if(t==='response.done'){
+    setStatus('あなたの回答を待っています',false,true);
+    $('orb').classList.remove('live');
+  }
+  if(t==='error'){
+    console.error(ev);
+    showLiveError('AI通信エラーが発生しました。');
+  }
+}
+
+function pushTranscript(role,text){
+  if(!text)return;
+  const last=transcript[transcript.length-1];
+  if(last&&last.role===role&&last.text===text)return;
+  transcript.push({role,text});
+  renderTranscript();
+}
+
+function renderTranscript(){
+  const box=$('transcript');
+  box.innerHTML=transcript.map(x=>`<div class="msg ${x.role==='candidate'?'candidate':'ai'}"><div class="speaker">${x.role==='candidate'?'応募者':'AI面接官'}</div>${esc(x.text)}</div>`).join('');
+  box.scrollTop=box.scrollHeight;
+}
+
+function setStatus(text,live=false,ok=false){
+  $('status').textContent=text;
+  $('dot').className='dot'+(live?' live':ok?' ok':'');
+}
+
+function toggleMute(){
+  if(!localStream)return;
+  muted=!muted;
+  localStream.getAudioTracks().forEach(t=>t.enabled=!muted);
+  $('muteBtn').textContent=muted?'マイクを再開':'マイクを一時停止';
+  setStatus(muted?'マイク停止中':'あなたの回答を待っています',false,!muted);
+}
+
+async function finishInterview(){
+  if(finished)return;
+  finished=true;
+  stopMedia();
+  $('liveCard').classList.add('hidden');
+  $('doneCard').classList.remove('hidden');
+  await analyzeInterview();
+}
+
+function stopMedia(){
+  try{if(dc)dc.close()}catch(e){}
+  try{if(pc)pc.close()}catch(e){}
+  try{if(localStream)localStream.getTracks().forEach(t=>t.stop())}catch(e){}
+}
+
+async function analyzeInterview(){
+  try{
+    const r=await fetch('/api/analyze',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({candidateName:$('name').value.trim(),transcript})
+    });
+    if(!r.ok)throw new Error(await r.text());
+    const d=await r.json();
+    $('analysisLoading').classList.add('hidden');
+    $('analysis').innerHTML=`
+      <div class="summary"><h3>面接内容の要約</h3><div class="sub">${esc(d.summary||'')}</div></div>
+      ${section('確認できた事実',d.confirmed_facts)}
+      ${section('未確認・追加確認事項',d.unresolved_points)}
+      ${section('人間面接での追加質問',d.follow_up_questions)}
+      ${section('本人が述べた条件',d.conditions_mentioned)}
+    `;
+  }catch(e){
+    console.error(e);
+    $('analysisLoading').textContent='面接は終了しました。要約処理のみ失敗しました。会話記録はこの画面で確認できます。';
+  }
+}
+
+function section(title,items){
+  const arr=Array.isArray(items)?items:[];
+  if(!arr.length)return'';
+  return `<div class="summary"><h3>${esc(title)}</h3><ul>${arr.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>`;
+}
+function showLiveError(s){$('liveError').textContent=s}
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+window.addEventListener('beforeunload',stopMedia);
+</script>
+</body>
+</html>
