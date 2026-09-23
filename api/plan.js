@@ -1,5 +1,7 @@
 import { getJob } from '../lib/jobs.js';
 
+export const config = { api: { bodyParser: { sizeLimit: '4mb' } } };
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method Not Allowed' });
   if (!process.env.OPENAI_API_KEY) return res.status(500).json({ error: 'OPENAI_API_KEY is not configured' });
@@ -12,6 +14,7 @@ export default async function handler(req, res) {
     const career = String(req.body?.career || '').slice(0, 12000);
     const assessment = String(req.body?.assessment || '').slice(0, 9000);
     const applicationMessage = String(req.body?.applicationMessage || '').slice(0, 5000);
+    const files = Array.isArray(req.body?.files) ? req.body.files.slice(0, 3) : [];
 
     const schema = {
       type: 'object',
@@ -39,10 +42,11 @@ export default async function handler(req, res) {
 - 履歴書・職務経歴書の事実と、適性診断から生じる仮説を明確に分ける。
 - 適性診断は「仮説→面接で確認」にのみ使う。診断結果だけで性格や職務適性を決めない。
 - 年齢、性別、家族構成、妊娠、宗教、思想信条、病歴等の職務上不要なセンシティブ情報は質問設計に使わない。
-- 外見、声、アクセント、話し方を評価材料にしない。
+- 外見、顔写真、声、アクセント、話し方を評価材料にしない。
 - 経歴の空白や転職理由等は、責める表現ではなく事実確認の質問にする。
 - tailored_questions は一度に1問ずつ聞ける自然な日本語で、8〜12問程度。資料ですでに確定している事実を無駄に聞き直さない。
 - 書類上の矛盾・曖昧さ・不足情報があれば、面接で確認する質問に変換する。
+- 添付された適性診断書に人物評価やスコアが書かれていても、その結論をそのまま採否判断に使わず、職務に関係する仮説だけを面接質問へ変換する。
 
 対象企業: ${job.company}
 職種: ${job.position}
@@ -50,7 +54,8 @@ export default async function handler(req, res) {
 会社・求人で主に確認する軸: ${job.coreFocus.join('、')}
 応募者名: ${candidateName || '未入力'}`;
 
-    const user = `以下の事前資料を整理し、この応募者専用のAI一次面接設計を作ってください。
+    const userText = `以下の事前資料を整理し、この応募者専用のAI一次面接設計を作ってください。
+添付ファイルがある場合は、その内容も併せて参照してください。
 
 【履歴書等の要約】
 ${resume || '未入力'}
@@ -65,11 +70,22 @@ ${assessment || '未入力'}
 ${applicationMessage || '未入力'}
 `;
 
+    const userContent = [];
+    for (const f of files) {
+      const filename = String(f?.name || '').slice(0, 160);
+      const fileData = String(f?.data || '');
+      if (!filename || !fileData.startsWith('data:')) continue;
+      const item = { type: 'input_file', filename, file_data: fileData };
+      if (/\.pdf$/i.test(filename)) item.detail = 'low';
+      userContent.push(item);
+    }
+    userContent.push({ type: 'input_text', text: userText });
+
     const body = {
       model: 'gpt-5.6-luna',
       input: [
         { role: 'system', content: [{ type: 'input_text', text: system }] },
-        { role: 'user', content: [{ type: 'input_text', text: user }] }
+        { role: 'user', content: userContent }
       ],
       text: {
         format: {
@@ -109,6 +125,7 @@ ${applicationMessage || '未入力'}
       jobKey,
       company: job.company,
       position: job.position,
+      filesRead: files.map(f => String(f?.name || '')).filter(Boolean),
       plan
     });
   } catch (e) {
