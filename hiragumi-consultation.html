@@ -17,7 +17,7 @@ input,select,textarea{width:100%;padding:13px 14px;border-radius:12px;border:1px
 .consent{display:flex;gap:9px;margin:14px 0;font-size:12px;line-height:1.65;color:#dbe1dd}.consent input{width:19px;height:19px;flex:0 0 19px;margin-top:1px}
 .btn{width:100%;padding:15px;border:0;border-radius:13px;font-size:16px;font-weight:850;cursor:pointer}.primary{background:var(--accent);color:var(--accentText)}.secondary{margin-top:9px;background:#27302b;color:#fff;border:1px solid #3a4740}.danger{background:#3b1a1a;color:#ffd8d6;border-color:#6a2b2b}.btn:disabled{opacity:.5;cursor:not-allowed}
 .hidden,[hidden]{display:none!important}body[data-stage="language"] #startCard,body[data-stage="language"] #liveCard,body[data-stage="language"] #doneCard{display:none!important}.error{margin-top:9px;color:var(--warn);font-size:12px;line-height:1.6}.small{font-size:10px;color:#87938c;line-height:1.6;margin-top:9px}
-.statusbar{display:flex;align-items:center;gap:8px}.dot{width:10px;height:10px;border-radius:50%;background:#66746d}.dot.live{background:var(--live);box-shadow:0 0 0 6px rgba(239,91,91,.13)}.orb{width:110px;height:110px;margin:22px auto;border-radius:50%;background:radial-gradient(circle at 35% 30%,#43584d,#1b2821 58%,#0c120f);border:1px solid #425149;box-shadow:0 15px 42px rgba(0,0,0,.32)}.question{text-align:center;font-size:17px;line-height:1.7;min-height:65px;padding:4px}.transcript{margin-top:15px;max-height:280px;overflow:auto;background:#0c110e;border:1px solid #29352f;border-radius:13px;padding:11px}.msg{margin:7px 0;padding:9px 10px;border-radius:10px;font-size:12px;line-height:1.6}.ai{background:#17221c}.employee{background:#282f2b}.speaker{font-size:10px;color:#93a098;font-weight:800;margin-bottom:2px}
+.statusbar{display:flex;align-items:center;gap:8px}.miccheck{margin:12px 0 4px;padding:10px 11px;border:1px solid #314038;border-radius:11px;background:#0c120f}.microw{display:flex;align-items:center;gap:9px}.micbar{height:8px;flex:1;background:#202b25;border-radius:999px;overflow:hidden}.micfill{height:100%;width:0%;background:#d8eadf;border-radius:999px;transition:width .08s linear}.miclabel{font-size:11px;color:#b8c5bd;white-space:nowrap}.dot{width:10px;height:10px;border-radius:50%;background:#66746d}.dot.live{background:var(--live);box-shadow:0 0 0 6px rgba(239,91,91,.13)}.orb{width:110px;height:110px;margin:22px auto;border-radius:50%;background:radial-gradient(circle at 35% 30%,#43584d,#1b2821 58%,#0c120f);border:1px solid #425149;box-shadow:0 15px 42px rgba(0,0,0,.32)}.question{text-align:center;font-size:17px;line-height:1.7;min-height:65px;padding:4px}.transcript{margin-top:15px;max-height:280px;overflow:auto;background:#0c110e;border:1px solid #29352f;border-radius:13px;padding:11px}.msg{margin:7px 0;padding:9px 10px;border-radius:10px;font-size:12px;line-height:1.6}.ai{background:#17221c}.employee{background:#282f2b}.speaker{font-size:10px;color:#93a098;font-weight:800;margin-bottom:2px}
 .receipt{margin-top:13px;padding:14px;background:#0e1511;border:1px solid #334239;border-radius:13px;font-size:14px;line-height:1.75;white-space:pre-wrap}.idtag{display:inline-block;margin-top:8px;padding:5px 9px;border-radius:999px;border:1px solid #3a4840;color:#c8d2cc;font-size:11px}
 .safety{margin-top:10px;color:#aeb8b2;font-size:10px;line-height:1.65}
 @media(max-width:430px){.wrap{padding-left:11px;padding-right:11px}.logo{width:62px;height:62px}h1{font-size:24px}.langs{grid-template-columns:1fr 1fr}.langBtn{font-size:13px;padding:11px 6px}}
@@ -60,7 +60,7 @@ input,select,textarea{width:100%;padding:13px 14px;border-radius:12px;border:1px
     <div class="field"><label id="memoLabel">最初に伝えておきたいこと（任意）</label><textarea id="memo" placeholder="短く入力しても、音声だけでも大丈夫です"></textarea></div>
 
     <div id="privacyNote" class="note">相談内容は、対応に必要な担当者だけに共有します。相談対象者本人へ自動的に共有することはありません。緊急の安全確保や法令対応等で必要な場合は、最小限の範囲で共有することがあります。</div>
-    <label class="consent"><input type="checkbox" id="consent"><span id="consentText">会話を文字起こし・翻訳・要約し、会社の指定された相談担当者とRac solution外部人事が対応のため確認することに同意します。音声そのものは保存しない設計です。</span></label>
+    <label class="consent"><input type="checkbox" id="consent"><span id="consentText">会話を文字起こし・翻訳・要約し、相談対応者が対応のため確認することに同意します。音声そのものは保存しない設計です。</span></label>
 
     <button id="startBtn" class="btn primary" onclick="startConsultation()">音声相談を始める</button>
     <div id="startError" class="error"></div>
@@ -71,6 +71,9 @@ input,select,textarea{width:100%;padding:13px 14px;border-radius:12px;border:1px
     <div class="statusbar"><span id="dot" class="dot"></span><span id="status" class="lead">Connecting…</span></div>
     <div class="orb"></div>
     <div id="question" class="question">AI相談員を接続しています…</div>
+    <div id="micMonitor" class="miccheck">
+      <div class="microw"><div class="micbar"><div id="micFill" class="micfill"></div></div><div id="micLabel" class="miclabel">MIC</div></div>
+    </div>
     <button id="muteBtn" class="btn secondary" onclick="toggleMute()">マイクを一時停止</button>
     <button id="finishBtn" class="btn secondary danger" onclick="finishConsultation()">相談を終了して内容を確認する</button>
     <div id="liveError" class="error"></div>
@@ -92,7 +95,7 @@ const LANGS=[
 ['日本語','ja'],['English','en'],['Tiếng Việt','vi'],['Bahasa Indonesia','id'],['ភាសាខ្មែរ','km'],['ไทย','th'],['မြန်မာဘာသာ','my'],['नेपाली','ne'],['हिन्दी','hi'],['বাংলা','bn'],['اردو','ur'],['中文','zh'],['한국어','ko'],['Filipino','tl'],['Bahasa Melayu','ms'],['Español','es'],['Português','pt'],['Français','fr'],['Deutsch','de'],['Italiano','it'],['Türkçe','tr'],['العربية','ar'],['فارسی','fa'],['Русский','ru'],['Українська','uk'],['Kiswahili','sw'],['Afrikaans','af'],['Монгол','mn'],['தமிழ்','ta'],['తెలుగు','te'],['मराठी','mr'],['Lao / ລາວ','lo'],['සිංහල','si'],['Polski','pl'],['Nederlands','nl'],['Română','ro'],['Ελληνικά','el'],['Čeština','cs'],['Magyar','hu'],['Svenska','sv'],['Norsk','no'],['Dansk','da'],['Suomi','fi'],['עברית','he'],['ქართული','ka'],['Հայերեն','hy'],['Azərbaycan dili','az'],['Қазақ тілі','kk'],['O‘zbekcha','uz']
 ];
 const UI_JA={
-title:'会社の相談窓口',subtitle:'あなたが話しやすい言語で、AI相談員に音声で相談できます。',identityLabel:'相談方法',anonymous:'匿名で相談する',named:'名前を伝えて相談する',nameLabel:'氏名',affiliationLabel:'所属・現場など（任意）',affiliationPlaceholder:'例：足場1班、○○現場',memoLabel:'最初に伝えておきたいこと（任意）',memoPlaceholder:'短く入力しても、音声だけでも大丈夫です',privacyNote:'相談内容は、対応に必要な担当者だけに共有します。相談対象者本人へ自動的に共有することはありません。緊急の安全確保や法令対応等で必要な場合は、最小限の範囲で共有することがあります。',consent:'会話を文字起こし・翻訳・要約し、会社の指定された相談担当者とRac solution外部人事が対応のため確認することに同意します。音声そのものは保存しない設計です。',startButton:'音声相談を始める',liveWaiting:'AI相談員を接続しています…',mute:'マイクを一時停止',resumeMic:'マイクを再開',finish:'相談を終了して内容を確認する',doneTitle:'相談内容を受け付けました',
+title:'会社の相談窓口',subtitle:'あなたが話しやすい言語で、AI相談員に音声で相談できます。',identityLabel:'相談方法',anonymous:'匿名で相談する',named:'名前を伝えて相談する',nameLabel:'氏名',affiliationLabel:'所属・現場など（任意）',affiliationPlaceholder:'例：足場1班、○○現場',memoLabel:'最初に伝えておきたいこと（任意）',memoPlaceholder:'短く入力しても、音声だけでも大丈夫です',privacyNote:'相談内容は、対応に必要な担当者だけに共有します。相談対象者本人へ自動的に共有することはありません。緊急の安全確保や法令対応等で必要な場合は、最小限の範囲で共有することがあります。',consent:'会話を文字起こし・翻訳・要約し、相談対応者が対応のため確認することに同意します。音声そのものは保存しない設計です。',startButton:'音声相談を始める',liveWaiting:'AI相談員を接続しています…',mute:'マイクを一時停止',resumeMic:'マイクを再開',finish:'相談を終了して内容を確認する',doneTitle:'相談内容を受け付けました',
 safety:'※ AIは聞き取りと整理を行います。法的判断、懲戒判断、医療診断は行いません。生命・身体に差し迫った危険がある場合は、この窓口だけに頼らず緊急窓口や会社の安全担当へ連絡してください。',
 loading:'内容を整理しています…',transcriptLabel:'会話記録',newConsultation:'新しい相談'
 };
@@ -110,7 +113,7 @@ const UI_PRESETS={
     memoLabel:'Anything you want to say first (optional)',
     memoPlaceholder:'You can type a short note, or just speak.',
     privacyNote:'Your consultation will be shared only with people who need it to respond. It will not be automatically shared with the person you are consulting about. If necessary for urgent safety or legal compliance, information may be shared only to the minimum extent required.',
-    consent:'I agree that this conversation may be transcribed, translated and summarized so the company-designated consultation staff and Rac solution external HR can review it for response. Raw audio is not stored by design.',
+    consent:'I agree that this conversation may be transcribed, translated and summarized so the consultation responder can review it for response. Raw audio is not stored by design.',
     startButton:'Start voice consultation',
     liveWaiting:'Connecting to the AI consultation assistant…',
     mute:'Pause microphone',resumeMic:'Resume microphone',
@@ -131,7 +134,7 @@ const UI_PRESETS={
     memoLabel:'Điều bạn muốn nói trước (không bắt buộc)',
     memoPlaceholder:'Bạn có thể nhập ngắn gọn hoặc chỉ nói bằng giọng nói.',
     privacyNote:'Nội dung tư vấn chỉ được chia sẻ với những người cần thiết để xử lý. Nội dung sẽ không tự động được chia sẻ với người mà bạn đang phản ánh. Khi cần để bảo đảm an toàn khẩn cấp hoặc tuân thủ pháp luật, thông tin chỉ được chia sẻ trong phạm vi tối thiểu cần thiết.',
-    consent:'Tôi đồng ý cho phép cuộc trò chuyện được chuyển thành văn bản, dịch và tóm tắt để người phụ trách tư vấn do công ty chỉ định và bộ phận nhân sự bên ngoài của Rac solution xem xét nhằm xử lý vụ việc. Bản ghi âm gốc không được lưu theo thiết kế.',
+    consent:'Tôi đồng ý cho phép cuộc trò chuyện được chuyển thành văn bản, dịch và tóm tắt để người phụ trách tư vấn xem xét nhằm xử lý vụ việc. Bản ghi âm gốc không được lưu theo thiết kế.',
     startButton:'Bắt đầu tư vấn bằng giọng nói',
     liveWaiting:'Đang kết nối trợ lý tư vấn AI…',
     mute:'Tạm dừng mic',resumeMic:'Bật lại mic',
@@ -152,7 +155,7 @@ const UI_PRESETS={
     memoLabel:'Hal yang ingin disampaikan terlebih dahulu (opsional)',
     memoPlaceholder:'Anda dapat menulis singkat atau langsung berbicara.',
     privacyNote:'Isi konsultasi hanya dibagikan kepada orang yang diperlukan untuk menangani masalah. Isi tersebut tidak akan otomatis dibagikan kepada orang yang menjadi subjek konsultasi. Jika diperlukan untuk keselamatan darurat atau kepatuhan hukum, informasi hanya akan dibagikan sebatas yang diperlukan.',
-    consent:'Saya setuju percakapan ini ditranskripsikan, diterjemahkan, dan diringkas agar petugas konsultasi yang ditunjuk perusahaan dan HR eksternal Rac solution dapat meninjaunya untuk penanganan. Audio asli tidak disimpan sesuai desain.',
+    consent:'Saya setuju percakapan ini ditranskripsikan, diterjemahkan, dan diringkas agar petugas konsultasi dapat meninjaunya untuk penanganan. Audio asli tidak disimpan sesuai desain.',
     startButton:'Mulai konsultasi suara',
     liveWaiting:'Menghubungkan asisten konsultasi AI…',
     mute:'Jeda mikrofon',resumeMic:'Aktifkan kembali mikrofon',
@@ -173,7 +176,7 @@ const UI_PRESETS={
     memoLabel:'អ្វីដែលចង់ប្រាប់ជាមុន (មិនបាច់បំពេញក៏បាន)',
     memoPlaceholder:'អ្នកអាចសរសេរខ្លីៗ ឬនិយាយជាសំឡេងតែប៉ុណ្ណោះក៏បាន។',
     privacyNote:'ខ្លឹមសារពិគ្រោះនឹងចែករំលែកតែជាមួយអ្នកដែលចាំបាច់សម្រាប់ដោះស្រាយប៉ុណ្ណោះ។ វានឹងមិនត្រូវបានចែករំលែកដោយស្វ័យប្រវត្តិទៅកាន់បុគ្គលដែលជាប្រធានបទនៃការពិគ្រោះទេ។ ប្រសិនបើចាំបាច់សម្រាប់សុវត្ថិភាពបន្ទាន់ ឬការអនុវត្តតាមច្បាប់ ព័ត៌មាននឹងត្រូវចែករំលែកតែក្នុងកម្រិតអប្បបរមាដែលចាំបាច់។',
-    consent:'ខ្ញុំយល់ព្រមឱ្យការសន្ទនានេះត្រូវបានបម្លែងជាអក្សរ បកប្រែ និងសង្ខេប ដើម្បីឱ្យអ្នកទទួលបន្ទុកពិគ្រោះដែលក្រុមហ៊ុនកំណត់ និងផ្នែកធនធានមនុស្សខាងក្រៅរបស់ Rac solution ពិនិត្យសម្រាប់ការដោះស្រាយ។ សំឡេងដើមមិនត្រូវបានរក្សាទុកតាមការរចនារបស់ប្រព័ន្ធទេ។',
+    consent:'ខ្ញុំយល់ព្រមឱ្យការសន្ទនានេះត្រូវបានបម្លែងជាអក្សរ បកប្រែ និងសង្ខេប ដើម្បីឱ្យអ្នកទទួលបន្ទុកពិគ្រោះពិនិត្យសម្រាប់ការដោះស្រាយ។ សំឡេងដើមមិនត្រូវបានរក្សាទុកតាមការរចនារបស់ប្រព័ន្ធទេ។',
     startButton:'ចាប់ផ្តើមពិគ្រោះជាសំឡេង',
     liveWaiting:'កំពុងភ្ជាប់ជំនួយការ AI…',
     mute:'ផ្អាកមីក្រូហ្វូន',resumeMic:'បើកមីក្រូហ្វូនវិញ',
@@ -183,7 +186,7 @@ const UI_PRESETS={
     loading:'កំពុងរៀបចំខ្លឹមសារពិគ្រោះ…',transcriptLabel:'កំណត់ត្រាសន្ទនា',newConsultation:'ពិគ្រោះថ្មី'
   }
 };
-let lang={name:'日本語',code:'ja'},ui=UI_JA,pc=null,dc=null,localStream=null,muted=false,finished=false,transcript=[],aiText='',employeeText='',consultationId='';
+let lang={name:'日本語',code:'ja'},ui=UI_JA,pc=null,dc=null,localStream=null,muted=false,finished=false,transcript=[],aiText='',employeeText='',consultationId='',audioCtx=null,micAnalyser=null,micRaf=null;
 const $=id=>document.getElementById(id);
 
 window.addEventListener('load',()=>{
@@ -248,21 +251,64 @@ function applyUi(){
 function toggleName(){$('nameField').classList.toggle('hidden',$('mode').value!=='named')}
 function makeId(){const d=new Date(),s=d.getFullYear()+String(d.getMonth()+1).padStart(2,'0')+String(d.getDate()).padStart(2,'0');return 'HG-'+s+'-'+Math.random().toString(36).slice(2,8).toUpperCase()}
 
+function startMicMeter(stream){
+  try{
+    audioCtx=new (window.AudioContext||window.webkitAudioContext)();
+    const src=audioCtx.createMediaStreamSource(stream);
+    micAnalyser=audioCtx.createAnalyser();
+    micAnalyser.fftSize=512;
+    src.connect(micAnalyser);
+    const data=new Uint8Array(micAnalyser.fftSize);
+    const tick=()=>{
+      if(!micAnalyser)return;
+      micAnalyser.getByteTimeDomainData(data);
+      let sum=0;
+      for(let i=0;i<data.length;i++){const v=(data[i]-128)/128;sum+=v*v}
+      const rms=Math.sqrt(sum/data.length);
+      const pct=Math.max(2,Math.min(100,Math.round(rms*650)));
+      $('micFill').style.width=pct+'%';
+      $('micLabel').textContent=rms>0.025?'MIC OK':rms>0.008?'MIC LOW':'MIC…';
+      micRaf=requestAnimationFrame(tick);
+    };
+    tick();
+  }catch(e){console.warn('mic meter unavailable',e)}
+}
+function stopMicMeter(){
+  try{if(micRaf)cancelAnimationFrame(micRaf)}catch(e){}
+  micRaf=null;micAnalyser=null;
+  try{if(audioCtx)audioCtx.close()}catch(e){}
+  audioCtx=null;
+}
+async function checkVoiceBackend(){
+  const r=await fetch('/api/counsel-health',{cache:'no-store'});
+  let d={};try{d=await r.json()}catch(_){}
+  if(!r.ok||!d.ok){
+    const err=new Error('VOICE_BACKEND_'+(d.openaiStatus||r.status||'ERR'));
+    err.detail=d.error||'';
+    throw err;
+  }
+}
 async function startConsultation(){
   $('startError').textContent='';
   if($('mode').value==='named'&&!$('employeeName').value.trim()){ $('startError').textContent=ui.nameLabel; return; }
   if(!$('consent').checked){ $('startError').textContent=ui.consent; return; }
   consultationId=makeId();$('startBtn').disabled=true;
   try{
-    localStream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true,autoGainControl:true}});
+    await checkVoiceBackend();
+    localStream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:false,autoGainControl:true,channelCount:1}});
     pc=new RTCPeerConnection();pc.ontrack=e=>{$('remoteAudio').srcObject=e.streams[0]};localStream.getTracks().forEach(t=>pc.addTrack(t,localStream));
     dc=pc.createDataChannel('oai-events');
     dc.onopen=()=>{
-      showStage('live');setStatus('AI',true);
+      showStage('live');setStatus('AI',true);startMicMeter(localStream);
+      try{$('remoteAudio').play().catch(()=>{})}catch(_){}
       dc.send(JSON.stringify({type:'response.create',response:{instructions:'相談を開始してください。選択された言語で短く挨拶し、最初の質問を1つだけしてください。'}}));
     };
     dc.onmessage=e=>{try{handleEvent(JSON.parse(e.data))}catch(_){}};
     dc.onerror=()=>{$('liveError').textContent='Communication error.'};
+    pc.onconnectionstatechange=()=>{
+      const st=pc.connectionState||'';
+      if(st==='failed'||st==='disconnected')$('liveError').textContent='音声回線が切断されました。ページを再読み込みして再接続してください。';
+    };
     const offer=await pc.createOffer();await pc.setLocalDescription(offer);
     const payload={sdp:offer.sdp,tenantKey:'hiragumi',consultationId,languageName:lang.name,languageCode:lang.code,category:'会話から判定',subjectLevel:'unknown',identityMode:$('mode').value,employeeName:$('employeeName').value.trim(),affiliation:$('affiliation').value.trim(),initialNote:$('memo').value.trim()};
     const r=await fetch('/api/counsel-session',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
@@ -279,8 +325,9 @@ async function startConsultation(){
       msg='マイクが許可されていません。ブラウザのアドレスバー左側のサイト設定から「マイク＝許可」にしてください。';
     }else if(name==='NotFoundError'||name==='DevicesNotFoundError'){
       msg='使用できるマイクが見つかりません。Windowsのサウンド入力設定を確認してください。';
-    }else if(detail.includes('SESSION_HTTP_401')||detail.includes('SESSION_HTTP_403')){
-      msg='AI接続の認証に失敗しました。APIキー設定を確認します。';
+    }else if(detail.includes('VOICE_BACKEND_401')||detail.includes('VOICE_BACKEND_403')||detail.includes('SESSION_HTTP_401')||detail.includes('SESSION_HTTP_403')){
+      msg='AI音声接続の認証に失敗しました。APIキーまたはRealtimeモデルへのアクセスを確認してください。';
+    }else if(detail.includes('VOICE_BACKEND_429')){msg='OpenAI APIの利用枠または請求設定により音声接続できません。';
     }else if(detail.includes('SESSION_HTTP_429')){
       msg='OpenAI APIの利用枠または請求設定で接続できません。APIの利用可能状態を確認してください。';
     }else if(detail.includes('SESSION_HTTP_400')){
@@ -299,6 +346,10 @@ function handleEvent(ev){
   if(t==='input_audio_buffer.speech_stopped')setStatus('…',false);
   if(t==='conversation.item.input_audio_transcription.delta'&&ev.delta){employeeText+=ev.delta;$('question').textContent=employeeText}
   if(t==='conversation.item.input_audio_transcription.completed'){const x=(ev.transcript||employeeText||'').trim();if(x)addMessage('employee',x);employeeText=''}
+  if(t==='conversation.item.input_audio_transcription.failed'){
+    const m=String(ev.error?.message||'transcription failed');
+    $('liveError').textContent='音声の文字起こしに失敗: '+m.slice(0,180);
+  }
   if((t==='response.output_audio_transcript.delta'||t==='response.audio_transcript.delta')&&ev.delta){aiText+=ev.delta;$('question').textContent=aiText}
   if(t==='response.output_audio_transcript.done'||t==='response.audio_transcript.done'){const x=(ev.transcript||aiText||'').trim();if(x){addMessage('ai',x);$('question').textContent=x}aiText=''}
   if(t==='response.done')setStatus('READY',false);
@@ -311,7 +362,7 @@ function handleEvent(ev){
 function addMessage(role,text){if(!text)return;transcript.push({role,text});$('transcript').innerHTML=transcript.map(x=>'<div class="msg '+(x.role==='employee'?'employee':'ai')+'"><div class="speaker">'+(x.role==='employee'?'YOU':'AI')+'</div>'+esc(x.text)+'</div>').join('');$('transcript').scrollTop=$('transcript').scrollHeight}
 function setStatus(text,live){$('status').textContent=text;$('dot').className='dot'+(live?' live':'')}
 function toggleMute(){if(!localStream)return;muted=!muted;localStream.getAudioTracks().forEach(t=>t.enabled=!muted);$('muteBtn').textContent=muted?ui.resumeMic:ui.mute}
-function stopMedia(){try{dc&&dc.close()}catch(e){}try{pc&&pc.close()}catch(e){}try{localStream&&localStream.getTracks().forEach(t=>t.stop())}catch(e){}}
+function stopMedia(){stopMicMeter();try{dc&&dc.close()}catch(e){}try{pc&&pc.close()}catch(e){}try{localStream&&localStream.getTracks().forEach(t=>t.stop())}catch(e){}}
 
 async function finishConsultation(){
   if(finished)return;finished=true;stopMedia();showStage('done');
