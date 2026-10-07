@@ -111,7 +111,7 @@ function showStage(stage){
     el.classList.toggle('hidden',!show);
     el.setAttribute('aria-hidden',show?'false':'true');
   });
-  window.scrollTo({top:0,behavior:'instant'});
+  window.scrollTo(0,0);
 }
 
 async function chooseLang(btn){
