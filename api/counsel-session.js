@@ -98,8 +98,7 @@ ${languageInstruction}
 `;
 
     const transcription = {
-      model: 'gpt-live-transcribe',
-      delay: 'low',
+      model: 'gpt-4o-mini-transcribe',
       prompt: `${tenant.companyName}の社内相談。建設現場、職長、班、上司、人間関係、安全、給与、残業、休日、配置、評価、退職意向、外国人社員の言語・作業指示等について話す可能性がある。希望言語: ${languageName}`
     };
     if (languageCode) transcription.language = languageCode;
@@ -118,7 +117,7 @@ ${languageInstruction}
             create_response: true,
             interrupt_response: true
           },
-          noise_reduction: { type: 'near_field' }
+          noise_reduction: { type: 'far_field' }
         },
         output: { voice: 'marin' }
       }
@@ -126,7 +125,7 @@ ${languageInstruction}
 
     const fd = new FormData();
     fd.set('sdp', sdp);
-    fd.set('session', sessionConfig);
+    fd.set('session', new Blob([sessionConfig], { type: 'application/json' }));
 
     const safetyId = crypto.createHash('sha256')
       .update(`${tenant.key}:counsel:${consultationId || 'anonymous'}`)
@@ -142,7 +141,10 @@ ${languageInstruction}
     });
 
     const text = await r.text();
-    if (!r.ok) return res.status(r.status).send(text);
+    if (!r.ok) {
+      console.error('OpenAI Realtime create call failed', r.status, text.slice(0, 1200));
+      return res.status(r.status).send(text);
+    }
     res.setHeader('Content-Type', 'application/sdp');
     res.setHeader('Cache-Control', 'no-store');
     return res.status(200).send(text);
