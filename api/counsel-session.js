@@ -98,7 +98,7 @@ ${languageInstruction}
 `;
 
     const transcription = {
-      model: 'gpt-4o-mini-transcribe',
+      model: 'gpt-live-transcribe',
       prompt: `${tenant.companyName}の社内相談。建設現場、職長、班、上司、人間関係、安全、給与、残業、休日、配置、評価、退職意向、外国人社員の言語・作業指示等について話す可能性がある。希望言語: ${languageName}`
     };
     if (languageCode) transcription.language = languageCode;
@@ -113,13 +113,12 @@ ${languageInstruction}
           transcription,
           turn_detection: {
             type: 'server_vad',
-            threshold: 0.30,
+            threshold: 0.18,
             prefix_padding_ms: 500,
-            silence_duration_ms: 700,
+            silence_duration_ms: 500,
             create_response: true,
             interrupt_response: true
-          },
-          noise_reduction: { type: 'far_field' }
+          }
         },
         output: { voice: 'marin' }
       }
