@@ -27,13 +27,18 @@ export default async function handler(req, res) {
         mute: { type: 'string' },
         resumeMic: { type: 'string' },
         finish: { type: 'string' },
-        doneTitle: { type: 'string' }
+        doneTitle: { type: 'string' },
+        safety: { type: 'string' },
+        loading: { type: 'string' },
+        transcriptLabel: { type: 'string' },
+        newConsultation: { type: 'string' }
       },
       required: [
         'title','subtitle','identityLabel','anonymous','named','nameLabel',
         'affiliationLabel','affiliationPlaceholder','subjectLabel','categoryLabel',
         'memoLabel','memoPlaceholder','privacyNote','consent','startButton',
-        'liveWaiting','mute','resumeMic','finish','doneTitle'
+        'liveWaiting','mute','resumeMic','finish','doneTitle',
+        'safety','loading','transcriptLabel','newConsultation'
       ]
     };
 
@@ -57,11 +62,15 @@ export default async function handler(req, res) {
       mute: 'マイクを一時停止',
       resumeMic: 'マイクを再開',
       finish: '相談を終了して内容を確認する',
-      doneTitle: '相談内容を受け付けました'
+      doneTitle: '相談内容を受け付けました',
+      safety: 'AIは聞き取りと整理を行います。法的判断、懲戒判断、医療診断は行いません。生命・身体に差し迫った危険がある場合は、この窓口だけに頼らず緊急窓口や会社の安全担当へ連絡してください。',
+      loading: '内容を整理しています…',
+      transcriptLabel: '会話記録',
+      newConsultation: '新しい相談'
     };
 
     const body = {
-      model: 'gpt-5.6-luna',
+      model: 'gpt-6-luna',
       input: [{
         role: 'system',
         content: [{
