@@ -56,7 +56,7 @@ export default async function handler(req, res) {
       memoLabel: '最初に伝えておきたいこと（任意）',
       memoPlaceholder: '短く入力しても、音声だけでも大丈夫です',
       privacyNote: '相談内容は、対応に必要な担当者だけに共有します。相談対象者本人へ自動的に共有することはありません。緊急の安全確保や法令対応等で必要な場合は、最小限の範囲で共有することがあります。',
-      consent: '会話を文字起こし・翻訳・要約し、会社の指定された相談担当者とRac solution外部人事が対応のため確認することに同意します。音声そのものは保存しない設計です。',
+      consent: '会話を文字起こし・翻訳・要約し、相談対応者が対応のため確認することに同意します。音声そのものは保存しない設計です。',
       startButton: '音声相談を始める',
       liveWaiting: 'AI相談員を接続しています…',
       mute: 'マイクを一時停止',
@@ -75,7 +75,7 @@ export default async function handler(req, res) {
         role: 'system',
         content: [{
           type: 'input_text',
-          text: `Translate a workplace employee consultation interface into ${languageName}. Use natural, plain language understandable by workers. Preserve meaning exactly, especially privacy and consent wording. Do not add legal promises or guarantees. Return only the required structured fields.`
+          text: `Translate a workplace employee consultation interface into ${languageName}. Use natural, plain language understandable by workers. Preserve meaning exactly, especially privacy and consent wording. Translate 相談対応者 as the neutral role 'consultation responder'; do not add Rac solution, external HR, company HR, or any other organization/role. Do not add legal promises or guarantees. Return only the required structured fields.`
         }]
       },{
         role: 'user',
