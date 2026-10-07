@@ -3,33 +3,25 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>平組 AI社内相談窓口</title>
+<meta name="robots" content="noindex,nofollow,noarchive">
+<title>平組 社内相談窓口</title>
 <style>
-:root{--bg:#0b0d0c;--card:#151917;--card2:#0f1311;--line:#303833;--text:#f7f8f7;--muted:#aeb8b2;--accent:#d8eadf;--accentText:#122018;--warn:#ffb7b2;--live:#ef5b5b}
+:root{--bg:#0b0d0c;--card:#151917;--line:#303833;--text:#f7f8f7;--muted:#aeb8b2;--accent:#d8eadf;--accentText:#122018;--warn:#ffb7b2;--ok:#bfe3ce}
 *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:linear-gradient(180deg,#090b0a 0%,#121713 100%);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans","Yu Gothic",sans-serif}
-.wrap{max-width:700px;margin:auto;padding:14px 13px 48px}
-.head{display:flex;align-items:center;gap:12px;padding:5px 2px 4px}.logo{width:72px;height:72px;object-fit:contain;background:#fff;border-radius:14px;padding:5px}.brand{font-size:11px;letter-spacing:.12em;color:#c7d0cb}.corp{font-size:18px;font-weight:850;margin-top:3px}.powered{font-size:10px;color:#7f8c85;margin-top:3px}
-h1{font-size:27px;line-height:1.25;margin:18px 0 7px}.lead{font-size:13px;line-height:1.75;color:var(--muted)}
-.card{margin-top:15px;background:rgba(21,25,23,.98);border:1px solid var(--line);border-radius:18px;padding:16px;box-shadow:0 18px 55px rgba(0,0,0,.25)}
-#languageCard{position:relative;overflow:hidden;background:linear-gradient(180deg,rgba(18,23,20,.96),rgba(18,23,20,.93))}
-#languageCard>*:not(.languageCardWatermark){position:relative;z-index:2}
-#languageCard .languageCardWatermark{position:absolute;z-index:1;left:50%;top:52%;width:min(82vw,560px);height:min(82vw,560px);transform:translate(-50%,-50%);object-fit:contain;opacity:.25;filter:grayscale(.62) brightness(1.82) contrast(1.08);pointer-events:none;user-select:none}
-@media(max-width:430px){#languageCard .languageCardWatermark{width:94vw;height:94vw;opacity:.22;top:54%}}
-.langTitle{font-size:15px;font-weight:800;margin-bottom:9px}.langs{display:grid;grid-template-columns:1fr 1fr;gap:8px}.langBtn{background:rgba(7,15,11,.28);color:#fff;border:1px solid rgba(130,157,143,.32);border-radius:12px;padding:12px 8px;font-size:14px;font-weight:750;cursor:pointer;backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);box-shadow:inset 0 1px 0 rgba(255,255,255,.025)}.langBtn:hover{background:rgba(18,35,27,.46);border-color:rgba(180,211,195,.46)}.langBtn.active{background:rgba(216,234,223,.88);color:var(--accentText);border-color:rgba(216,234,223,.92)}.other{margin-top:9px}
-#languageCard .other input{background:rgba(7,15,11,.24);border-color:rgba(130,157,143,.30);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px)}
-#languageCard>.btn.secondary{background:rgba(56,72,63,.34);border-color:rgba(160,190,174,.28);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px)}
-input,select,textarea{width:100%;padding:13px 14px;border-radius:12px;border:1px solid #39463f;background:#0e1310;color:#fff;font-size:16px}textarea{min-height:82px;resize:vertical;line-height:1.6}.field{margin-top:14px}label{display:block;font-size:12px;margin-bottom:7px;color:#e1e6e3}
-.note{margin-top:13px;padding:12px;border-radius:12px;background:#0d1210;border:1px solid #29332e;color:#c6d0ca;font-size:12px;line-height:1.7}
-.consent{display:flex;gap:9px;margin:14px 0;font-size:12px;line-height:1.65;color:#dbe1dd}.consent input{width:19px;height:19px;flex:0 0 19px;margin-top:1px}
-.btn{width:100%;padding:15px;border:0;border-radius:13px;font-size:16px;font-weight:850;cursor:pointer}.primary{background:var(--accent);color:var(--accentText)}.secondary{margin-top:9px;background:#27302b;color:#fff;border:1px solid #3a4740}.danger{background:#3b1a1a;color:#ffd8d6;border-color:#6a2b2b}.btn:disabled{opacity:.5;cursor:not-allowed}
-.hidden,[hidden]{display:none!important}body[data-stage="language"] #startCard,body[data-stage="language"] #liveCard,body[data-stage="language"] #doneCard{display:none!important}.error{margin-top:9px;color:var(--warn);font-size:12px;line-height:1.6}.small{font-size:10px;color:#87938c;line-height:1.6;margin-top:9px}
-.statusbar{display:flex;align-items:center;gap:8px}.miccheck{margin:12px 0 4px;padding:10px 11px;border:1px solid #314038;border-radius:11px;background:#0c120f}.microw{display:flex;align-items:center;gap:9px}.micbar{height:8px;flex:1;background:#202b25;border-radius:999px;overflow:hidden}.micfill{height:100%;width:0%;background:#d8eadf;border-radius:999px;transition:width .08s linear}.miclabel{font-size:11px;color:#b8c5bd;white-space:nowrap}.dot{width:10px;height:10px;border-radius:50%;background:#66746d}.dot.live{background:var(--live);box-shadow:0 0 0 6px rgba(239,91,91,.13)}.orb{width:110px;height:110px;margin:22px auto;border-radius:50%;background:radial-gradient(circle at 35% 30%,#43584d,#1b2821 58%,#0c120f);border:1px solid #425149;box-shadow:0 15px 42px rgba(0,0,0,.32)}.question{text-align:center;font-size:17px;line-height:1.7;min-height:65px;padding:4px}.transcript{margin-top:15px;max-height:280px;overflow:auto;background:#0c110e;border:1px solid #29352f;border-radius:13px;padding:11px}.msg{margin:7px 0;padding:9px 10px;border-radius:10px;font-size:12px;line-height:1.6}.ai{background:#17221c}.employee{background:#282f2b}.speaker{font-size:10px;color:#93a098;font-weight:800;margin-bottom:2px}
-.receipt{margin-top:13px;padding:14px;background:#0e1511;border:1px solid #334239;border-radius:13px;font-size:14px;line-height:1.75;white-space:pre-wrap}.idtag{display:inline-block;margin-top:8px;padding:5px 9px;border-radius:999px;border:1px solid #3a4840;color:#c8d2cc;font-size:11px}
-.safety{margin-top:10px;color:#aeb8b2;font-size:10px;line-height:1.65}
-@media(max-width:430px){.wrap{padding-left:11px;padding-right:11px}.logo{width:62px;height:62px}h1{font-size:24px}.langs{grid-template-columns:1fr 1fr}.langBtn{font-size:13px;padding:11px 6px}}
+.wrap{max-width:760px;margin:auto;padding:14px 13px 48px}.head{display:flex;align-items:center;gap:12px;padding:5px 2px 4px}.logo{width:72px;height:72px;object-fit:contain;background:#fff;border-radius:14px;padding:5px}.brand{font-size:11px;letter-spacing:.12em;color:#c7d0cb}.corp{font-size:18px;font-weight:850;margin-top:3px}
+.card{margin-top:15px;background:rgba(21,25,23,.97);border:1px solid var(--line);border-radius:18px;padding:16px;box-shadow:0 18px 55px rgba(0,0,0,.25)}
+#languageCard{position:relative;overflow:hidden;background:linear-gradient(180deg,rgba(18,23,20,.94),rgba(18,23,20,.91))}#languageCard>*:not(.watermark){position:relative;z-index:2}.watermark{position:absolute;z-index:1;left:50%;top:53%;width:min(82vw,560px);height:min(82vw,560px);transform:translate(-50%,-50%);object-fit:contain;opacity:.24;filter:grayscale(.62) brightness(1.82) contrast(1.08);pointer-events:none}
+.langTitle{font-size:15px;font-weight:800;margin-bottom:10px}.langs{display:grid;grid-template-columns:1fr 1fr;gap:8px}.langBtn{background:rgba(7,15,11,.27);color:#fff;border:1px solid rgba(130,157,143,.32);border-radius:12px;padding:14px 8px;font-size:14px;font-weight:800;cursor:pointer;backdrop-filter:blur(3px)}.langBtn:hover{background:rgba(18,35,27,.46)}.other{margin-top:9px}
+input,select,textarea{width:100%;padding:13px 14px;border-radius:12px;border:1px solid #39463f;background:#0e1310;color:#fff;font-size:16px}textarea{min-height:180px;resize:vertical;line-height:1.7}.field{margin-top:14px}label{display:block;font-size:12px;margin-bottom:7px;color:#e1e6e3}
+#languageCard input{background:rgba(7,15,11,.24);backdrop-filter:blur(3px)}
+.btn{width:100%;padding:15px;border:0;border-radius:13px;font-size:16px;font-weight:850;cursor:pointer}.primary{background:var(--accent);color:var(--accentText)}.secondary{margin-top:9px;background:#27302b;color:#fff;border:1px solid #3a4740}.voice{background:#101a15;color:#fff;border:1px solid #405148;margin-top:10px}.voice.on{background:#21382c;border-color:#6b8f7d}.danger{background:#3b1a1a;color:#ffd8d6;border:1px solid #6a2b2b}.btn:disabled{opacity:.5}
+.note{margin-top:13px;padding:12px;border-radius:12px;background:#0d1210;border:1px solid #29332e;color:#c6d0ca;font-size:12px;line-height:1.7}.consent{display:flex;gap:9px;margin:14px 0;font-size:12px;line-height:1.65;color:#dbe1dd}.consent input{width:19px;height:19px;flex:0 0 19px;margin-top:1px}.small{font-size:10px;color:#87938c;line-height:1.6;margin-top:9px}.error{margin-top:9px;color:var(--warn);font-size:12px;line-height:1.6}.ok{color:var(--ok)}
+.hidden,[hidden]{display:none!important}h1{font-size:27px;line-height:1.25;margin:10px 0 7px}.lead{font-size:13px;line-height:1.75;color:var(--muted)}.review{white-space:pre-wrap;min-height:150px;padding:15px;border-radius:12px;background:#0c110e;border:1px solid #334239;font-size:15px;line-height:1.8}.idtag{display:inline-block;margin-top:10px;padding:6px 10px;border:1px solid #3a4840;border-radius:999px;color:#c8d2cc;font-size:12px}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:12px}.actions .btn{margin:0}.voiceStatus{display:flex;align-items:center;gap:8px;margin-top:8px;font-size:12px;color:#aeb8b2}.dot{width:9px;height:9px;border-radius:50%;background:#66746d}.dot.on{background:#ef5b5b;box-shadow:0 0 0 5px rgba(239,91,91,.12)}
+@media(max-width:430px){.wrap{padding:11px 10px 40px}.logo{width:60px;height:60px}.langs{grid-template-columns:1fr 1fr}.actions{grid-template-columns:1fr}.watermark{width:94vw;height:94vw;opacity:.21}.card{padding:14px}h1{font-size:24px}}
 </style>
 </head>
-<body data-stage="language">
+<body>
 <div class="wrap">
   <div class="head">
     <img class="logo" src="https://hiragumi.rac-solution.com/wp-content/uploads/2026/10/平組流ロゴ.png" alt="平組流">
@@ -37,355 +29,140 @@ input,select,textarea{width:100%;padding:13px 14px;border-radius:12px;border:1px
   </div>
 
   <section id="languageCard" class="card">
-    <img class="languageCardWatermark" src="https://hiragumi.rac-solution.com/wp-content/uploads/2026/10/平組流ロゴ.png" alt="" aria-hidden="true">
+    <img class="watermark" src="https://hiragumi.rac-solution.com/wp-content/uploads/2026/10/平組流ロゴ.png" alt="" aria-hidden="true">
     <div class="langTitle">相談する言語を選んでください / Choose your language</div>
     <div class="langs">
-      <button class="langBtn" data-name="日本語" data-code="ja" onclick="chooseLang(this)">日本語</button>
-      <button class="langBtn" data-name="Tiếng Việt" data-code="vi" onclick="chooseLang(this)">Tiếng Việt</button>
-      <button class="langBtn" data-name="Bahasa Indonesia" data-code="id" onclick="chooseLang(this)">Bahasa Indonesia</button>
-      <button class="langBtn" data-name="ភាសាខ្មែរ" data-code="km" onclick="chooseLang(this)">ភាសាខ្មែរ</button>
-      <button class="langBtn" data-name="English" data-code="en" onclick="chooseLang(this)">English</button>
-      <button class="langBtn" data-name="自動判定 / Auto detect" data-code="" onclick="chooseLang(this)">Auto detect</button>
+      <button class="langBtn" data-code="ja" data-name="日本語">日本語</button>
+      <button class="langBtn" data-code="vi" data-name="Tiếng Việt">Tiếng Việt</button>
+      <button class="langBtn" data-code="id" data-name="Bahasa Indonesia">Bahasa Indonesia</button>
+      <button class="langBtn" data-code="km" data-name="ភាសាខ្មែរ">ភាសាខ្មែរ</button>
+      <button class="langBtn" data-code="en" data-name="English">English</button>
+      <button class="langBtn" data-code="auto" data-name="Auto detect">Auto detect</button>
     </div>
-    <div class="other"><input id="otherLang" list="allLanguages" placeholder="Other language / その他の言語"><datalist id="allLanguages"></datalist></div>
-    <button class="btn secondary" onclick="chooseOther()">Use this language</button>
-    <div id="langStatus" class="small">一覧にない言語も入力できます。</div>
+    <div class="other"><input id="otherLang" placeholder="Other language / その他の言語"></div>
+    <button id="otherBtn" class="btn secondary">Use this language</button>
+    <div class="small">一覧にない言語も入力できます。</div>
   </section>
 
-  <section id="startCard" class="card hidden" hidden aria-hidden="true">
-    <h1 id="uiTitle">会社の相談窓口</h1>
-    <div id="uiSubtitle" class="lead">あなたが話しやすい言語で、AI相談員に音声で相談できます。</div>
+  <section id="formCard" class="card hidden">
+    <h1 id="title">会社の相談窓口</h1>
+    <div id="subtitle" class="lead">相談内容を音声または文字で入力してください。</div>
 
-    <div class="field"><label id="identityLabel">相談方法</label>
-      <select id="mode" onchange="toggleName()">
-        <option id="anonymousOpt" value="anonymous">匿名で相談する</option>
-        <option id="namedOpt" value="named">名前を伝えて相談する</option>
+    <div class="field">
+      <label id="modeLabel">相談方法</label>
+      <select id="mode">
+        <option value="anonymous" id="anonymousOpt">匿名で相談する</option>
+        <option value="named" id="namedOpt">名前を伝えて相談する</option>
       </select>
     </div>
-    <div id="nameField" class="field hidden"><label id="nameLabel">氏名</label><input id="employeeName" autocomplete="name"></div>
-    <div class="field"><label id="affiliationLabel">所属・現場など（任意）</label><input id="affiliation" placeholder="例：足場1班、○○現場"></div>
-    <div class="field"><label id="memoLabel">最初に伝えておきたいこと（任意）</label><textarea id="memo" placeholder="短く入力しても、音声だけでも大丈夫です"></textarea></div>
+    <div id="nameField" class="field hidden"><label id="nameLabel">氏名</label><input id="name"></div>
+    <div class="field"><label id="affLabel">所属・現場など（任意）</label><input id="affiliation"></div>
 
-    <div id="privacyNote" class="note">相談内容は、対応に必要な担当者だけに共有します。相談対象者本人へ自動的に共有することはありません。緊急の安全確保や法令対応等で必要な場合は、最小限の範囲で共有することがあります。</div>
-    <label class="consent"><input type="checkbox" id="consent"><span id="consentText">会話を文字起こし・翻訳・要約し、相談対応者が対応のため確認することに同意します。音声そのものは保存しない設計です。</span></label>
-
-    <button id="startBtn" class="btn primary" onclick="startConsultation()">音声相談を始める</button>
-    <div id="startError" class="error"></div>
-    <div id="safetyText" class="safety">※ AIは聞き取りと整理を行います。法的判断、懲戒判断、医療診断は行いません。生命・身体に差し迫った危険がある場合は、この窓口だけに頼らず緊急窓口や会社の安全担当へ連絡してください。</div>
-  </section>
-
-  <section id="liveCard" class="card hidden" hidden aria-hidden="true">
-    <div class="statusbar"><span id="dot" class="dot"></span><span id="status" class="lead">Connecting…</span></div>
-    <div class="orb"></div>
-    <div id="question" class="question">AI相談員を接続しています…</div>
-    <div id="micMonitor" class="miccheck">
-      <div class="microw"><div class="micbar"><div id="micFill" class="micfill"></div></div><div id="micLabel" class="miclabel">MIC</div></div>
+    <div class="field">
+      <label id="contentLabel">相談内容</label>
+      <textarea id="content" placeholder="ここに相談内容を入力してください。音声入力した内容もここに文字で表示されます。"></textarea>
+      <button id="voiceBtn" class="btn voice" type="button">🎤 音声入力を開始</button>
+      <div class="voiceStatus"><span id="voiceDot" class="dot"></span><span id="voiceStatus">文字入力はいつでも使えます。</span></div>
+      <div id="voiceError" class="error"></div>
     </div>
-    <button id="muteBtn" class="btn secondary" onclick="toggleMute()">マイクを一時停止</button>
-    <button id="finishBtn" class="btn secondary danger" onclick="finishConsultation()">相談を終了して内容を確認する</button>
-    <div id="liveError" class="error"></div>
-    <div id="transcript" class="transcript"><div id="transcriptLabel" class="small">会話記録</div></div>
-    <audio id="remoteAudio" autoplay playsinline></audio>
+
+    <div id="privacy" class="note">相談内容は、対応に必要な相談対応者だけが確認します。相談対象者本人へ自動的に共有することはありません。</div>
+    <label class="consent"><input type="checkbox" id="consent"><span id="consentText">入力した相談内容を相談対応者が確認することに同意します。</span></label>
+    <button id="reviewBtn" class="btn primary">内容を確認する</button>
+    <div id="formError" class="error"></div>
   </section>
 
-  <section id="doneCard" class="card hidden" hidden aria-hidden="true">
-    <h1 id="doneTitle">相談内容を受け付けました</h1>
-    <div id="loading" class="note">内容を整理しています…</div>
-    <div id="receipt" class="receipt hidden"></div>
-    <div id="consultationId" class="idtag hidden"></div>
-    <button id="newConsultationBtn" class="btn secondary" onclick="location.reload()">新しい相談</button>
+  <section id="reviewCard" class="card hidden">
+    <h1 id="reviewTitle">送信前の確認</h1>
+    <div id="reviewLead" class="lead">下記の内容で送信します。間違いがあれば修正してください。</div>
+    <div class="field"><label id="reviewContentLabel">相談内容</label><div id="reviewContent" class="review"></div></div>
+    <div id="reviewMeta" class="note"></div>
+    <div class="actions">
+      <button id="editBtn" class="btn secondary">修正する</button>
+      <button id="sendBtn" class="btn primary">この内容で送信</button>
+    </div>
+    <div id="sendError" class="error"></div>
+  </section>
+
+  <section id="doneCard" class="card hidden">
+    <h1 id="doneTitle">相談を受け付けました</h1>
+    <div id="doneText" class="lead">送信が完了しました。相談IDを控えてください。</div>
+    <div id="caseId" class="idtag"></div>
+    <button class="btn secondary" onclick="location.reload()">新しい相談</button>
   </section>
 </div>
 
 <script>
-const LANGS=[
-['日本語','ja'],['English','en'],['Tiếng Việt','vi'],['Bahasa Indonesia','id'],['ភាសាខ្មែរ','km'],['ไทย','th'],['မြန်မာဘာသာ','my'],['नेपाली','ne'],['हिन्दी','hi'],['বাংলা','bn'],['اردو','ur'],['中文','zh'],['한국어','ko'],['Filipino','tl'],['Bahasa Melayu','ms'],['Español','es'],['Português','pt'],['Français','fr'],['Deutsch','de'],['Italiano','it'],['Türkçe','tr'],['العربية','ar'],['فارسی','fa'],['Русский','ru'],['Українська','uk'],['Kiswahili','sw'],['Afrikaans','af'],['Монгол','mn'],['தமிழ்','ta'],['తెలుగు','te'],['मराठी','mr'],['Lao / ລາວ','lo'],['සිංහල','si'],['Polski','pl'],['Nederlands','nl'],['Română','ro'],['Ελληνικά','el'],['Čeština','cs'],['Magyar','hu'],['Svenska','sv'],['Norsk','no'],['Dansk','da'],['Suomi','fi'],['עברית','he'],['ქართული','ka'],['Հայերեն','hy'],['Azərbaycan dili','az'],['Қазақ тілі','kk'],['O‘zbekcha','uz']
-];
-const UI_JA={
-title:'会社の相談窓口',subtitle:'あなたが話しやすい言語で、AI相談員に音声で相談できます。',identityLabel:'相談方法',anonymous:'匿名で相談する',named:'名前を伝えて相談する',nameLabel:'氏名',affiliationLabel:'所属・現場など（任意）',affiliationPlaceholder:'例：足場1班、○○現場',memoLabel:'最初に伝えておきたいこと（任意）',memoPlaceholder:'短く入力しても、音声だけでも大丈夫です',privacyNote:'相談内容は、対応に必要な担当者だけに共有します。相談対象者本人へ自動的に共有することはありません。緊急の安全確保や法令対応等で必要な場合は、最小限の範囲で共有することがあります。',consent:'会話を文字起こし・翻訳・要約し、相談対応者が対応のため確認することに同意します。音声そのものは保存しない設計です。',startButton:'音声相談を始める',liveWaiting:'AI相談員を接続しています…',mute:'マイクを一時停止',resumeMic:'マイクを再開',finish:'相談を終了して内容を確認する',doneTitle:'相談内容を受け付けました',
-safety:'※ AIは聞き取りと整理を行います。法的判断、懲戒判断、医療診断は行いません。生命・身体に差し迫った危険がある場合は、この窓口だけに頼らず緊急窓口や会社の安全担当へ連絡してください。',
-loading:'内容を整理しています…',transcriptLabel:'会話記録',newConsultation:'新しい相談'
+const PRESETS={
+ja:{title:'会社の相談窓口',subtitle:'相談内容を音声または文字で入力してください。',modeLabel:'相談方法',anonymous:'匿名で相談する',named:'名前を伝えて相談する',nameLabel:'氏名',aff:'所属・現場など（任意）',content:'相談内容',placeholder:'ここに相談内容を入力してください。音声入力した内容もここに文字で表示されます。',voiceStart:'🎤 音声入力を開始',voiceStop:'■ 音声入力を停止',voiceIdle:'文字入力はいつでも使えます。',privacy:'相談内容は、対応に必要な相談対応者だけが確認します。相談対象者本人へ自動的に共有することはありません。',consent:'入力した相談内容を相談対応者が確認することに同意します。',review:'内容を確認する',reviewTitle:'送信前の確認',reviewLead:'下記の内容で送信します。間違いがあれば修正してください。',edit:'修正する',send:'この内容で送信',done:'相談を受け付けました',doneText:'送信が完了しました。相談IDを控えてください。'},
+en:{title:'Company Consultation Desk',subtitle:'Enter your consultation by voice or text.',modeLabel:'Consultation method',anonymous:'Consult anonymously',named:'Consult with your name',nameLabel:'Name',aff:'Team / worksite (optional)',content:'Consultation details',placeholder:'Type your consultation here. Voice input will also appear here as text.',voiceStart:'🎤 Start voice input',voiceStop:'■ Stop voice input',voiceIdle:'Text input is always available.',privacy:'Only the consultation responder(s) needed to handle the matter can review it. It is not automatically shared with the person you are consulting about.',consent:'I agree that the consultation responder may review the content I submit.',review:'Review before sending',reviewTitle:'Review before sending',reviewLead:'Please check the content below before sending.',edit:'Edit',send:'Send this consultation',done:'Consultation received',doneText:'Your consultation has been submitted. Please keep the consultation ID.'},
+vi:{title:'Kênh tư vấn của công ty',subtitle:'Hãy nhập nội dung tư vấn bằng giọng nói hoặc văn bản.',modeLabel:'Cách tư vấn',anonymous:'Tư vấn ẩn danh',named:'Tư vấn có cung cấp tên',nameLabel:'Họ và tên',aff:'Bộ phận / công trường (không bắt buộc)',content:'Nội dung tư vấn',placeholder:'Nhập nội dung tư vấn tại đây. Nội dung nói bằng giọng nói cũng sẽ được hiển thị thành văn bản.',voiceStart:'🎤 Bắt đầu nhập bằng giọng nói',voiceStop:'■ Dừng nhập bằng giọng nói',voiceIdle:'Bạn luôn có thể nhập bằng bàn phím.',privacy:'Chỉ người phụ trách cần thiết để xử lý mới có thể xem nội dung tư vấn. Nội dung không tự động được chia sẻ với người mà bạn đang phản ánh.',consent:'Tôi đồng ý để người phụ trách tư vấn xem nội dung tôi gửi.',review:'Kiểm tra nội dung',reviewTitle:'Kiểm tra trước khi gửi',reviewLead:'Hãy kiểm tra nội dung dưới đây trước khi gửi.',edit:'Sửa',send:'Gửi nội dung này',done:'Đã tiếp nhận tư vấn',doneText:'Đã gửi nội dung tư vấn. Hãy lưu lại mã tư vấn.'},
+id:{title:'Layanan Konsultasi Perusahaan',subtitle:'Masukkan isi konsultasi melalui suara atau teks.',modeLabel:'Cara berkonsultasi',anonymous:'Konsultasi anonim',named:'Konsultasi dengan nama',nameLabel:'Nama',aff:'Bagian / lokasi kerja (opsional)',content:'Isi konsultasi',placeholder:'Masukkan isi konsultasi di sini. Input suara juga akan ditampilkan sebagai teks.',voiceStart:'🎤 Mulai input suara',voiceStop:'■ Hentikan input suara',voiceIdle:'Input teks selalu dapat digunakan.',privacy:'Hanya petugas konsultasi yang diperlukan untuk penanganan yang dapat melihat isi konsultasi. Isi tidak otomatis dibagikan kepada orang yang menjadi subjek konsultasi.',consent:'Saya setuju petugas konsultasi dapat meninjau isi yang saya kirim.',review:'Periksa isi',reviewTitle:'Periksa sebelum mengirim',reviewLead:'Periksa isi di bawah sebelum mengirim.',edit:'Edit',send:'Kirim konsultasi ini',done:'Konsultasi diterima',doneText:'Konsultasi telah dikirim. Simpan ID konsultasi Anda.'},
+km:{title:'បណ្តាញប្រឹក្សារបស់ក្រុមហ៊ុន',subtitle:'សូមបញ្ចូលខ្លឹមសារពិគ្រោះជាសំឡេង ឬអក្សរ។',modeLabel:'របៀបពិគ្រោះ',anonymous:'ពិគ្រោះដោយអនាមិក',named:'ពិគ្រោះដោយប្រាប់ឈ្មោះ',nameLabel:'ឈ្មោះ',aff:'ផ្នែក / ការដ្ឋាន (មិនបាច់បំពេញក៏បាន)',content:'ខ្លឹមសារពិគ្រោះ',placeholder:'សូមបញ្ចូលខ្លឹមសារនៅទីនេះ។ ការនិយាយជាសំឡេងនឹងបង្ហាញជាអក្សរផងដែរ។',voiceStart:'🎤 ចាប់ផ្តើមបញ្ចូលសំឡេង',voiceStop:'■ បញ្ឈប់ការបញ្ចូលសំឡេង',voiceIdle:'អ្នកអាចវាយអក្សរបានគ្រប់ពេល។',privacy:'មានតែអ្នកទទួលបន្ទុកពិគ្រោះដែលចាំបាច់សម្រាប់ដោះស្រាយប៉ុណ្ណោះដែលអាចមើលខ្លឹមសារ។ វាមិនត្រូវបានចែករំលែកដោយស្វ័យប្រវត្តិទៅកាន់បុគ្គលដែលអ្នកកំពុងពិគ្រោះអំពីទេ។',consent:'ខ្ញុំយល់ព្រមឱ្យអ្នកទទួលបន្ទុកពិគ្រោះពិនិត្យខ្លឹមសារដែលខ្ញុំផ្ញើ។',review:'ពិនិត្យខ្លឹមសារ',reviewTitle:'ពិនិត្យមុនផ្ញើ',reviewLead:'សូមពិនិត្យខ្លឹមសារខាងក្រោមមុនផ្ញើ។',edit:'កែសម្រួល',send:'ផ្ញើខ្លឹមសារនេះ',done:'បានទទួលការពិគ្រោះ',doneText:'បានផ្ញើរួច។ សូមរក្សាទុកលេខសម្គាល់ការពិគ្រោះ។'}
 };
-
-const UI_PRESETS={
-  en:{
-    title:'Company Consultation Desk',
-    subtitle:'Talk by voice with an AI consultation assistant in the language you are most comfortable using.',
-    identityLabel:'How would you like to consult?',
-    anonymous:'Consult anonymously',
-    named:'Consult with your name',
-    nameLabel:'Name',
-    affiliationLabel:'Team / worksite (optional)',
-    affiliationPlaceholder:'Example: Scaffolding Team 1, ○○ worksite',
-    memoLabel:'Anything you want to say first (optional)',
-    memoPlaceholder:'You can type a short note, or just speak.',
-    privacyNote:'Your consultation will be shared only with people who need it to respond. It will not be automatically shared with the person you are consulting about. If necessary for urgent safety or legal compliance, information may be shared only to the minimum extent required.',
-    consent:'I agree that this conversation may be transcribed, translated and summarized so the consultation responder can review it for response. Raw audio is not stored by design.',
-    startButton:'Start voice consultation',
-    liveWaiting:'Connecting to the AI consultation assistant…',
-    mute:'Pause microphone',resumeMic:'Resume microphone',
-    finish:'Finish consultation and review',
-    doneTitle:'Your consultation has been received',
-    safety:'AI helps listen and organize information. It does not make legal, disciplinary, or medical judgments. If there is an immediate danger to life or physical safety, do not rely only on this service; contact emergency services or the company safety contact.',
-    loading:'Organizing your consultation…',transcriptLabel:'Conversation record',newConsultation:'New consultation'
-  },
-  vi:{
-    title:'Kênh tư vấn của công ty',
-    subtitle:'Bạn có thể trao đổi bằng giọng nói với trợ lý tư vấn AI bằng ngôn ngữ mà bạn cảm thấy dễ nói nhất.',
-    identityLabel:'Cách tư vấn',
-    anonymous:'Tư vấn ẩn danh',
-    named:'Tư vấn có cung cấp tên',
-    nameLabel:'Họ và tên',
-    affiliationLabel:'Bộ phận / công trường (không bắt buộc)',
-    affiliationPlaceholder:'Ví dụ: Đội giàn giáo 1, công trường ○○',
-    memoLabel:'Điều bạn muốn nói trước (không bắt buộc)',
-    memoPlaceholder:'Bạn có thể nhập ngắn gọn hoặc chỉ nói bằng giọng nói.',
-    privacyNote:'Nội dung tư vấn chỉ được chia sẻ với những người cần thiết để xử lý. Nội dung sẽ không tự động được chia sẻ với người mà bạn đang phản ánh. Khi cần để bảo đảm an toàn khẩn cấp hoặc tuân thủ pháp luật, thông tin chỉ được chia sẻ trong phạm vi tối thiểu cần thiết.',
-    consent:'Tôi đồng ý cho phép cuộc trò chuyện được chuyển thành văn bản, dịch và tóm tắt để người phụ trách tư vấn xem xét nhằm xử lý vụ việc. Bản ghi âm gốc không được lưu theo thiết kế.',
-    startButton:'Bắt đầu tư vấn bằng giọng nói',
-    liveWaiting:'Đang kết nối trợ lý tư vấn AI…',
-    mute:'Tạm dừng mic',resumeMic:'Bật lại mic',
-    finish:'Kết thúc tư vấn và xem lại nội dung',
-    doneTitle:'Đã tiếp nhận nội dung tư vấn',
-    safety:'AI hỗ trợ lắng nghe và sắp xếp thông tin. AI không đưa ra kết luận pháp lý, quyết định kỷ luật hoặc chẩn đoán y tế. Nếu có nguy hiểm cấp bách đến tính mạng hoặc thân thể, đừng chỉ dựa vào kênh này; hãy liên hệ dịch vụ khẩn cấp hoặc người phụ trách an toàn của công ty.',
-    loading:'Đang sắp xếp nội dung tư vấn…',transcriptLabel:'Nội dung cuộc trò chuyện',newConsultation:'Tư vấn mới'
-  },
-  id:{
-    title:'Layanan Konsultasi Perusahaan',
-    subtitle:'Anda dapat berkonsultasi melalui suara dengan asisten AI menggunakan bahasa yang paling nyaman bagi Anda.',
-    identityLabel:'Cara berkonsultasi',
-    anonymous:'Konsultasi secara anonim',
-    named:'Konsultasi dengan menyebutkan nama',
-    nameLabel:'Nama',
-    affiliationLabel:'Bagian / lokasi kerja (opsional)',
-    affiliationPlaceholder:'Contoh: Tim Perancah 1, lokasi kerja ○○',
-    memoLabel:'Hal yang ingin disampaikan terlebih dahulu (opsional)',
-    memoPlaceholder:'Anda dapat menulis singkat atau langsung berbicara.',
-    privacyNote:'Isi konsultasi hanya dibagikan kepada orang yang diperlukan untuk menangani masalah. Isi tersebut tidak akan otomatis dibagikan kepada orang yang menjadi subjek konsultasi. Jika diperlukan untuk keselamatan darurat atau kepatuhan hukum, informasi hanya akan dibagikan sebatas yang diperlukan.',
-    consent:'Saya setuju percakapan ini ditranskripsikan, diterjemahkan, dan diringkas agar petugas konsultasi dapat meninjaunya untuk penanganan. Audio asli tidak disimpan sesuai desain.',
-    startButton:'Mulai konsultasi suara',
-    liveWaiting:'Menghubungkan asisten konsultasi AI…',
-    mute:'Jeda mikrofon',resumeMic:'Aktifkan kembali mikrofon',
-    finish:'Akhiri konsultasi dan tinjau isi',
-    doneTitle:'Konsultasi Anda telah diterima',
-    safety:'AI membantu mendengarkan dan merangkum informasi. AI tidak membuat keputusan hukum, disipliner, atau diagnosis medis. Jika ada bahaya langsung terhadap nyawa atau keselamatan fisik, jangan hanya mengandalkan layanan ini; hubungi layanan darurat atau petugas keselamatan perusahaan.',
-    loading:'Sedang merangkum isi konsultasi…',transcriptLabel:'Catatan percakapan',newConsultation:'Konsultasi baru'
-  },
-  km:{
-    title:'បណ្តាញប្រឹក្សារបស់ក្រុមហ៊ុន',
-    subtitle:'អ្នកអាចនិយាយពិគ្រោះជាសំឡេងជាមួយជំនួយការ AI ដោយប្រើភាសាដែលអ្នកងាយស្រួលនិយាយបំផុត។',
-    identityLabel:'របៀបពិគ្រោះ',
-    anonymous:'ពិគ្រោះដោយអនាមិក',
-    named:'ពិគ្រោះដោយប្រាប់ឈ្មោះ',
-    nameLabel:'ឈ្មោះ',
-    affiliationLabel:'ផ្នែក / ការដ្ឋាន (មិនបាច់បំពេញក៏បាន)',
-    affiliationPlaceholder:'ឧ. ក្រុមរន្ទា 1, ការដ្ឋាន ○○',
-    memoLabel:'អ្វីដែលចង់ប្រាប់ជាមុន (មិនបាច់បំពេញក៏បាន)',
-    memoPlaceholder:'អ្នកអាចសរសេរខ្លីៗ ឬនិយាយជាសំឡេងតែប៉ុណ្ណោះក៏បាន។',
-    privacyNote:'ខ្លឹមសារពិគ្រោះនឹងចែករំលែកតែជាមួយអ្នកដែលចាំបាច់សម្រាប់ដោះស្រាយប៉ុណ្ណោះ។ វានឹងមិនត្រូវបានចែករំលែកដោយស្វ័យប្រវត្តិទៅកាន់បុគ្គលដែលជាប្រធានបទនៃការពិគ្រោះទេ។ ប្រសិនបើចាំបាច់សម្រាប់សុវត្ថិភាពបន្ទាន់ ឬការអនុវត្តតាមច្បាប់ ព័ត៌មាននឹងត្រូវចែករំលែកតែក្នុងកម្រិតអប្បបរមាដែលចាំបាច់។',
-    consent:'ខ្ញុំយល់ព្រមឱ្យការសន្ទនានេះត្រូវបានបម្លែងជាអក្សរ បកប្រែ និងសង្ខេប ដើម្បីឱ្យអ្នកទទួលបន្ទុកពិគ្រោះពិនិត្យសម្រាប់ការដោះស្រាយ។ សំឡេងដើមមិនត្រូវបានរក្សាទុកតាមការរចនារបស់ប្រព័ន្ធទេ។',
-    startButton:'ចាប់ផ្តើមពិគ្រោះជាសំឡេង',
-    liveWaiting:'កំពុងភ្ជាប់ជំនួយការ AI…',
-    mute:'ផ្អាកមីក្រូហ្វូន',resumeMic:'បើកមីក្រូហ្វូនវិញ',
-    finish:'បញ្ចប់ការពិគ្រោះ និងពិនិត្យមាតិកា',
-    doneTitle:'បានទទួលការពិគ្រោះរបស់អ្នក',
-    safety:'AI ជួយស្តាប់ និងរៀបចំព័ត៌មាន។ AI មិនធ្វើការវិនិច្ឆ័យផ្នែកច្បាប់ វិន័យ ឬវេជ្ជសាស្ត្រទេ។ ប្រសិនបើមានគ្រោះថ្នាក់បន្ទាន់ដល់ជីវិត ឬរាងកាយ សូមកុំពឹងផ្អែកតែលើបណ្តាញនេះ ហើយទាក់ទងសេវាបន្ទាន់ ឬអ្នកទទួលបន្ទុកសុវត្ថិភាពរបស់ក្រុមហ៊ុន។',
-    loading:'កំពុងរៀបចំខ្លឹមសារពិគ្រោះ…',transcriptLabel:'កំណត់ត្រាសន្ទនា',newConsultation:'ពិគ្រោះថ្មី'
-  }
-};
-let lang={name:'日本語',code:'ja'},ui=UI_JA,pc=null,dc=null,localStream=null,muted=false,finished=false,transcript=[],aiText='',employeeText='',consultationId='',audioCtx=null,micAnalyser=null,micRaf=null;
+let lang={code:'ja',name:'日本語'},ui=PRESETS.ja,recognition=null,listening=false;
 const $=id=>document.getElementById(id);
-
-window.addEventListener('load',()=>{
-  $('allLanguages').innerHTML=LANGS.map(x=>'<option value="'+esc(x[0])+'"></option>').join('');
-  showStage('language');
-});
-
-function showStage(stage){
-  document.body.dataset.stage=stage;
-  const cards={language:'languageCard',setup:'startCard',live:'liveCard',done:'doneCard'};
-  Object.entries(cards).forEach(([key,id])=>{
-    const el=$(id),show=key===stage;
-    el.hidden=!show;
-    el.classList.toggle('hidden',!show);
-    el.setAttribute('aria-hidden',show?'false':'true');
-  });
-  window.scrollTo(0,0);
-}
-
-async function chooseLang(btn){
-  document.querySelectorAll('.langBtn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');
-  const code=btn.dataset.code||'';
-  if(!code){
-    const browserCode=String(navigator.language||'en').split('-')[0].toLowerCase();
-    const detected=LANGS.find(x=>x[1]===browserCode)||LANGS.find(x=>x[1]==='en');
-    lang={name:detected[0],code:detected[1]};
-  }else{
-    lang={name:btn.dataset.name,code};
-  }
-  await loadUiLanguage();
-}
-async function chooseOther(){
-  const name=$('otherLang').value.trim();if(!name){$('langStatus').textContent='Please enter a language name.';return}
-  const found=LANGS.find(x=>x[0].toLowerCase()===name.toLowerCase());
-  lang={name,code:found?found[1]:''};document.querySelectorAll('.langBtn').forEach(b=>b.classList.remove('active'));await loadUiLanguage();
-}
-async function loadUiLanguage(){
-  $('langStatus').textContent='Loading language…';
-  try{
-    if(lang.code==='ja'){ui=UI_JA}else if(UI_PRESETS[lang.code]){ui=UI_PRESETS[lang.code]}else{
-      const cacheKey='hiragumi-ui-'+lang.name;
-      const cached=sessionStorage.getItem(cacheKey);
-      if(cached){ui=JSON.parse(cached)}else{
-        const r=await fetch('/api/counsel-ui',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({languageName:lang.name})});
-        if(!r.ok)throw new Error(await r.text());ui=await r.json();sessionStorage.setItem(cacheKey,JSON.stringify(ui));
-      }
-    }
-    applyUi();showStage('setup');
-  }catch(e){console.error(e);ui=UI_JA;applyUi();$('langStatus').textContent='Translation failed. 日本語で表示します。';showStage('setup')}
-}
+function show(id){['languageCard','formCard','reviewCard','doneCard'].forEach(x=>$(x).classList.toggle('hidden',x!==id));scrollTo(0,0)}
 function applyUi(){
-  $('uiTitle').textContent=ui.title;$('uiSubtitle').textContent=ui.subtitle;$('identityLabel').textContent=ui.identityLabel;
+  $('title').textContent=ui.title;$('subtitle').textContent=ui.subtitle;$('modeLabel').textContent=ui.modeLabel;
   $('anonymousOpt').textContent=ui.anonymous;$('namedOpt').textContent=ui.named;$('nameLabel').textContent=ui.nameLabel;
-  $('affiliationLabel').textContent=ui.affiliationLabel;$('affiliation').placeholder=ui.affiliationPlaceholder;
-  $('memoLabel').textContent=ui.memoLabel;$('memo').placeholder=ui.memoPlaceholder;$('privacyNote').textContent=ui.privacyNote;
-  $('consentText').textContent=ui.consent;$('startBtn').textContent=ui.startButton;$('question').textContent=ui.liveWaiting;
-  $('muteBtn').textContent=ui.mute;$('finishBtn').textContent=ui.finish;$('doneTitle').textContent=ui.doneTitle;
-  $('safetyText').textContent=ui.safety;$('loading').textContent=ui.loading;$('transcriptLabel').textContent=ui.transcriptLabel;
-  $('newConsultationBtn').textContent=ui.newConsultation;
-  document.documentElement.lang=lang.code||'en';
+  $('affLabel').textContent=ui.aff;$('contentLabel').textContent=ui.content;$('content').placeholder=ui.placeholder;
+  $('voiceBtn').textContent=listening?ui.voiceStop:ui.voiceStart;$('voiceStatus').textContent=ui.voiceIdle;$('privacy').textContent=ui.privacy;
+  $('consentText').textContent=ui.consent;$('reviewBtn').textContent=ui.review;$('reviewTitle').textContent=ui.reviewTitle;
+  $('reviewLead').textContent=ui.reviewLead;$('editBtn').textContent=ui.edit;$('sendBtn').textContent=ui.send;
+  $('doneTitle').textContent=ui.done;$('doneText').textContent=ui.doneText;document.documentElement.lang=lang.code||'en'
 }
-function toggleName(){$('nameField').classList.toggle('hidden',$('mode').value!=='named')}
-function makeId(){const d=new Date(),s=d.getFullYear()+String(d.getMonth()+1).padStart(2,'0')+String(d.getDate()).padStart(2,'0');return 'HG-'+s+'-'+Math.random().toString(36).slice(2,8).toUpperCase()}
+function choose(code,name){
+  if(code==='auto'){const b=(navigator.language||'en').split('-')[0];code=PRESETS[b]?b:'en';name=code}
+  lang={code,name};ui=PRESETS[code]||PRESETS.en;applyUi();show('formCard')
+}
+document.querySelectorAll('.langBtn').forEach(b=>b.onclick=()=>choose(b.dataset.code,b.dataset.name));
+$('otherBtn').onclick=()=>{const v=$('otherLang').value.trim();if(!v)return;lang={code:'',name:v};ui=PRESETS.en;applyUi();show('formCard')};
+$('mode').onchange=()=>{$('nameField').classList.toggle('hidden',$('mode').value!=='named')};
 
-function startMicMeter(stream){
-  try{
-    audioCtx=new (window.AudioContext||window.webkitAudioContext)();
-    const src=audioCtx.createMediaStreamSource(stream);
-    micAnalyser=audioCtx.createAnalyser();
-    micAnalyser.fftSize=512;
-    src.connect(micAnalyser);
-    const data=new Uint8Array(micAnalyser.fftSize);
-    const tick=()=>{
-      if(!micAnalyser)return;
-      micAnalyser.getByteTimeDomainData(data);
-      let sum=0;
-      for(let i=0;i<data.length;i++){const v=(data[i]-128)/128;sum+=v*v}
-      const rms=Math.sqrt(sum/data.length);
-      const pct=Math.max(2,Math.min(100,Math.round(rms*650)));
-      $('micFill').style.width=pct+'%';
-      $('micLabel').textContent=rms>0.025?'MIC OK':rms>0.008?'MIC LOW':'MIC…';
-      micRaf=requestAnimationFrame(tick);
-    };
-    tick();
-  }catch(e){console.warn('mic meter unavailable',e)}
+function speechLocale(){return ({ja:'ja-JP',en:'en-US',vi:'vi-VN',id:'id-ID',km:'km-KH'})[lang.code]||navigator.language||'en-US'}
+function startVoice(){
+  $('voiceError').textContent='';
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!SR){$('voiceError').textContent='このブラウザでは音声入力を利用できません。文字入力をご利用ください。';return}
+  recognition=new SR();recognition.lang=speechLocale();recognition.continuous=true;recognition.interimResults=true;
+  let base=$('content').value.trim();let finalChunk='';
+  recognition.onstart=()=>{listening=true;$('voiceBtn').classList.add('on');$('voiceDot').classList.add('on');$('voiceStatus').textContent='Listening…';$('voiceBtn').textContent=ui.voiceStop};
+  recognition.onresult=e=>{
+    let interim='';for(let i=e.resultIndex;i<e.results.length;i++){const t=e.results[i][0].transcript;if(e.results[i].isFinal)finalChunk+=t;else interim+=t}
+    const sep=base&&!(base.endsWith('\n')||base.endsWith(' '))?' ':'';
+    $('content').value=(base+sep+finalChunk+(interim?' '+interim:'')).trim();
+  };
+  recognition.onerror=e=>{$('voiceError').textContent='音声入力を継続できません。文字入力はそのまま利用できます。';stopVoice()};
+  recognition.onend=()=>{if(listening){base=$('content').value.trim();finalChunk='';try{recognition.start()}catch(_){stopVoice()}}};
+  try{recognition.start()}catch(e){$('voiceError').textContent='音声入力を開始できません。文字入力をご利用ください。'}
 }
-function stopMicMeter(){
-  try{if(micRaf)cancelAnimationFrame(micRaf)}catch(e){}
-  micRaf=null;micAnalyser=null;
-  try{if(audioCtx)audioCtx.close()}catch(e){}
-  audioCtx=null;
-}
-async function checkVoiceBackend(){
-  const r=await fetch('/api/counsel-health',{cache:'no-store'});
-  let d={};try{d=await r.json()}catch(_){}
-  if(!r.ok||!d.ok){
-    const err=new Error('VOICE_BACKEND_'+(d.openaiStatus||r.status||'ERR'));
-    err.detail=d.error||'';
-    throw err;
-  }
-}
-async function startConsultation(){
-  $('startError').textContent='';
-  if($('mode').value==='named'&&!$('employeeName').value.trim()){ $('startError').textContent=ui.nameLabel; return; }
-  if(!$('consent').checked){ $('startError').textContent=ui.consent; return; }
-  consultationId=makeId();$('startBtn').disabled=true;
-  try{
-    await checkVoiceBackend();
-    localStream=await navigator.mediaDevices.getUserMedia({audio:true});
-    pc=new RTCPeerConnection();
-    pc.ontrack=e=>{$('remoteAudio').srcObject=e.streams[0]};
-    const micTrack=localStream.getAudioTracks()[0];
-    if(!micTrack)throw new Error('NO_AUDIO_TRACK');
-    pc.addTrack(micTrack,localStream);
-    dc=pc.createDataChannel('oai-events');
-    dc.onopen=()=>{
-      showStage('live');setStatus('AI',true);startMicMeter(localStream);
-      try{$('remoteAudio').play().catch(()=>{})}catch(_){}
-      dc.send(JSON.stringify({type:'response.create',response:{instructions:'相談を開始してください。選択された言語で短く挨拶し、最初の質問を1つだけしてください。'}}));
-    };
-    dc.onmessage=e=>{try{handleEvent(JSON.parse(e.data))}catch(_){}};
-    dc.onerror=()=>{$('liveError').textContent='Communication error.'};
-    pc.onconnectionstatechange=()=>{
-      const st=pc.connectionState||'';
-      if(st==='failed'||st==='disconnected')$('liveError').textContent='音声回線が切断されました。ページを再読み込みして再接続してください。';
-    };
-    const offer=await pc.createOffer();await pc.setLocalDescription(offer);
-    const payload={sdp:offer.sdp,tenantKey:'hiragumi',consultationId,languageName:lang.name,languageCode:lang.code,category:'会話から判定',subjectLevel:'unknown',identityMode:$('mode').value,employeeName:$('employeeName').value.trim(),affiliation:$('affiliation').value.trim(),initialNote:$('memo').value.trim()};
-    const r=await fetch('/api/counsel-session',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
-    const answer=await r.text();
-    if(!r.ok)throw new Error('SESSION_HTTP_'+r.status+': '+answer);
-    await pc.setRemoteDescription({type:'answer',sdp:answer});
-  }catch(e){
-    console.error(e);
-    $('startBtn').disabled=false;
-    let msg='接続に失敗しました。';
-    const name=String(e&&e.name||'');
-    const detail=String(e&&e.message||'');
-    if(name==='NotAllowedError'||name==='SecurityError'){
-      msg='マイクが許可されていません。ブラウザのアドレスバー左側のサイト設定から「マイク＝許可」にしてください。';
-    }else if(name==='NotFoundError'||name==='DevicesNotFoundError'){
-      msg='使用できるマイクが見つかりません。Windowsのサウンド入力設定を確認してください。';
-    }else if(detail.includes('VOICE_BACKEND_401')||detail.includes('VOICE_BACKEND_403')||detail.includes('SESSION_HTTP_401')||detail.includes('SESSION_HTTP_403')){
-      msg='AI音声接続の認証に失敗しました。APIキーまたはRealtimeモデルへのアクセスを確認してください。';
-    }else if(detail.includes('VOICE_BACKEND_429')){msg='OpenAI APIの利用枠または請求設定により音声接続できません。';
-    }else if(detail.includes('SESSION_HTTP_429')){
-      msg='OpenAI APIの利用枠または請求設定で接続できません。APIの利用可能状態を確認してください。';
-    }else if(detail.includes('SESSION_HTTP_400')){
-      msg='AI音声セッション設定で接続できませんでした。設定を自動修正します。';
-    }else if(detail){
-      msg='音声接続に失敗しました。再読み込みしてもう一度お試しください。';
-    }
-    $('startError').textContent=msg;
-    stopMedia();
-  }
-}
-function handleEvent(ev){
-  const t=ev.type||'';
-  if(t==='response.created'||t.includes('audio.delta'))setStatus('AI',true);
-  if(t==='input_audio_buffer.speech_started'){setStatus('MIC',true);employeeText=''}
-  if(t==='input_audio_buffer.speech_stopped')setStatus('…',false);
-  if(t==='conversation.item.input_audio_transcription.delta'&&ev.delta){employeeText+=ev.delta;$('question').textContent=employeeText}
-  if(t==='conversation.item.input_audio_transcription.completed'){const x=(ev.transcript||employeeText||'').trim();if(x)addMessage('employee',x);employeeText=''}
-  if(t==='conversation.item.input_audio_transcription.failed'){
-    const m=String(ev.error?.message||'transcription failed');
-    $('liveError').textContent='音声の文字起こしに失敗: '+m.slice(0,180);
-  }
-  if((t==='response.output_audio_transcript.delta'||t==='response.audio_transcript.delta')&&ev.delta){aiText+=ev.delta;$('question').textContent=aiText}
-  if(t==='response.output_audio_transcript.done'||t==='response.audio_transcript.done'){const x=(ev.transcript||aiText||'').trim();if(x){addMessage('ai',x);$('question').textContent=x}aiText=''}
-  if(t==='response.done')setStatus('READY',false);
-  if(t==='error'){
-    const m=String(ev.error?.message||ev.error?.code||'AI communication error');
-    console.error('Realtime error',ev);
-    $('liveError').textContent='AI音声通信エラー: '+m.slice(0,220);
-  }
-}
-function addMessage(role,text){if(!text)return;transcript.push({role,text});$('transcript').innerHTML=transcript.map(x=>'<div class="msg '+(x.role==='employee'?'employee':'ai')+'"><div class="speaker">'+(x.role==='employee'?'YOU':'AI')+'</div>'+esc(x.text)+'</div>').join('');$('transcript').scrollTop=$('transcript').scrollHeight}
-function setStatus(text,live){$('status').textContent=text;$('dot').className='dot'+(live?' live':'')}
-function toggleMute(){if(!localStream)return;muted=!muted;localStream.getAudioTracks().forEach(t=>t.enabled=!muted);$('muteBtn').textContent=muted?ui.resumeMic:ui.mute}
-function stopMedia(){stopMicMeter();try{dc&&dc.close()}catch(e){}try{pc&&pc.close()}catch(e){}try{localStream&&localStream.getTracks().forEach(t=>t.stop())}catch(e){}}
+function stopVoice(){listening=false;try{recognition&&recognition.stop()}catch(_){}$('voiceBtn').classList.remove('on');$('voiceDot').classList.remove('on');$('voiceStatus').textContent=ui.voiceIdle;$('voiceBtn').textContent=ui.voiceStart}
+$('voiceBtn').onclick=()=>listening?stopVoice():startVoice();
 
-async function finishConsultation(){
-  if(finished)return;finished=true;stopMedia();showStage('done');
+$('reviewBtn').onclick=()=>{
+  $('formError').textContent='';
+  if($('mode').value==='named'&&!$('name').value.trim()){$('formError').textContent=ui.nameLabel;return}
+  if(!$('content').value.trim()){$('formError').textContent=ui.content;return}
+  if(!$('consent').checked){$('formError').textContent=ui.consent;return}
+  stopVoice();$('reviewContent').textContent=$('content').value.trim();
+  $('reviewMeta').textContent=(lang.name||lang.code)+' / '+($('mode').value==='anonymous'?ui.anonymous:ui.named)+($('affiliation').value.trim()?' / '+$('affiliation').value.trim():'');
+  show('reviewCard')
+};
+$('editBtn').onclick=()=>show('formCard');
+
+function makeId(){const d=new Date();return 'HG-'+d.getFullYear()+String(d.getMonth()+1).padStart(2,'0')+String(d.getDate()).padStart(2,'0')+'-'+Math.random().toString(36).slice(2,8).toUpperCase()}
+$('sendBtn').onclick=async()=>{
+  $('sendError').textContent='';$('sendBtn').disabled=true;
+  const payload={consultationId:makeId(),languageName:lang.name,languageCode:lang.code,identityMode:$('mode').value,employeeName:$('mode').value==='named'?$('name').value.trim():'',affiliation:$('affiliation').value.trim(),content:$('content').value.trim(),confirmed:true};
   try{
-    const payload={tenantKey:'hiragumi',consultationId,languageName:lang.name,category:'会話から判定',subjectLevel:'unknown',identityMode:$('mode').value,employeeName:$('employeeName').value.trim(),affiliation:$('affiliation').value.trim(),initialNote:$('memo').value.trim(),transcript};
-    const r=await fetch('/api/counsel-analyze',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
-    if(!r.ok)throw new Error(await r.text());const report=await r.json();
-    $('loading').classList.add('hidden');$('receipt').textContent=report.employee_receipt_text||'';$('receipt').classList.remove('hidden');
-    $('consultationId').textContent=consultationId;$('consultationId').classList.remove('hidden');
-  }catch(e){console.error(e);$('loading').textContent='Your consultation was received, but automatic summary failed. ID: '+consultationId}
-}
-function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+    const r=await fetch('/api/counsel-submit',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+    const d=await r.json().catch(()=>({}));
+    if(!r.ok)throw new Error(d.error||'submit failed');
+    $('caseId').textContent=d.consultationId||payload.consultationId;show('doneCard');
+  }catch(e){$('sendError').textContent='現在、送信先の安全な保存設定が未完了です。内容は送信されていません。';$('sendBtn').disabled=false}
+};
+applyUi();
 </script>
 </body>
 </html>
