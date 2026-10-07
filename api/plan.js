@@ -71,7 +71,12 @@ ${candidateNotes||'未入力'}
     ],text:{format:{type:'json_schema',name:'interview_plan',strict:true,schema}},max_output_tokens:3000};
 
     const r=await fetch('https://api.openai.com/v1/responses',{method:'POST',headers:{Authorization:`Bearer ${process.env.OPENAI_API_KEY}`,'Content-Type':'application/json'},body:JSON.stringify(body)});
-    const data=await r.json();if(!r.ok)return res.status(r.status).json({error:data});
+    const data=await r.json();
+    if(!r.ok){
+      const code=data?.error?.code||'OPENAI_API_ERROR';
+      if(code==='credit_balance_exhausted') return res.status(402).json({code:'API_CREDIT_EXHAUSTED',message:'OpenAI API credit balance is exhausted.'});
+      return res.status(r.status).json({code,message:data?.error?.message||'OpenAI API request failed'});
+    }
     let output=data.output_text||'';
     if(!output&&Array.isArray(data.output)){for(const item of data.output){for(const c of(item.content||[])){if(c.text){output=c.text;break}}if(output)break}}
     const plan=JSON.parse(output);
