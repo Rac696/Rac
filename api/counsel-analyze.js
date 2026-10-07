@@ -137,7 +137,7 @@ translated_transcript_ja:
 `;
 
     const body = {
-      model: 'gpt-5.6-luna',
+      model: 'gpt-6-luna',
       input: [
         { role: 'system', content: [{ type: 'input_text', text: system }] },
         {
