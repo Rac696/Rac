@@ -1,0 +1,15 @@
+{
+  "rewrites": [
+    { "source": "/hiragumi", "destination": "/hiragumi-consultation.html" },
+    { "source": "/consultation", "destination": "/consultation.html" }
+  ],
+  "headers": [
+    {
+      "source": "/hiragumi",
+      "headers": [
+        { "key": "X-Robots-Tag", "value": "noindex, nofollow, noarchive" },
+        { "key": "Cache-Control", "value": "no-store" }
+      ]
+    }
+  ]
+}
