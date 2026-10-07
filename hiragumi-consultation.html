@@ -11,6 +11,10 @@
 .head{display:flex;align-items:center;gap:12px;padding:5px 2px 4px}.logo{width:72px;height:72px;object-fit:contain;background:#fff;border-radius:14px;padding:5px}.brand{font-size:11px;letter-spacing:.12em;color:#c7d0cb}.corp{font-size:18px;font-weight:850;margin-top:3px}.powered{font-size:10px;color:#7f8c85;margin-top:3px}
 h1{font-size:27px;line-height:1.25;margin:18px 0 7px}.lead{font-size:13px;line-height:1.75;color:var(--muted)}
 .card{margin-top:15px;background:rgba(21,25,23,.98);border:1px solid var(--line);border-radius:18px;padding:16px;box-shadow:0 18px 55px rgba(0,0,0,.25)}
+#languageCard{position:relative;overflow:hidden;background:linear-gradient(180deg,rgba(18,23,20,.96),rgba(18,23,20,.93))}
+#languageCard>*{position:relative;z-index:2}
+.languageCardWatermark{position:absolute;z-index:1;left:50%;top:52%;width:min(78vw,520px);height:min(78vw,520px);transform:translate(-50%,-50%);object-fit:contain;opacity:.11;filter:grayscale(1) brightness(2.2);pointer-events:none;user-select:none}
+@media(max-width:430px){.languageCardWatermark{width:88vw;height:88vw;opacity:.10;top:54%}}
 .langTitle{font-size:15px;font-weight:800;margin-bottom:9px}.langs{display:grid;grid-template-columns:1fr 1fr;gap:8px}.langBtn{background:#101512;color:#fff;border:1px solid #354039;border-radius:12px;padding:12px 8px;font-size:14px;font-weight:750;cursor:pointer}.langBtn.active{background:var(--accent);color:var(--accentText);border-color:var(--accent)}.other{margin-top:9px}
 input,select,textarea{width:100%;padding:13px 14px;border-radius:12px;border:1px solid #39463f;background:#0e1310;color:#fff;font-size:16px}textarea{min-height:82px;resize:vertical;line-height:1.6}.field{margin-top:14px}label{display:block;font-size:12px;margin-bottom:7px;color:#e1e6e3}
 .note{margin-top:13px;padding:12px;border-radius:12px;background:#0d1210;border:1px solid #29332e;color:#c6d0ca;font-size:12px;line-height:1.7}
@@ -31,6 +35,7 @@ input,select,textarea{width:100%;padding:13px 14px;border-radius:12px;border:1px
   </div>
 
   <section id="languageCard" class="card">
+    <img class="languageCardWatermark" src="https://hiragumi.rac-solution.com/wp-content/uploads/2026/10/平組流ロゴ.png" alt="" aria-hidden="true">
     <div class="langTitle">相談する言語を選んでください / Choose your language</div>
     <div class="langs">
       <button class="langBtn" data-name="日本語" data-code="ja" onclick="chooseLang(this)">日本語</button>
