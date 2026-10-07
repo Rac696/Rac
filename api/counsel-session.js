@@ -127,7 +127,7 @@ ${languageInstruction}
 
     const fd = new FormData();
     fd.set('sdp', sdp);
-    fd.set('session', new Blob([sessionConfig], { type: 'application/json' }));
+    fd.set('session', sessionConfig);
 
     const safetyId = crypto.createHash('sha256')
       .update(`${tenant.key}:counsel:${consultationId || 'anonymous'}`)
