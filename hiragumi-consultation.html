@@ -13,11 +13,11 @@ h1{font-size:27px;line-height:1.25;margin:18px 0 7px}.lead{font-size:13px;line-h
 .card{margin-top:15px;background:rgba(21,25,23,.98);border:1px solid var(--line);border-radius:18px;padding:16px;box-shadow:0 18px 55px rgba(0,0,0,.25)}
 #languageCard{position:relative;overflow:hidden;background:linear-gradient(180deg,rgba(18,23,20,.96),rgba(18,23,20,.93))}
 #languageCard>*:not(.languageCardWatermark){position:relative;z-index:2}
-#languageCard .languageCardWatermark{position:absolute;z-index:1;left:50%;top:52%;width:min(82vw,560px);height:min(82vw,560px);transform:translate(-50%,-50%);object-fit:contain;opacity:.19;filter:grayscale(.72) brightness(1.72) contrast(1.08);pointer-events:none;user-select:none}
-@media(max-width:430px){#languageCard .languageCardWatermark{width:94vw;height:94vw;opacity:.17;top:54%}}
-.langTitle{font-size:15px;font-weight:800;margin-bottom:9px}.langs{display:grid;grid-template-columns:1fr 1fr;gap:8px}.langBtn{background:rgba(7,15,11,.58);color:#fff;border:1px solid rgba(130,157,143,.32);border-radius:12px;padding:12px 8px;font-size:14px;font-weight:750;cursor:pointer;backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);box-shadow:inset 0 1px 0 rgba(255,255,255,.025)}.langBtn:hover{background:rgba(18,35,27,.72);border-color:rgba(180,211,195,.46)}.langBtn.active{background:rgba(216,234,223,.88);color:var(--accentText);border-color:rgba(216,234,223,.92)}.other{margin-top:9px}
-#languageCard .other input{background:rgba(7,15,11,.50);border-color:rgba(130,157,143,.30);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px)}
-#languageCard>.btn.secondary{background:rgba(56,72,63,.58);border-color:rgba(160,190,174,.28);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px)}
+#languageCard .languageCardWatermark{position:absolute;z-index:1;left:50%;top:52%;width:min(82vw,560px);height:min(82vw,560px);transform:translate(-50%,-50%);object-fit:contain;opacity:.25;filter:grayscale(.62) brightness(1.82) contrast(1.08);pointer-events:none;user-select:none}
+@media(max-width:430px){#languageCard .languageCardWatermark{width:94vw;height:94vw;opacity:.22;top:54%}}
+.langTitle{font-size:15px;font-weight:800;margin-bottom:9px}.langs{display:grid;grid-template-columns:1fr 1fr;gap:8px}.langBtn{background:rgba(7,15,11,.28);color:#fff;border:1px solid rgba(130,157,143,.32);border-radius:12px;padding:12px 8px;font-size:14px;font-weight:750;cursor:pointer;backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);box-shadow:inset 0 1px 0 rgba(255,255,255,.025)}.langBtn:hover{background:rgba(18,35,27,.46);border-color:rgba(180,211,195,.46)}.langBtn.active{background:rgba(216,234,223,.88);color:var(--accentText);border-color:rgba(216,234,223,.92)}.other{margin-top:9px}
+#languageCard .other input{background:rgba(7,15,11,.24);border-color:rgba(130,157,143,.30);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px)}
+#languageCard>.btn.secondary{background:rgba(56,72,63,.34);border-color:rgba(160,190,174,.28);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px)}
 input,select,textarea{width:100%;padding:13px 14px;border-radius:12px;border:1px solid #39463f;background:#0e1310;color:#fff;font-size:16px}textarea{min-height:82px;resize:vertical;line-height:1.6}.field{margin-top:14px}label{display:block;font-size:12px;margin-bottom:7px;color:#e1e6e3}
 .note{margin-top:13px;padding:12px;border-radius:12px;background:#0d1210;border:1px solid #29332e;color:#c6d0ca;font-size:12px;line-height:1.7}
 .consent{display:flex;gap:9px;margin:14px 0;font-size:12px;line-height:1.65;color:#dbe1dd}.consent input{width:19px;height:19px;flex:0 0 19px;margin-top:1px}
@@ -302,8 +302,12 @@ async function startConsultation(){
   consultationId=makeId();$('startBtn').disabled=true;
   try{
     await checkVoiceBackend();
-    localStream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:false,autoGainControl:true,channelCount:1}});
-    pc=new RTCPeerConnection();pc.ontrack=e=>{$('remoteAudio').srcObject=e.streams[0]};localStream.getTracks().forEach(t=>pc.addTrack(t,localStream));
+    localStream=await navigator.mediaDevices.getUserMedia({audio:true});
+    pc=new RTCPeerConnection();
+    pc.ontrack=e=>{$('remoteAudio').srcObject=e.streams[0]};
+    const micTrack=localStream.getAudioTracks()[0];
+    if(!micTrack)throw new Error('NO_AUDIO_TRACK');
+    pc.addTrack(micTrack,localStream);
     dc=pc.createDataChannel('oai-events');
     dc.onopen=()=>{
       showStage('live');setStatus('AI',true);startMicMeter(localStream);
