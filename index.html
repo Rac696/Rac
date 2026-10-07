@@ -110,11 +110,18 @@ async function prepareAndStart(){
     const fileData=await collectAllFiles();
     const payload={...profile,...fileData};
     const r=await fetch('/api/plan',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
-    if(!r.ok)throw new Error(await r.text());
+    if(!r.ok){
+      let detail={};try{detail=await r.json()}catch(_){}
+      const err=new Error(detail?.message||detail?.error||'面接設計の生成に失敗しました。');
+      err.code=detail?.code||'';throw err;
+    }
     const d=await r.json();interviewPlan=d.plan;renderPlanPreview(d);$('startBtn').textContent='マイク接続中…';await startRealtime();
   }catch(e){
     console.error(e);$('startBtn').disabled=false;$('startBtn').textContent='面接設計を生成して開始';
-    $('startError').textContent=e.message&&e.message.includes('3MB')?e.message:'面接設計または音声接続に失敗しました。API設定とSafariのマイク許可を確認してください。';stopMedia()
+    if(e.code==='API_CREDIT_EXHAUSTED') $('startError').textContent='現在AI面接サービスのAPI利用残高が不足しています。管理者が利用設定を更新後、再度お試しください。';
+    else if(e.message&&e.message.includes('3MB')) $('startError').textContent=e.message;
+    else $('startError').textContent='面接設計または音声接続に失敗しました。しばらくして再度お試しください。';
+    stopMedia()
   }
 }
 function renderPlanPreview(d){
