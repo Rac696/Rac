@@ -16,14 +16,14 @@ input,select,textarea{width:100%;padding:13px 14px;border-radius:12px;border:1px
 .note{margin-top:13px;padding:12px;border-radius:12px;background:#0d1210;border:1px solid #29332e;color:#c6d0ca;font-size:12px;line-height:1.7}
 .consent{display:flex;gap:9px;margin:14px 0;font-size:12px;line-height:1.65;color:#dbe1dd}.consent input{width:19px;height:19px;flex:0 0 19px;margin-top:1px}
 .btn{width:100%;padding:15px;border:0;border-radius:13px;font-size:16px;font-weight:850;cursor:pointer}.primary{background:var(--accent);color:var(--accentText)}.secondary{margin-top:9px;background:#27302b;color:#fff;border:1px solid #3a4740}.danger{background:#3b1a1a;color:#ffd8d6;border-color:#6a2b2b}.btn:disabled{opacity:.5;cursor:not-allowed}
-.hidden{display:none!important}.error{margin-top:9px;color:var(--warn);font-size:12px;line-height:1.6}.small{font-size:10px;color:#87938c;line-height:1.6;margin-top:9px}
+.hidden,[hidden]{display:none!important}body[data-stage="language"] #startCard,body[data-stage="language"] #liveCard,body[data-stage="language"] #doneCard{display:none!important}.error{margin-top:9px;color:var(--warn);font-size:12px;line-height:1.6}.small{font-size:10px;color:#87938c;line-height:1.6;margin-top:9px}
 .statusbar{display:flex;align-items:center;gap:8px}.dot{width:10px;height:10px;border-radius:50%;background:#66746d}.dot.live{background:var(--live);box-shadow:0 0 0 6px rgba(239,91,91,.13)}.orb{width:110px;height:110px;margin:22px auto;border-radius:50%;background:radial-gradient(circle at 35% 30%,#43584d,#1b2821 58%,#0c120f);border:1px solid #425149;box-shadow:0 15px 42px rgba(0,0,0,.32)}.question{text-align:center;font-size:17px;line-height:1.7;min-height:65px;padding:4px}.transcript{margin-top:15px;max-height:280px;overflow:auto;background:#0c110e;border:1px solid #29352f;border-radius:13px;padding:11px}.msg{margin:7px 0;padding:9px 10px;border-radius:10px;font-size:12px;line-height:1.6}.ai{background:#17221c}.employee{background:#282f2b}.speaker{font-size:10px;color:#93a098;font-weight:800;margin-bottom:2px}
 .receipt{margin-top:13px;padding:14px;background:#0e1511;border:1px solid #334239;border-radius:13px;font-size:14px;line-height:1.75;white-space:pre-wrap}.idtag{display:inline-block;margin-top:8px;padding:5px 9px;border-radius:999px;border:1px solid #3a4840;color:#c8d2cc;font-size:11px}
 .safety{margin-top:10px;color:#aeb8b2;font-size:10px;line-height:1.65}
 @media(max-width:430px){.wrap{padding-left:11px;padding-right:11px}.logo{width:62px;height:62px}h1{font-size:24px}.langs{grid-template-columns:1fr 1fr}.langBtn{font-size:13px;padding:11px 6px}}
 </style>
 </head>
-<body>
+<body data-stage="language">
 <div class="wrap">
   <div class="head">
     <img class="logo" src="https://hiragumi.rac-solution.com/wp-content/uploads/2026/10/平組流ロゴ.png" alt="平組流">
@@ -45,7 +45,7 @@ input,select,textarea{width:100%;padding:13px 14px;border-radius:12px;border:1px
     <div id="langStatus" class="small">一覧にない言語も入力できます。</div>
   </section>
 
-  <section id="startCard" class="card hidden">
+  <section id="startCard" class="card hidden" hidden aria-hidden="true">
     <h1 id="uiTitle">会社の相談窓口</h1>
     <div id="uiSubtitle" class="lead">あなたが話しやすい言語で、AI相談員に音声で相談できます。</div>
 
@@ -67,7 +67,7 @@ input,select,textarea{width:100%;padding:13px 14px;border-radius:12px;border:1px
     <div class="safety">※ AIは聞き取りと整理を行います。法的判断、懲戒判断、医療診断は行いません。生命・身体に差し迫った危険がある場合は、この窓口だけに頼らず緊急窓口や会社の安全担当へ連絡してください。</div>
   </section>
 
-  <section id="liveCard" class="card hidden">
+  <section id="liveCard" class="card hidden" hidden aria-hidden="true">
     <div class="statusbar"><span id="dot" class="dot"></span><span id="status" class="lead">Connecting…</span></div>
     <div class="orb"></div>
     <div id="question" class="question">AI相談員を接続しています…</div>
@@ -78,7 +78,7 @@ input,select,textarea{width:100%;padding:13px 14px;border-radius:12px;border:1px
     <audio id="remoteAudio" autoplay playsinline></audio>
   </section>
 
-  <section id="doneCard" class="card hidden">
+  <section id="doneCard" class="card hidden" hidden aria-hidden="true">
     <h1 id="doneTitle">相談内容を受け付けました</h1>
     <div id="loading" class="note">内容を整理しています…</div>
     <div id="receipt" class="receipt hidden"></div>
@@ -99,7 +99,20 @@ const $=id=>document.getElementById(id);
 
 window.addEventListener('load',()=>{
   $('allLanguages').innerHTML=LANGS.map(x=>'<option value="'+esc(x[0])+'"></option>').join('');
+  showStage('language');
 });
+
+function showStage(stage){
+  document.body.dataset.stage=stage;
+  const cards={language:'languageCard',setup:'startCard',live:'liveCard',done:'doneCard'};
+  Object.entries(cards).forEach(([key,id])=>{
+    const el=$(id),show=key===stage;
+    el.hidden=!show;
+    el.classList.toggle('hidden',!show);
+    el.setAttribute('aria-hidden',show?'false':'true');
+  });
+  window.scrollTo({top:0,behavior:'instant'});
+}
 
 async function chooseLang(btn){
   document.querySelectorAll('.langBtn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');
@@ -121,8 +134,8 @@ async function loadUiLanguage(){
         if(!r.ok)throw new Error(await r.text());ui=await r.json();sessionStorage.setItem(cacheKey,JSON.stringify(ui));
       }
     }
-    applyUi();$('languageCard').classList.add('hidden');$('startCard').classList.remove('hidden');
-  }catch(e){console.error(e);ui=UI_JA;applyUi();$('langStatus').textContent='Translation failed. 日本語で表示します。';$('startCard').classList.remove('hidden')}
+    applyUi();showStage('setup');
+  }catch(e){console.error(e);ui=UI_JA;applyUi();$('langStatus').textContent='Translation failed. 日本語で表示します。';showStage('setup')}
 }
 function applyUi(){
   $('uiTitle').textContent=ui.title;$('uiSubtitle').textContent=ui.subtitle;$('identityLabel').textContent=ui.identityLabel;
@@ -146,7 +159,7 @@ async function startConsultation(){
     pc=new RTCPeerConnection();pc.ontrack=e=>{$('remoteAudio').srcObject=e.streams[0]};localStream.getTracks().forEach(t=>pc.addTrack(t,localStream));
     dc=pc.createDataChannel('oai-events');
     dc.onopen=()=>{
-      $('startCard').classList.add('hidden');$('liveCard').classList.remove('hidden');setStatus('AI',true);
+      showStage('live');setStatus('AI',true);
       dc.send(JSON.stringify({type:'response.create',response:{instructions:'相談を開始してください。選択された言語で短く挨拶し、最初の質問を1つだけしてください。'}}));
     };
     dc.onmessage=e=>{try{handleEvent(JSON.parse(e.data))}catch(_){}};
@@ -175,7 +188,7 @@ function toggleMute(){if(!localStream)return;muted=!muted;localStream.getAudioTr
 function stopMedia(){try{dc&&dc.close()}catch(e){}try{pc&&pc.close()}catch(e){}try{localStream&&localStream.getTracks().forEach(t=>t.stop())}catch(e){}}
 
 async function finishConsultation(){
-  if(finished)return;finished=true;stopMedia();$('liveCard').classList.add('hidden');$('doneCard').classList.remove('hidden');
+  if(finished)return;finished=true;stopMedia();showStage('done');
   try{
     const payload={tenantKey:'hiragumi',consultationId,languageName:lang.name,category:'会話から判定',subjectLevel:'unknown',identityMode:$('mode').value,employeeName:$('employeeName').value.trim(),affiliation:$('affiliation').value.trim(),initialNote:$('memo').value.trim(),transcript};
     const r=await fetch('/api/counsel-analyze',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
