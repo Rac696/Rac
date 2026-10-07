@@ -112,8 +112,10 @@ ${languageInstruction}
         input: {
           transcription,
           turn_detection: {
-            type: 'semantic_vad',
-            eagerness: 'low',
+            type: 'server_vad',
+            threshold: 0.30,
+            prefix_padding_ms: 500,
+            silence_duration_ms: 700,
             create_response: true,
             interrupt_response: true
           },
