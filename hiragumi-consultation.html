@@ -266,8 +266,31 @@ async function startConsultation(){
     const offer=await pc.createOffer();await pc.setLocalDescription(offer);
     const payload={sdp:offer.sdp,tenantKey:'hiragumi',consultationId,languageName:lang.name,languageCode:lang.code,category:'会話から判定',subjectLevel:'unknown',identityMode:$('mode').value,employeeName:$('employeeName').value.trim(),affiliation:$('affiliation').value.trim(),initialNote:$('memo').value.trim()};
     const r=await fetch('/api/counsel-session',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
-    if(!r.ok)throw new Error(await r.text());await pc.setRemoteDescription({type:'answer',sdp:await r.text()});
-  }catch(e){console.error(e);$('startBtn').disabled=false;$('startError').textContent='Microphone / connection error. マイク許可と通信を確認してください。';stopMedia()}
+    const answer=await r.text();
+    if(!r.ok)throw new Error('SESSION_HTTP_'+r.status+': '+answer);
+    await pc.setRemoteDescription({type:'answer',sdp:answer});
+  }catch(e){
+    console.error(e);
+    $('startBtn').disabled=false;
+    let msg='接続に失敗しました。';
+    const name=String(e&&e.name||'');
+    const detail=String(e&&e.message||'');
+    if(name==='NotAllowedError'||name==='SecurityError'){
+      msg='マイクが許可されていません。ブラウザのアドレスバー左側のサイト設定から「マイク＝許可」にしてください。';
+    }else if(name==='NotFoundError'||name==='DevicesNotFoundError'){
+      msg='使用できるマイクが見つかりません。Windowsのサウンド入力設定を確認してください。';
+    }else if(detail.includes('SESSION_HTTP_401')||detail.includes('SESSION_HTTP_403')){
+      msg='AI接続の認証に失敗しました。APIキー設定を確認します。';
+    }else if(detail.includes('SESSION_HTTP_429')){
+      msg='OpenAI APIの利用枠または請求設定で接続できません。APIの利用可能状態を確認してください。';
+    }else if(detail.includes('SESSION_HTTP_400')){
+      msg='AI音声セッション設定で接続できませんでした。設定を自動修正します。';
+    }else if(detail){
+      msg='音声接続に失敗しました。再読み込みしてもう一度お試しください。';
+    }
+    $('startError').textContent=msg;
+    stopMedia();
+  }
 }
 function handleEvent(ev){
   const t=ev.type||'';
@@ -279,7 +302,11 @@ function handleEvent(ev){
   if((t==='response.output_audio_transcript.delta'||t==='response.audio_transcript.delta')&&ev.delta){aiText+=ev.delta;$('question').textContent=aiText}
   if(t==='response.output_audio_transcript.done'||t==='response.audio_transcript.done'){const x=(ev.transcript||aiText||'').trim();if(x){addMessage('ai',x);$('question').textContent=x}aiText=''}
   if(t==='response.done')setStatus('READY',false);
-  if(t==='error')$('liveError').textContent='AI communication error.';
+  if(t==='error'){
+    const m=String(ev.error?.message||ev.error?.code||'AI communication error');
+    console.error('Realtime error',ev);
+    $('liveError').textContent='AI音声通信エラー: '+m.slice(0,220);
+  }
 }
 function addMessage(role,text){if(!text)return;transcript.push({role,text});$('transcript').innerHTML=transcript.map(x=>'<div class="msg '+(x.role==='employee'?'employee':'ai')+'"><div class="speaker">'+(x.role==='employee'?'YOU':'AI')+'</div>'+esc(x.text)+'</div>').join('');$('transcript').scrollTop=$('transcript').scrollHeight}
 function setStatus(text,live){$('status').textContent=text;$('dot').className='dot'+(live?' live':'')}
