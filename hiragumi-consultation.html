@@ -70,7 +70,28 @@ input,select,textarea{width:100%;padding:13px 14px;border-radius:12px;border:1px
         <option value="company" id="subjectCompany">会社・制度全体</option>
       </select>
     </div>
-    <div class="field"><label id="shareAvoidLabel">共有してほしくない相手（任意）</label><input id="shareAvoid" placeholder="例：直属上司、○○さん"></div>
+    <div class="field">
+      <label id="shareAvoidLabel">共有してほしくない相手（任意）</label>
+      <select id="shareAvoidType">
+        <option value="" id="avoidNone">指定しない</option>
+        <option value="direct_supervisor" id="avoidSupervisor">直属上司</option>
+        <option value="subject_person" id="avoidSubject">相談対象者本人</option>
+        <option value="specific_executive" id="avoidExecutive">特定の役員</option>
+        <option value="other" id="avoidOther">その他</option>
+      </select>
+      <input id="shareAvoid" style="margin-top:8px" placeholder="必要な場合：相手の氏名・役職など">
+    </div>
+
+    <div class="field">
+      <label id="shareScopeLabel">この相談内容を対応のためにどこまで共有してよいですか？</label>
+      <select id="shareScope">
+        <option value="anonymized" id="scopeAnon">本人特定情報を伏せれば、必要な担当者への共有可</option>
+        <option value="summary_only" id="scopeSummary">相談内容の要旨だけなら共有可</option>
+        <option value="confirm_first" id="scopeConfirm">誰かに共有する前に、まず自分に確認してほしい</option>
+        <option value="external_only" id="scopeExternal">一切共有せず、外部相談対応者への相談だけにしたい</option>
+      </select>
+      <div id="shareScopeNote" class="small">共有を制限するほど、会社による事実確認や具体的な改善対応が難しくなる場合があります。</div>
+    </div>
 
     <div class="field">
       <label id="contentLabel">相談内容</label>
@@ -97,7 +118,7 @@ input,select,textarea{width:100%;padding:13px 14px;border-radius:12px;border:1px
     </div>
 
     <div id="privacy" class="note">本窓口は外部相談対応者が受付します。相談内容は、対応に必要な担当者に限って共有します。相談対象者本人へ自動的に共有することはありません。</div>
-    <label class="consent"><input type="checkbox" id="consent"><span id="consentText">入力した相談内容を外部相談対応者が受け付け、対応のため必要に応じて日本語へ自動翻訳し、必要な範囲で関係者へ共有することに同意します。</span></label>
+    <label class="consent"><input type="checkbox" id="consent"><span id="consentText">入力した相談内容を外部相談対応者が受け付け、必要に応じて日本語へ自動翻訳し、上で選択した共有範囲に従って取り扱うことに同意します。</span></label>
     <button id="reviewBtn" class="btn primary">内容を確認する</button>
     <div id="formError" class="error"></div>
   </section>
@@ -124,11 +145,63 @@ input,select,textarea{width:100%;padding:13px 14px;border-radius:12px;border:1px
 
 <script>
 const PRESETS={
-ja:{title:'社内相談窓口',subtitle:'外部相談対応者が受付します。相談内容を音声または文字で入力してください。',modeLabel:'相談方法',anonymous:'匿名で相談する',named:'名前を伝えて相談する',nameLabel:'氏名',aff:'所属・現場など（任意）',subjectLabel:'誰についての相談ですか？',subjectUnknown:'わからない・その他',subjectCoworker:'同僚',subjectLeader:'職長・リーダー',subjectManager:'管理職',subjectOfficer:'役員',subjectVicePresident:'副社長',subjectPresident:'社長',subjectCompany:'会社・制度全体',shareAvoidLabel:'共有してほしくない相手（任意）',shareAvoidPlaceholder:'例：直属上司、○○さん',content:'相談内容',placeholder:'ここに相談内容を入力してください。音声入力した内容もここに文字で表示されます。',improveLabel:'あなたはどうすればよくなると考えますか？（任意）',improvePlaceholder:'会社や周囲にどのような対応・変化があればよくなると思うか、あなたの考えを入力してください。',selfActionLabel:'あなたにできることは何ですか？（任意）',selfActionPlaceholder:'自分でできそうなこと、協力できること、今後やってみようと思うことがあれば入力してください。',voiceStart:'🎤 音声入力を開始',voiceStop:'■ 音声入力を停止',voiceIdle:'文字入力はいつでも使えます。',privacy:'本窓口は外部相談対応者が受付します。相談内容は、対応に必要な担当者に限って共有します。相談対象者本人へ自動的に共有することはありません。',consent:'入力した相談内容を外部相談対応者が受け付け、対応のため必要に応じて日本語へ自動翻訳し、必要な範囲で関係者へ共有することに同意します。',review:'内容を確認する',reviewTitle:'送信前の確認',reviewLead:'下記の内容で送信します。間違いがあれば修正してください。',edit:'修正する',send:'この内容で送信',done:'相談を受け付けました',doneText:'送信が完了しました。相談IDを控えてください。'},
+ja:{title:'社内相談窓口',subtitle:'外部相談対応者が受付します。相談内容を音声または文字で入力してください。',modeLabel:'相談方法',anonymous:'匿名で相談する',named:'名前を伝えて相談する',nameLabel:'氏名',aff:'所属・現場など（任意）',subjectLabel:'誰についての相談ですか？',subjectUnknown:'わからない・その他',subjectCoworker:'同僚',subjectLeader:'職長・リーダー',subjectManager:'管理職',subjectOfficer:'役員',subjectVicePresident:'副社長',subjectPresident:'社長',subjectCompany:'会社・制度全体',shareAvoidLabel:'共有してほしくない相手（任意）',shareAvoidPlaceholder:'例：直属上司、○○さん',content:'相談内容',placeholder:'ここに相談内容を入力してください。音声入力した内容もここに文字で表示されます。',improveLabel:'あなたはどうすればよくなると考えますか？（任意）',improvePlaceholder:'会社や周囲にどのような対応・変化があればよくなると思うか、あなたの考えを入力してください。',selfActionLabel:'あなたにできることは何ですか？（任意）',selfActionPlaceholder:'自分でできそうなこと、協力できること、今後やってみようと思うことがあれば入力してください。',voiceStart:'🎤 音声入力を開始',voiceStop:'■ 音声入力を停止',voiceIdle:'文字入力はいつでも使えます。',privacy:'本窓口は外部相談対応者が受付します。相談内容は、対応に必要な担当者に限って共有します。相談対象者本人へ自動的に共有することはありません。',consent:'入力した相談内容を外部相談対応者が受け付け、必要に応じて日本語へ自動翻訳し、上で選択した共有範囲に従って取り扱うことに同意します。',review:'内容を確認する',reviewTitle:'送信前の確認',reviewLead:'下記の内容で送信します。間違いがあれば修正してください。',edit:'修正する',send:'この内容で送信',done:'相談を受け付けました',doneText:'送信が完了しました。相談IDを控えてください。'},
 en:{title:'Internal Consultation Desk',subtitle:'An external consultation responder receives your submission. Enter your consultation by voice or text.',modeLabel:'Consultation method',anonymous:'Consult anonymously',named:'Consult with your name',nameLabel:'Name',aff:'Team / worksite (optional)',subjectLabel:'Who is this consultation about?',subjectUnknown:'Not sure / other',subjectCoworker:'Coworker',subjectLeader:'Foreman / team leader',subjectManager:'Manager',subjectOfficer:'Executive',subjectVicePresident:'Vice president',subjectPresident:'President',subjectCompany:'Company / company-wide system',shareAvoidLabel:'Person(s) you do not want this shared with (optional)',shareAvoidPlaceholder:'Example: direct supervisor, specific person',content:'Consultation details',placeholder:'Type your consultation here. Voice input will also appear here as text.',improveLabel:'What do you think would make the situation better? (optional)',improvePlaceholder:'Describe what kind of response or change from the company or people around you would help improve the situation.',selfActionLabel:'What can you do? (optional)',selfActionPlaceholder:'If there is anything you can do, cooperate with, or try yourself, please enter it here.',voiceStart:'🎤 Start voice input',voiceStop:'■ Stop voice input',voiceIdle:'Text input is always available.',privacy:'This desk is received by an external consultation responder. The content is shared only with people necessary to handle the matter and is not automatically shared with the person you are consulting about.',consent:'I agree that an external consultation responder may receive my submission and share it only as necessary to handle the matter.',review:'Review before sending',reviewTitle:'Review before sending',reviewLead:'Please check the content below before sending.',edit:'Edit',send:'Send this consultation',done:'Consultation received',doneText:'Your consultation has been submitted. Please keep the consultation ID.'},
 vi:{title:'Kênh tư vấn nội bộ',subtitle:'Người phụ trách tư vấn bên ngoài sẽ tiếp nhận. Hãy nhập nội dung tư vấn bằng giọng nói hoặc văn bản.',modeLabel:'Cách tư vấn',anonymous:'Tư vấn ẩn danh',named:'Tư vấn có cung cấp tên',nameLabel:'Họ và tên',aff:'Bộ phận / công trường (không bắt buộc)',subjectLabel:'Nội dung tư vấn liên quan đến ai?',subjectUnknown:'Không rõ / khác',subjectCoworker:'Đồng nghiệp',subjectLeader:'Tổ trưởng / trưởng nhóm',subjectManager:'Quản lý',subjectOfficer:'Ban điều hành',subjectVicePresident:'Phó giám đốc',subjectPresident:'Giám đốc / Chủ tịch',subjectCompany:'Công ty / chế độ chung',shareAvoidLabel:'Người bạn không muốn chia sẻ nội dung này (không bắt buộc)',shareAvoidPlaceholder:'Ví dụ: quản lý trực tiếp, tên người cụ thể',content:'Nội dung tư vấn',placeholder:'Nhập nội dung tư vấn tại đây. Nội dung nói bằng giọng nói cũng sẽ được hiển thị thành văn bản.',improveLabel:'Theo bạn, cần làm gì để tình hình tốt hơn? (không bắt buộc)',improvePlaceholder:'Hãy nhập suy nghĩ của bạn về cách công ty hoặc những người xung quanh có thể hỗ trợ hay thay đổi để tình hình tốt hơn.',selfActionLabel:'Bạn có thể làm gì? (không bắt buộc)',selfActionPlaceholder:'Nếu có điều gì bạn có thể tự làm, hợp tác hoặc thử thực hiện, hãy nhập tại đây.',voiceStart:'🎤 Bắt đầu nhập bằng giọng nói',voiceStop:'■ Dừng nhập bằng giọng nói',voiceIdle:'Bạn luôn có thể nhập bằng bàn phím.',privacy:'Kênh này do người phụ trách tư vấn bên ngoài tiếp nhận. Nội dung chỉ được chia sẻ với những người cần thiết để xử lý và không tự động được chia sẻ với người mà bạn đang phản ánh.',consent:'Tôi đồng ý để người phụ trách tư vấn bên ngoài tiếp nhận nội dung và chỉ chia sẻ trong phạm vi cần thiết để xử lý.',review:'Kiểm tra nội dung',reviewTitle:'Kiểm tra trước khi gửi',reviewLead:'Hãy kiểm tra nội dung dưới đây trước khi gửi.',edit:'Sửa',send:'Gửi nội dung này',done:'Đã tiếp nhận tư vấn',doneText:'Đã gửi nội dung tư vấn. Hãy lưu lại mã tư vấn.'},
 id:{title:'Layanan Konsultasi Internal',subtitle:'Konsultasi diterima oleh petugas konsultasi eksternal. Masukkan isi konsultasi melalui suara atau teks.',modeLabel:'Cara berkonsultasi',anonymous:'Konsultasi anonim',named:'Konsultasi dengan nama',nameLabel:'Nama',aff:'Bagian / lokasi kerja (opsional)',subjectLabel:'Konsultasi ini tentang siapa?',subjectUnknown:'Tidak yakin / lainnya',subjectCoworker:'Rekan kerja',subjectLeader:'Mandor / pemimpin tim',subjectManager:'Manajer',subjectOfficer:'Eksekutif',subjectVicePresident:'Wakil presiden',subjectPresident:'Presiden',subjectCompany:'Perusahaan / sistem perusahaan',shareAvoidLabel:'Orang yang tidak ingin Anda beri akses (opsional)',shareAvoidPlaceholder:'Contoh: atasan langsung, nama tertentu',content:'Isi konsultasi',placeholder:'Masukkan isi konsultasi di sini. Input suara juga akan ditampilkan sebagai teks.',improveLabel:'Menurut Anda, apa yang perlu dilakukan agar keadaan membaik? (opsional)',improvePlaceholder:'Tuliskan pendapat Anda tentang respons atau perubahan apa yang diperlukan dari perusahaan atau orang di sekitar Anda.',selfActionLabel:'Apa yang dapat Anda lakukan? (opsional)',selfActionPlaceholder:'Jika ada hal yang dapat Anda lakukan, bantu, atau coba sendiri, silakan tuliskan di sini.',voiceStart:'🎤 Mulai input suara',voiceStop:'■ Hentikan input suara',voiceIdle:'Input teks selalu dapat digunakan.',privacy:'Layanan ini diterima oleh petugas konsultasi eksternal. Isi hanya dibagikan kepada pihak yang diperlukan untuk penanganan dan tidak otomatis dibagikan kepada orang yang menjadi subjek konsultasi.',consent:'Saya setuju petugas konsultasi eksternal menerima isi konsultasi dan membagikannya hanya sejauh diperlukan untuk penanganan.',review:'Periksa isi',reviewTitle:'Periksa sebelum mengirim',reviewLead:'Periksa isi di bawah sebelum mengirim.',edit:'Edit',send:'Kirim konsultasi ini',done:'Konsultasi diterima',doneText:'Konsultasi telah dikirim. Simpan ID konsultasi Anda.'},
 km:{title:'បណ្តាញប្រឹក្សាផ្ទៃក្នុង',subtitle:'អ្នកទទួលបន្ទុកពិគ្រោះខាងក្រៅនឹងទទួលព័ត៌មាននេះ។ សូមបញ្ចូលខ្លឹមសារជាសំឡេង ឬអក្សរ។',modeLabel:'របៀបពិគ្រោះ',anonymous:'ពិគ្រោះដោយអនាមិក',named:'ពិគ្រោះដោយប្រាប់ឈ្មោះ',nameLabel:'ឈ្មោះ',aff:'ផ្នែក / ការដ្ឋាន (មិនបាច់បំពេញក៏បាន)',subjectLabel:'ការពិគ្រោះនេះពាក់ព័ន្ធនឹងអ្នកណា?',subjectUnknown:'មិនប្រាកដ / ផ្សេងទៀត',subjectCoworker:'មិត្តរួមការងារ',subjectLeader:'មេក្រុម / អ្នកដឹកនាំ',subjectManager:'អ្នកគ្រប់គ្រង',subjectOfficer:'ថ្នាក់ដឹកនាំក្រុមហ៊ុន',subjectVicePresident:'អនុប្រធាន',subjectPresident:'ប្រធាន',subjectCompany:'ក្រុមហ៊ុន / ប្រព័ន្ធទូទៅ',shareAvoidLabel:'អ្នកដែលអ្នកមិនចង់ឱ្យចែករំលែក (មិនបាច់បំពេញក៏បាន)',shareAvoidPlaceholder:'ឧ. អ្នកគ្រប់គ្រងផ្ទាល់ ឬឈ្មោះជាក់លាក់',content:'ខ្លឹមសារពិគ្រោះ',placeholder:'សូមបញ្ចូលខ្លឹមសារនៅទីនេះ។ ការនិយាយជាសំឡេងនឹងបង្ហាញជាអក្សរផងដែរ។',improveLabel:'តើអ្នកគិតថាត្រូវធ្វើអ្វីដើម្បីឱ្យស្ថានភាពប្រសើរឡើង? (មិនបាច់បំពេញក៏បាន)',improvePlaceholder:'សូមបញ្ចូលគំនិតរបស់អ្នកអំពីអ្វីដែលក្រុមហ៊ុន ឬមនុស្សជុំវិញគួរធ្វើ ឬផ្លាស់ប្តូរ ដើម្បីឱ្យស្ថានភាពប្រសើរឡើង។',selfActionLabel:'តើអ្នកអាចធ្វើអ្វីបានខ្លះ? (មិនបាច់បំពេញក៏បាន)',selfActionPlaceholder:'បើមានអ្វីដែលអ្នកអាចធ្វើ សហការ ឬសាកល្បងធ្វើដោយខ្លួនឯង សូមបញ្ចូលនៅទីនេះ។',voiceStart:'🎤 ចាប់ផ្តើមបញ្ចូលសំឡេង',voiceStop:'■ បញ្ឈប់ការបញ្ចូលសំឡេង',voiceIdle:'អ្នកអាចវាយអក្សរបានគ្រប់ពេល។',privacy:'បណ្តាញនេះត្រូវបានទទួលដោយអ្នកទទួលបន្ទុកពិគ្រោះខាងក្រៅ។ ខ្លឹមសារនឹងត្រូវចែករំលែកតែជាមួយអ្នកដែលចាំបាច់សម្រាប់ដោះស្រាយ ហើយមិនចែករំលែកដោយស្វ័យប្រវត្តិទៅកាន់បុគ្គលដែលអ្នកកំពុងពិគ្រោះអំពីទេ។',consent:'ខ្ញុំយល់ព្រមឱ្យអ្នកទទួលបន្ទុកពិគ្រោះខាងក្រៅទទួលខ្លឹមសារ និងចែករំលែកតែក្នុងកម្រិតដែលចាំបាច់សម្រាប់ដោះស្រាយ។',review:'ពិនិត្យខ្លឹមសារ',reviewTitle:'ពិនិត្យមុនផ្ញើ',reviewLead:'សូមពិនិត្យខ្លឹមសារខាងក្រោមមុនផ្ញើ។',edit:'កែសម្រួល',send:'ផ្ញើខ្លឹមសារនេះ',done:'បានទទួលការពិគ្រោះ',doneText:'បានផ្ញើរួច។ សូមរក្សាទុកលេខសម្គាល់ការពិគ្រោះ។'}
+};
+const SHARE_PRESETS={
+ja:{
+  avoidNone:'指定しない',avoidSupervisor:'直属上司',avoidSubject:'相談対象者本人',avoidExecutive:'特定の役員',avoidOther:'その他',
+  avoidPlaceholder:'必要な場合：相手の氏名・役職など',
+  scopeLabel:'この相談内容を対応のためにどこまで共有してよいですか？',
+  scopeAnon:'本人特定情報を伏せれば、必要な担当者への共有可',
+  scopeSummary:'相談内容の要旨だけなら共有可',
+  scopeConfirm:'誰かに共有する前に、まず自分に確認してほしい',
+  scopeExternal:'一切共有せず、外部相談対応者への相談だけにしたい',
+  scopeNote:'共有を制限するほど、会社による事実確認や具体的な改善対応が難しくなる場合があります。'
+},
+en:{
+  avoidNone:'No restriction specified',avoidSupervisor:'Direct supervisor',avoidSubject:'The person this consultation is about',avoidExecutive:'A specific executive',avoidOther:'Other',
+  avoidPlaceholder:'If needed: name or role of the person',
+  scopeLabel:'How much of this consultation may be shared to handle the matter?',
+  scopeAnon:'May be shared with necessary responders if identifying information is removed',
+  scopeSummary:'Only a summary may be shared',
+  scopeConfirm:'Ask me before sharing with anyone',
+  scopeExternal:'Do not share; keep it only with the external consultation responder',
+  scopeNote:'The more sharing is restricted, the harder it may be for the company to verify facts or take concrete action.'
+},
+vi:{
+  avoidNone:'Không chỉ định',avoidSupervisor:'Quản lý trực tiếp',avoidSubject:'Người liên quan đến nội dung tư vấn',avoidExecutive:'Một lãnh đạo cụ thể',avoidOther:'Khác',
+  avoidPlaceholder:'Nếu cần: họ tên hoặc chức vụ của người đó',
+  scopeLabel:'Nội dung tư vấn này có thể được chia sẻ đến mức nào để xử lý?',
+  scopeAnon:'Có thể chia sẻ cho người cần thiết nếu ẩn thông tin nhận dạng của tôi',
+  scopeSummary:'Chỉ được chia sẻ phần tóm tắt',
+  scopeConfirm:'Hãy hỏi lại tôi trước khi chia sẻ với bất kỳ ai',
+  scopeExternal:'Không chia sẻ; chỉ giữ với người phụ trách tư vấn bên ngoài',
+  scopeNote:'Việc hạn chế chia sẻ có thể khiến công ty khó xác minh sự việc hoặc thực hiện cải thiện cụ thể.'
+},
+id:{
+  avoidNone:'Tidak ditentukan',avoidSupervisor:'Atasan langsung',avoidSubject:'Orang yang menjadi subjek konsultasi',avoidExecutive:'Eksekutif tertentu',avoidOther:'Lainnya',
+  avoidPlaceholder:'Jika perlu: nama atau jabatan orang tersebut',
+  scopeLabel:'Sejauh mana isi konsultasi ini boleh dibagikan untuk penanganan?',
+  scopeAnon:'Boleh dibagikan kepada petugas yang diperlukan jika informasi identitas saya disamarkan',
+  scopeSummary:'Hanya ringkasan yang boleh dibagikan',
+  scopeConfirm:'Tanyakan kepada saya sebelum membagikan kepada siapa pun',
+  scopeExternal:'Jangan dibagikan; hanya untuk petugas konsultasi eksternal',
+  scopeNote:'Semakin ketat pembatasan berbagi, semakin sulit perusahaan melakukan verifikasi fakta atau tindakan perbaikan konkret.'
+},
+km:{
+  avoidNone:'មិនកំណត់',avoidSupervisor:'អ្នកគ្រប់គ្រងផ្ទាល់',avoidSubject:'បុគ្គលដែលការពិគ្រោះនេះពាក់ព័ន្ធ',avoidExecutive:'ថ្នាក់ដឹកនាំជាក់លាក់',avoidOther:'ផ្សេងទៀត',
+  avoidPlaceholder:'បើចាំបាច់៖ ឈ្មោះ ឬតួនាទីរបស់បុគ្គលនោះ',
+  scopeLabel:'សម្រាប់ដោះស្រាយ តើអាចចែករំលែកខ្លឹមសារនេះដល់កម្រិតណា?',
+  scopeAnon:'អាចចែករំលែកជាមួយអ្នកដែលចាំបាច់ ប្រសិនបើលាក់ព័ត៌មានដែលអាចសម្គាល់ខ្ញុំបាន',
+  scopeSummary:'អាចចែករំលែកតែសេចក្តីសង្ខេប',
+  scopeConfirm:'សូមសួរខ្ញុំមុនពេលចែករំលែកទៅអ្នកណាម្នាក់',
+  scopeExternal:'កុំចែករំលែក ហើយទុកតែជាមួយអ្នកទទួលបន្ទុកពិគ្រោះខាងក្រៅ',
+  scopeNote:'ការកំណត់ការចែករំលែកខ្លាំងពេក អាចធ្វើឱ្យក្រុមហ៊ុនពិបាកផ្ទៀងផ្ទាត់ការពិត ឬអនុវត្តការកែលម្អជាក់ស្តែង។'
+}
 };
 let lang={code:'ja',name:'日本語'},ui=PRESETS.ja,recognition=null,listening=false,voiceTarget=null;
 const $=id=>document.getElementById(id);
@@ -139,7 +212,10 @@ function applyUi(){
   $('affLabel').textContent=ui.aff;$('subjectLabel').textContent=ui.subjectLabel;$('subjectUnknown').textContent=ui.subjectUnknown;
   $('subjectCoworker').textContent=ui.subjectCoworker;$('subjectLeader').textContent=ui.subjectLeader;$('subjectManager').textContent=ui.subjectManager;
   $('subjectOfficer').textContent=ui.subjectOfficer;$('subjectVicePresident').textContent=ui.subjectVicePresident;$('subjectPresident').textContent=ui.subjectPresident;
-  $('subjectCompany').textContent=ui.subjectCompany;$('shareAvoidLabel').textContent=ui.shareAvoidLabel;$('shareAvoid').placeholder=ui.shareAvoidPlaceholder;
+  $('subjectCompany').textContent=ui.subjectCompany;$('shareAvoidLabel').textContent=ui.shareAvoidLabel;
+  const shareUi=SHARE_PRESETS[lang.code]||SHARE_PRESETS.en;
+  $('avoidNone').textContent=shareUi.avoidNone;$('avoidSupervisor').textContent=shareUi.avoidSupervisor;$('avoidSubject').textContent=shareUi.avoidSubject;$('avoidExecutive').textContent=shareUi.avoidExecutive;$('avoidOther').textContent=shareUi.avoidOther;
+  $('shareAvoid').placeholder=shareUi.avoidPlaceholder;$('shareScopeLabel').textContent=shareUi.scopeLabel;$('scopeAnon').textContent=shareUi.scopeAnon;$('scopeSummary').textContent=shareUi.scopeSummary;$('scopeConfirm').textContent=shareUi.scopeConfirm;$('scopeExternal').textContent=shareUi.scopeExternal;$('shareScopeNote').textContent=shareUi.scopeNote;
   $('contentLabel').textContent=ui.content;$('content').placeholder=ui.placeholder;
   $('improveLabel').textContent=ui.improveLabel;$('improveIdea').placeholder=ui.improvePlaceholder;
   $('selfActionLabel').textContent=ui.selfActionLabel;$('selfAction').placeholder=ui.selfActionPlaceholder;
@@ -237,7 +313,10 @@ $('reviewBtn').onclick=()=>{
   if(selfAction)reviewParts.push(ui.selfActionLabel.replace('（任意）','').replace(' (optional)','')+':\n'+selfAction);
   $('reviewContent').textContent=reviewParts.join('\n\n');
   const subjectText=$('subjectLevel').selectedOptions[0]?.textContent||'';
-  $('reviewMeta').textContent=(lang.name||lang.code)+' / '+($('mode').value==='anonymous'?ui.anonymous:ui.named)+(subjectText?' / '+subjectText:'')+($('affiliation').value.trim()?' / '+$('affiliation').value.trim():'')+($('shareAvoid').value.trim()?' / '+ui.shareAvoidLabel+': '+$('shareAvoid').value.trim():'');
+  const shareUi=SHARE_PRESETS[lang.code]||SHARE_PRESETS.en;
+  const avoidText=$('shareAvoidType').selectedOptions[0]?.textContent||'';
+  const scopeText=$('shareScope').selectedOptions[0]?.textContent||'';
+  $('reviewMeta').textContent=(lang.name||lang.code)+' / '+($('mode').value==='anonymous'?ui.anonymous:ui.named)+(subjectText?' / '+subjectText:'')+($('affiliation').value.trim()?' / '+$('affiliation').value.trim():'')+(avoidText&&$('shareAvoidType').value?' / '+ui.shareAvoidLabel+': '+avoidText+($('shareAvoid').value.trim()?' '+$('shareAvoid').value.trim():''):'')+' / '+shareUi.scopeLabel+': '+scopeText;
   show('reviewCard')
 };
 $('editBtn').onclick=()=>show('formCard');
@@ -245,7 +324,7 @@ $('editBtn').onclick=()=>show('formCard');
 function makeId(){const d=new Date();return 'HG-'+d.getFullYear()+String(d.getMonth()+1).padStart(2,'0')+String(d.getDate()).padStart(2,'0')+'-'+Math.random().toString(36).slice(2,8).toUpperCase()}
 $('sendBtn').onclick=async()=>{
   $('sendError').textContent='';$('sendBtn').disabled=true;
-  const payload={consultationId:makeId(),languageName:lang.name,languageCode:lang.code,identityMode:$('mode').value,employeeName:$('mode').value==='named'?$('name').value.trim():'',affiliation:$('affiliation').value.trim(),subjectLevel:$('subjectLevel').value,shareAvoid:$('shareAvoid').value.trim(),content:$('content').value.trim(),improveIdea:$('improveIdea').value.trim(),selfAction:$('selfAction').value.trim(),confirmed:true};
+  const payload={consultationId:makeId(),languageName:lang.name,languageCode:lang.code,identityMode:$('mode').value,employeeName:$('mode').value==='named'?$('name').value.trim():'',affiliation:$('affiliation').value.trim(),subjectLevel:$('subjectLevel').value,shareAvoidType:$('shareAvoidType').value,shareAvoid:$('shareAvoid').value.trim(),shareScope:$('shareScope').value,content:$('content').value.trim(),improveIdea:$('improveIdea').value.trim(),selfAction:$('selfAction').value.trim(),confirmed:true};
   try{
     const r=await fetch('/api/counsel-submit',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
     const d=await r.json().catch(()=>({}));
