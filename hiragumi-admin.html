@@ -27,7 +27,10 @@ async function ensureJapaneseTranslation(c){
       Object.assign(c,d.record);
       renderDetail(c);
     }
-  }catch(_){}
+  }catch(_){
+    c.translationStatus='failed';
+    renderDetail(c);
+  }
   finally{translating.delete(c.consultationId)}
 }
 function renderDetail(c){if(!c)return;$('detail').innerHTML='<div class="caseId">'+esc(c.consultationId)+'</div><div class="row"><b>受付:</b> '+esc(new Date(c.receivedAt).toLocaleString('ja-JP'))+'</div><div class="row"><b>言語:</b> '+esc(c.languageName||c.languageCode)+'</div><div class="row"><b>相談方法:</b> '+esc(c.identityMode==='named'?'記名':'匿名')+(c.employeeName?' / '+esc(c.employeeName):'')+'</div><div class="row"><b>所属・現場:</b> '+esc(c.affiliation||'—')+'</div><div class="row"><b>相談対象:</b> '+esc(subject(c.subjectLevel))+'</div><div class="row"><b>共有してほしくない相手:</b> '+esc(c.shareAvoid||'—')+'</div><div class="row"><b>対応状況:</b> <select id="status" class="status"><option>未確認</option><option>確認済</option><option>対応中</option><option>対応済</option></select></div><div class="row" style="margin-top:18px"><b>相談内容（原文）</b></div><div class="content">'+esc(c.content)+'</div>'
@@ -36,6 +39,7 @@ function renderDetail(c){if(!c)return;$('detail').innerHTML='<div class="caseId"
   +(c.improveIdeaJa&&c.improveIdeaJa!==c.improveIdea?'<div class="row" style="margin-top:12px"><b>どうすればよくなると考えるか（日本語訳）</b></div><div class="content">'+esc(c.improveIdeaJa)+'</div>':'')
   +(c.selfAction?'<div class="row" style="margin-top:18px"><b>あなたにできることは何か（原文）</b></div><div class="content">'+esc(c.selfAction)+'</div>':'')
   +(c.selfActionJa&&c.selfActionJa!==c.selfAction?'<div class="row" style="margin-top:12px"><b>あなたにできること（日本語訳）</b></div><div class="content">'+esc(c.selfActionJa)+'</div>':'')
-  +((c.languageCode&&c.languageCode!=='ja'&&!c.contentJa)?'<div class="row" style="margin-top:12px;color:#d8eadf"><b>日本語訳：</b>生成中…</div>':''); $('status').value=c.status||'未確認';ensureJapaneseTranslation(c);$('status').onchange=async()=>{const status=$('status').value;const r=await fetch('/api/counsel-admin-update',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({consultationId:c.consultationId,status})});if(r.ok){c.status=status;renderList()}}}
+  +((c.languageCode&&c.languageCode!=='ja'&&!c.contentJa&&c.translationStatus!=='failed')?'<div class="row" style="margin-top:12px;color:#d8eadf"><b>日本語訳：</b>生成中…</div>':'')
+  +((c.languageCode&&c.languageCode!=='ja'&&!c.contentJa&&c.translationStatus==='failed')?'<div class="row" style="margin-top:12px;color:#ffb7b2"><b>日本語訳：</b>生成できませんでした。<button id="retryTranslation" class="btn refresh" style="margin-left:8px;padding:6px 10px">再翻訳</button></div>':''); $('status').value=c.status||'未確認';ensureJapaneseTranslation(c);const retry=$('retryTranslation');if(retry)retry.onclick=()=>{c.translationStatus='';ensureJapaneseTranslation(c)};$('status').onchange=async()=>{const status=$('status').value;const r=await fetch('/api/counsel-admin-update',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({consultationId:c.consultationId,status})});if(r.ok){c.status=status;renderList()}}}
 $('loginBtn').onclick=login;$('pin').onkeydown=e=>{if(e.key==='Enter')login()};$('refresh').onclick=load;load();
 </script></body></html>
