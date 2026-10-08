@@ -159,6 +159,7 @@ export default async function handler(req,res){
       shareAvoidType:clean(p.shareAvoidType,60),
       shareAvoid:clean(p.shareAvoid,500),
       shareScope:['anonymized','summary_only','confirm_first','external_only'].includes(clean(p.shareScope,40))?clean(p.shareScope,40):'anonymized',
+      sharePolicyVersion:'v2_confirm_before_company_share',
       content,
       improveIdea:clean(p.improveIdea,4000),
       selfAction:clean(p.selfAction,4000),
