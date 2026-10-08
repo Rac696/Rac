@@ -88,7 +88,7 @@ input,select,textarea{width:100%;padding:13px 14px;border-radius:12px;border:1px
         <option value="anonymized" id="scopeAnon">本人特定情報を伏せれば、必要な担当者への共有可</option>
         <option value="summary_only" id="scopeSummary">相談内容の要旨だけなら共有可</option>
         <option value="confirm_first" id="scopeConfirm">誰かに共有する前に、まず自分に確認してほしい</option>
-        <option value="external_only" id="scopeExternal">一切共有せず、外部相談対応者への相談だけにしたい</option>
+        <option value="external_only" id="scopeExternal">まずは外部相談対応者だけに相談したい</option>
       </select>
       <div id="shareScopeNote" class="small">共有を制限するほど、会社による事実確認や具体的な改善対応が難しくなる場合があります。</div>
     </div>
@@ -159,8 +159,8 @@ ja:{
   scopeAnon:'本人特定情報を伏せれば、必要な担当者への共有可',
   scopeSummary:'相談内容の要旨だけなら共有可',
   scopeConfirm:'誰かに共有する前に、まず自分に確認してほしい',
-  scopeExternal:'一切共有せず、外部相談対応者への相談だけにしたい',
-  scopeNote:'共有を制限するほど、会社による事実確認や具体的な改善対応が難しくなる場合があります。'
+  scopeExternal:'まずは外部相談対応者だけに相談したい',
+  scopeNote:'「まずは外部相談対応者だけ」を選んだ場合、この段階では会社側へ共有しません。会社への共有や対応が必要な場合は、原則としてあなたに確認してから進めます。共有を制限するほど、事実確認や具体的な改善対応が難しくなる場合があります。'
 },
 en:{
   avoidNone:'No restriction specified',avoidSupervisor:'Direct supervisor',avoidSubject:'The person this consultation is about',avoidExecutive:'A specific executive',avoidOther:'Other',
@@ -169,8 +169,8 @@ en:{
   scopeAnon:'May be shared with necessary responders if identifying information is removed',
   scopeSummary:'Only a summary may be shared',
   scopeConfirm:'Ask me before sharing with anyone',
-  scopeExternal:'Do not share; keep it only with the external consultation responder',
-  scopeNote:'The more sharing is restricted, the harder it may be for the company to verify facts or take concrete action.'
+  scopeExternal:'For now, I want to speak only with the external consultation responder',
+  scopeNote:'If you choose to speak only with the external consultation responder for now, the company will not be given the content at this stage. If company action becomes necessary, you will normally be asked before anything is shared. Greater restrictions may make fact-checking or concrete action harder.'
 },
 vi:{
   avoidNone:'Không chỉ định',avoidSupervisor:'Quản lý trực tiếp',avoidSubject:'Người liên quan đến nội dung tư vấn',avoidExecutive:'Một lãnh đạo cụ thể',avoidOther:'Khác',
@@ -179,8 +179,8 @@ vi:{
   scopeAnon:'Có thể chia sẻ cho người cần thiết nếu ẩn thông tin nhận dạng của tôi',
   scopeSummary:'Chỉ được chia sẻ phần tóm tắt',
   scopeConfirm:'Hãy hỏi lại tôi trước khi chia sẻ với bất kỳ ai',
-  scopeExternal:'Không chia sẻ; chỉ giữ với người phụ trách tư vấn bên ngoài',
-  scopeNote:'Việc hạn chế chia sẻ có thể khiến công ty khó xác minh sự việc hoặc thực hiện cải thiện cụ thể.'
+  scopeExternal:'Trước mắt, tôi chỉ muốn trao đổi với người phụ trách tư vấn bên ngoài',
+  scopeNote:'Nếu bạn chọn trước mắt chỉ trao đổi với người phụ trách tư vấn bên ngoài, nội dung sẽ chưa được chia sẻ với công ty. Nếu cần công ty xử lý, về nguyên tắc sẽ hỏi lại bạn trước khi chia sẻ. Hạn chế chia sẻ có thể khiến việc xác minh hoặc cải thiện cụ thể khó hơn.'
 },
 id:{
   avoidNone:'Tidak ditentukan',avoidSupervisor:'Atasan langsung',avoidSubject:'Orang yang menjadi subjek konsultasi',avoidExecutive:'Eksekutif tertentu',avoidOther:'Lainnya',
@@ -189,8 +189,8 @@ id:{
   scopeAnon:'Boleh dibagikan kepada petugas yang diperlukan jika informasi identitas saya disamarkan',
   scopeSummary:'Hanya ringkasan yang boleh dibagikan',
   scopeConfirm:'Tanyakan kepada saya sebelum membagikan kepada siapa pun',
-  scopeExternal:'Jangan dibagikan; hanya untuk petugas konsultasi eksternal',
-  scopeNote:'Semakin ketat pembatasan berbagi, semakin sulit perusahaan melakukan verifikasi fakta atau tindakan perbaikan konkret.'
+  scopeExternal:'Untuk saat ini, saya hanya ingin berkonsultasi dengan petugas konsultasi eksternal',
+  scopeNote:'Jika Anda memilih untuk sementara hanya berkonsultasi dengan petugas konsultasi eksternal, isi belum akan dibagikan kepada perusahaan. Jika tindakan perusahaan diperlukan, pada prinsipnya Anda akan dimintai konfirmasi sebelum dibagikan. Pembatasan berbagi dapat menyulitkan verifikasi atau tindakan konkret.'
 },
 km:{
   avoidNone:'មិនកំណត់',avoidSupervisor:'អ្នកគ្រប់គ្រងផ្ទាល់',avoidSubject:'បុគ្គលដែលការពិគ្រោះនេះពាក់ព័ន្ធ',avoidExecutive:'ថ្នាក់ដឹកនាំជាក់លាក់',avoidOther:'ផ្សេងទៀត',
@@ -199,8 +199,8 @@ km:{
   scopeAnon:'អាចចែករំលែកជាមួយអ្នកដែលចាំបាច់ ប្រសិនបើលាក់ព័ត៌មានដែលអាចសម្គាល់ខ្ញុំបាន',
   scopeSummary:'អាចចែករំលែកតែសេចក្តីសង្ខេប',
   scopeConfirm:'សូមសួរខ្ញុំមុនពេលចែករំលែកទៅអ្នកណាម្នាក់',
-  scopeExternal:'កុំចែករំលែក ហើយទុកតែជាមួយអ្នកទទួលបន្ទុកពិគ្រោះខាងក្រៅ',
-  scopeNote:'ការកំណត់ការចែករំលែកខ្លាំងពេក អាចធ្វើឱ្យក្រុមហ៊ុនពិបាកផ្ទៀងផ្ទាត់ការពិត ឬអនុវត្តការកែលម្អជាក់ស្តែង។'
+  scopeExternal:'សម្រាប់ពេលនេះ ខ្ញុំចង់ពិគ្រោះតែជាមួយអ្នកទទួលបន្ទុកពិគ្រោះខាងក្រៅប៉ុណ្ណោះ',
+  scopeNote:'បើអ្នកជ្រើសរើសថាសម្រាប់ពេលនេះចង់ពិគ្រោះតែជាមួយអ្នកទទួលបន្ទុកពិគ្រោះខាងក្រៅ ខ្លឹមសារនឹងមិនត្រូវចែករំលែកទៅក្រុមហ៊ុននៅដំណាក់កាលនេះទេ។ បើត្រូវការឱ្យក្រុមហ៊ុនដោះស្រាយ ជាទូទៅនឹងសួរអ្នកជាមុនសិន។ ការកំណត់ការចែករំលែកអាចធ្វើឱ្យការផ្ទៀងផ្ទាត់ ឬការកែលម្អជាក់ស្តែងពិបាកឡើង។'
 }
 };
 let lang={code:'ja',name:'日本語'},ui=PRESETS.ja,recognition=null,listening=false,voiceTarget=null;
