@@ -179,7 +179,7 @@ $('sendBtn').onclick=async()=>{
     const d=await r.json().catch(()=>({}));
     if(!r.ok)throw new Error(d.error||'submit failed');
     $('caseId').textContent=d.consultationId||payload.consultationId;show('doneCard');
-  }catch(e){$('sendError').textContent='現在、送信先の安全な保存設定が未完了です。内容は送信されていません。';$('sendBtn').disabled=false}
+  }catch(e){$('sendError').textContent='送信できませんでした。内容は送信されていません。通信状況を確認して、もう一度送信してください。';$('sendBtn').disabled=false}
 };
 applyUi();
 </script>
