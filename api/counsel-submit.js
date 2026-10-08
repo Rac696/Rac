@@ -13,6 +13,87 @@ function makeConsultationId() {
 }
 const SUBJECTS=new Set(['unknown','coworker','leader','manager','officer','vice_president','president','company']);
 
+
+function responseText(data){
+  if(data?.output_text)return data.output_text;
+  if(Array.isArray(data?.output)){
+    for(const item of data.output){
+      for(const part of (item.content||[])){
+        if(typeof part?.text==='string')return part.text;
+      }
+    }
+  }
+  return '';
+}
+async function translateConsultationToJapanese(record){
+  if(record.languageCode==='ja'||record.languageName==='日本語'){
+    return {
+      status:'not_needed',
+      contentJa:record.content||'',
+      improveIdeaJa:record.improveIdea||'',
+      selfActionJa:record.selfAction||''
+    };
+  }
+  const apiKey=String(process.env.OPENAI_API_KEY||'').trim();
+  if(!apiKey)return {status:'unavailable',contentJa:'',improveIdeaJa:'',selfActionJa:''};
+
+  const schema={
+    type:'object',
+    additionalProperties:false,
+    properties:{
+      content_ja:{type:'string'},
+      improve_idea_ja:{type:'string'},
+      self_action_ja:{type:'string'}
+    },
+    required:['content_ja','improve_idea_ja','self_action_ja']
+  };
+  const input={
+    source_language:record.languageName||record.languageCode||'unknown',
+    consultation_content:record.content||'',
+    improvement_idea:record.improveIdea||'',
+    self_action:record.selfAction||''
+  };
+  try{
+    const r=await fetch('https://api.openai.com/v1/responses',{
+      method:'POST',
+      headers:{
+        'Authorization':'Bearer '+apiKey,
+        'Content-Type':'application/json'
+      },
+      body:JSON.stringify({
+        model:'gpt-6-luna',
+        input:[
+          {
+            role:'system',
+            content:[{type:'input_text',text:'Translate the employee workplace consultation faithfully into natural Japanese. Do not summarize, judge, soften, strengthen, interpret, or add facts. Preserve names, dates, amounts, and uncertainty. Empty source fields must remain empty. Return only the required JSON fields.'}]
+          },
+          {
+            role:'user',
+            content:[{type:'input_text',text:JSON.stringify(input)}]
+          }
+        ],
+        text:{format:{type:'json_schema',name:'hiragumi_consultation_translation',strict:true,schema}},
+        max_output_tokens:4500
+      })
+    });
+    const data=await r.json();
+    if(!r.ok){
+      console.error('translation failed',r.status,JSON.stringify(data).slice(0,500));
+      return {status:'failed',contentJa:'',improveIdeaJa:'',selfActionJa:''};
+    }
+    const parsed=JSON.parse(responseText(data));
+    return {
+      status:'translated',
+      contentJa:String(parsed.content_ja||''),
+      improveIdeaJa:String(parsed.improve_idea_ja||''),
+      selfActionJa:String(parsed.self_action_ja||'')
+    };
+  }catch(e){
+    console.error('translation exception',e?.message||e);
+    return {status:'failed',contentJa:'',improveIdeaJa:'',selfActionJa:''};
+  }
+}
+
 async function sendNotification(record){
   const apiKey=String(process.env.RESEND_API_KEY||'').trim();
   const rawTo=String(process.env.HIRAGUMI_NOTIFY_TO||'').trim();
@@ -79,6 +160,10 @@ export default async function handler(req,res){
       content,
       improveIdea:clean(p.improveIdea,4000),
       selfAction:clean(p.selfAction,4000),
+      contentJa:'',
+      improveIdeaJa:'',
+      selfActionJa:'',
+      translationStatus:'pending',
       updatedAt:receivedAt
     };
 
@@ -87,6 +172,23 @@ export default async function handler(req,res){
       addRandomSuffix:false,
       contentType:'application/json; charset=utf-8'
     });
+
+    try{
+      const t=await translateConsultationToJapanese(record);
+      record.translationStatus=t.status;
+      record.contentJa=t.contentJa;
+      record.improveIdeaJa=t.improveIdeaJa;
+      record.selfActionJa=t.selfActionJa;
+      record.translationCheckedAt=new Date().toISOString();
+      await put(`cases/${consultationId}.json`,JSON.stringify(record),{
+        access:'private',
+        addRandomSuffix:false,
+        allowOverwrite:true,
+        contentType:'application/json; charset=utf-8'
+      });
+    }catch(e){
+      console.error('translation save failed',e?.message||e);
+    }
 
     // Notification is best-effort, but await it so the serverless function is not
     // terminated before Resend receives the request. A mail failure must never
