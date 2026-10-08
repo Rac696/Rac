@@ -77,6 +77,8 @@ export default async function handler(req,res){
       subjectLevel,
       shareAvoid:clean(p.shareAvoid,500),
       content,
+      improveIdea:clean(p.improveIdea,4000),
+      selfAction:clean(p.selfAction,4000),
       updatedAt:receivedAt
     };
 
