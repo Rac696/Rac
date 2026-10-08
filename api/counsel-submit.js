@@ -84,10 +84,18 @@ export default async function handler(req,res){
       contentType:'application/json; charset=utf-8'
     });
 
-    // Notification is best-effort: a mail failure must never lose the consultation.
-    sendNotification(record).catch(e=>console.error('notification exception',e?.message||e));
+    // Notification is best-effort, but await it so the serverless function is not
+    // terminated before Resend receives the request. A mail failure must never
+    // invalidate an already-saved consultation.
+    let notification={sent:false,reason:'unknown'};
+    try{
+      notification=await sendNotification(record);
+      if(!notification.sent) console.error('notification not sent',notification.reason);
+    }catch(e){
+      console.error('notification exception',e?.message||e);
+    }
 
-    return res.status(200).json({ok:true,consultationId});
+    return res.status(200).json({ok:true,consultationId,notificationSent:notification.sent===true});
   }catch(e){
     console.error('consultation submit failed',e?.message||e);
     return res.status(500).json({ok:false,error:'Failed to save consultation'});
