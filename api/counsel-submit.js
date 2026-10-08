@@ -14,9 +14,11 @@ function makeConsultationId() {
 const SUBJECTS=new Set(['unknown','coworker','leader','manager','officer','vice_president','president','company']);
 
 async function sendNotification(record){
-  const apiKey=process.env.RESEND_API_KEY;
-  const to=process.env.HIRAGUMI_NOTIFY_TO;
-  if(!apiKey||!to)return {sent:false,reason:'not_configured'};
+  const apiKey=String(process.env.RESEND_API_KEY||'').trim();
+  const rawTo=String(process.env.HIRAGUMI_NOTIFY_TO||'').trim();
+  const emailMatch=rawTo.match(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/i);
+  const to=emailMatch?emailMatch[0]:'';
+  if(!apiKey||!to)return {sent:false,reason:'not_configured',status:0};
   const adminUrl='https://hiragumi-ai-consultation.vercel.app/hiragumi/admin';
   const subject='【平組 社内相談窓口】新規相談 '+record.consultationId;
   const text=[
@@ -36,7 +38,7 @@ async function sendNotification(record){
       'Content-Type':'application/json'
     },
     body:JSON.stringify({
-      from:process.env.HIRAGUMI_NOTIFY_FROM||'平組 社内相談窓口 <onboarding@resend.dev>',
+      from:String(process.env.HIRAGUMI_NOTIFY_FROM||'onboarding@resend.dev').trim(),
       to:[to],
       subject,
       text
@@ -45,9 +47,9 @@ async function sendNotification(record){
   if(!r.ok){
     const body=await r.text();
     console.error('notification failed',r.status,body.slice(0,500));
-    return {sent:false,reason:'send_failed'};
+    return {sent:false,reason:'send_failed',status:r.status};
   }
-  return {sent:true};
+  return {sent:true,status:r.status};
 }
 
 export default async function handler(req,res){
@@ -93,6 +95,23 @@ export default async function handler(req,res){
       if(!notification.sent) console.error('notification not sent',notification.reason);
     }catch(e){
       console.error('notification exception',e?.message||e);
+    }
+
+    try{
+      record.notification={
+        sent:notification.sent===true,
+        reason:String(notification.reason||''),
+        status:Number(notification.status||0),
+        checkedAt:new Date().toISOString()
+      };
+      await put(`cases/${consultationId}.json`,JSON.stringify(record),{
+        access:'private',
+        addRandomSuffix:false,
+        allowOverwrite:true,
+        contentType:'application/json; charset=utf-8'
+      });
+    }catch(e){
+      console.error('notification status save failed',e?.message||e);
     }
 
     return res.status(200).json({ok:true,consultationId,notificationSent:notification.sent===true});
