@@ -83,11 +83,17 @@ input,select,textarea{width:100%;padding:13px 14px;border-radius:12px;border:1px
     <div class="field">
       <label id="improveLabel">あなたはどうすればよくなると考えますか？（任意）</label>
       <textarea id="improveIdea" placeholder="会社や周囲にどのような対応・変化があればよくなると思うか、あなたの考えを入力してください。"></textarea>
+      <button id="improveVoiceBtn" class="btn voice" type="button">🎤 音声入力を開始</button>
+      <div class="voiceStatus"><span id="improveVoiceDot" class="dot"></span><span id="improveVoiceStatus">文字入力はいつでも使えます。</span></div>
+      <div id="improveVoiceError" class="error"></div>
     </div>
 
     <div class="field">
       <label id="selfActionLabel">あなたにできることは何ですか？（任意）</label>
       <textarea id="selfAction" placeholder="自分でできそうなこと、協力できること、今後やってみようと思うことがあれば入力してください。"></textarea>
+      <button id="selfVoiceBtn" class="btn voice" type="button">🎤 音声入力を開始</button>
+      <div class="voiceStatus"><span id="selfVoiceDot" class="dot"></span><span id="selfVoiceStatus">文字入力はいつでも使えます。</span></div>
+      <div id="selfVoiceError" class="error"></div>
     </div>
 
     <div id="privacy" class="note">本窓口は外部相談対応者が受付します。相談内容は、対応に必要な担当者に限って共有します。相談対象者本人へ自動的に共有することはありません。</div>
@@ -124,7 +130,7 @@ vi:{title:'Kênh tư vấn nội bộ',subtitle:'Người phụ trách tư vấn
 id:{title:'Layanan Konsultasi Internal',subtitle:'Konsultasi diterima oleh petugas konsultasi eksternal. Masukkan isi konsultasi melalui suara atau teks.',modeLabel:'Cara berkonsultasi',anonymous:'Konsultasi anonim',named:'Konsultasi dengan nama',nameLabel:'Nama',aff:'Bagian / lokasi kerja (opsional)',subjectLabel:'Konsultasi ini tentang siapa?',subjectUnknown:'Tidak yakin / lainnya',subjectCoworker:'Rekan kerja',subjectLeader:'Mandor / pemimpin tim',subjectManager:'Manajer',subjectOfficer:'Eksekutif',subjectVicePresident:'Wakil presiden',subjectPresident:'Presiden',subjectCompany:'Perusahaan / sistem perusahaan',shareAvoidLabel:'Orang yang tidak ingin Anda beri akses (opsional)',shareAvoidPlaceholder:'Contoh: atasan langsung, nama tertentu',content:'Isi konsultasi',placeholder:'Masukkan isi konsultasi di sini. Input suara juga akan ditampilkan sebagai teks.',improveLabel:'Menurut Anda, apa yang perlu dilakukan agar keadaan membaik? (opsional)',improvePlaceholder:'Tuliskan pendapat Anda tentang respons atau perubahan apa yang diperlukan dari perusahaan atau orang di sekitar Anda.',selfActionLabel:'Apa yang dapat Anda lakukan? (opsional)',selfActionPlaceholder:'Jika ada hal yang dapat Anda lakukan, bantu, atau coba sendiri, silakan tuliskan di sini.',voiceStart:'🎤 Mulai input suara',voiceStop:'■ Hentikan input suara',voiceIdle:'Input teks selalu dapat digunakan.',privacy:'Layanan ini diterima oleh petugas konsultasi eksternal. Isi hanya dibagikan kepada pihak yang diperlukan untuk penanganan dan tidak otomatis dibagikan kepada orang yang menjadi subjek konsultasi.',consent:'Saya setuju petugas konsultasi eksternal menerima isi konsultasi dan membagikannya hanya sejauh diperlukan untuk penanganan.',review:'Periksa isi',reviewTitle:'Periksa sebelum mengirim',reviewLead:'Periksa isi di bawah sebelum mengirim.',edit:'Edit',send:'Kirim konsultasi ini',done:'Konsultasi diterima',doneText:'Konsultasi telah dikirim. Simpan ID konsultasi Anda.'},
 km:{title:'បណ្តាញប្រឹក្សាផ្ទៃក្នុង',subtitle:'អ្នកទទួលបន្ទុកពិគ្រោះខាងក្រៅនឹងទទួលព័ត៌មាននេះ។ សូមបញ្ចូលខ្លឹមសារជាសំឡេង ឬអក្សរ។',modeLabel:'របៀបពិគ្រោះ',anonymous:'ពិគ្រោះដោយអនាមិក',named:'ពិគ្រោះដោយប្រាប់ឈ្មោះ',nameLabel:'ឈ្មោះ',aff:'ផ្នែក / ការដ្ឋាន (មិនបាច់បំពេញក៏បាន)',subjectLabel:'ការពិគ្រោះនេះពាក់ព័ន្ធនឹងអ្នកណា?',subjectUnknown:'មិនប្រាកដ / ផ្សេងទៀត',subjectCoworker:'មិត្តរួមការងារ',subjectLeader:'មេក្រុម / អ្នកដឹកនាំ',subjectManager:'អ្នកគ្រប់គ្រង',subjectOfficer:'ថ្នាក់ដឹកនាំក្រុមហ៊ុន',subjectVicePresident:'អនុប្រធាន',subjectPresident:'ប្រធាន',subjectCompany:'ក្រុមហ៊ុន / ប្រព័ន្ធទូទៅ',shareAvoidLabel:'អ្នកដែលអ្នកមិនចង់ឱ្យចែករំលែក (មិនបាច់បំពេញក៏បាន)',shareAvoidPlaceholder:'ឧ. អ្នកគ្រប់គ្រងផ្ទាល់ ឬឈ្មោះជាក់លាក់',content:'ខ្លឹមសារពិគ្រោះ',placeholder:'សូមបញ្ចូលខ្លឹមសារនៅទីនេះ។ ការនិយាយជាសំឡេងនឹងបង្ហាញជាអក្សរផងដែរ។',improveLabel:'តើអ្នកគិតថាត្រូវធ្វើអ្វីដើម្បីឱ្យស្ថានភាពប្រសើរឡើង? (មិនបាច់បំពេញក៏បាន)',improvePlaceholder:'សូមបញ្ចូលគំនិតរបស់អ្នកអំពីអ្វីដែលក្រុមហ៊ុន ឬមនុស្សជុំវិញគួរធ្វើ ឬផ្លាស់ប្តូរ ដើម្បីឱ្យស្ថានភាពប្រសើរឡើង។',selfActionLabel:'តើអ្នកអាចធ្វើអ្វីបានខ្លះ? (មិនបាច់បំពេញក៏បាន)',selfActionPlaceholder:'បើមានអ្វីដែលអ្នកអាចធ្វើ សហការ ឬសាកល្បងធ្វើដោយខ្លួនឯង សូមបញ្ចូលនៅទីនេះ។',voiceStart:'🎤 ចាប់ផ្តើមបញ្ចូលសំឡេង',voiceStop:'■ បញ្ឈប់ការបញ្ចូលសំឡេង',voiceIdle:'អ្នកអាចវាយអក្សរបានគ្រប់ពេល។',privacy:'បណ្តាញនេះត្រូវបានទទួលដោយអ្នកទទួលបន្ទុកពិគ្រោះខាងក្រៅ។ ខ្លឹមសារនឹងត្រូវចែករំលែកតែជាមួយអ្នកដែលចាំបាច់សម្រាប់ដោះស្រាយ ហើយមិនចែករំលែកដោយស្វ័យប្រវត្តិទៅកាន់បុគ្គលដែលអ្នកកំពុងពិគ្រោះអំពីទេ។',consent:'ខ្ញុំយល់ព្រមឱ្យអ្នកទទួលបន្ទុកពិគ្រោះខាងក្រៅទទួលខ្លឹមសារ និងចែករំលែកតែក្នុងកម្រិតដែលចាំបាច់សម្រាប់ដោះស្រាយ។',review:'ពិនិត្យខ្លឹមសារ',reviewTitle:'ពិនិត្យមុនផ្ញើ',reviewLead:'សូមពិនិត្យខ្លឹមសារខាងក្រោមមុនផ្ញើ។',edit:'កែសម្រួល',send:'ផ្ញើខ្លឹមសារនេះ',done:'បានទទួលការពិគ្រោះ',doneText:'បានផ្ញើរួច។ សូមរក្សាទុកលេខសម្គាល់ការពិគ្រោះ។'}
 };
-let lang={code:'ja',name:'日本語'},ui=PRESETS.ja,recognition=null,listening=false;
+let lang={code:'ja',name:'日本語'},ui=PRESETS.ja,recognition=null,listening=false,voiceTarget=null;
 const $=id=>document.getElementById(id);
 function show(id){['languageCard','formCard','reviewCard','doneCard'].forEach(x=>$(x).classList.toggle('hidden',x!==id));scrollTo(0,0)}
 function applyUi(){
@@ -137,7 +143,12 @@ function applyUi(){
   $('contentLabel').textContent=ui.content;$('content').placeholder=ui.placeholder;
   $('improveLabel').textContent=ui.improveLabel;$('improveIdea').placeholder=ui.improvePlaceholder;
   $('selfActionLabel').textContent=ui.selfActionLabel;$('selfAction').placeholder=ui.selfActionPlaceholder;
-  $('voiceBtn').textContent=listening?ui.voiceStop:ui.voiceStart;$('voiceStatus').textContent=ui.voiceIdle;$('privacy').textContent=ui.privacy;
+  ['content','improveIdea','selfAction'].forEach(id=>{
+    const cfg=VOICE_FIELDS[id];
+    $(cfg.button).textContent=(listening&&voiceTarget===id)?ui.voiceStop:ui.voiceStart;
+    $(cfg.status).textContent=(listening&&voiceTarget===id)?'Listening…':ui.voiceIdle;
+  });
+  $('privacy').textContent=ui.privacy;
   $('consentText').textContent=ui.consent;$('reviewBtn').textContent=ui.review;$('reviewTitle').textContent=ui.reviewTitle;
   $('reviewLead').textContent=ui.reviewLead;$('editBtn').textContent=ui.edit;$('sendBtn').textContent=ui.send;
   $('doneTitle').textContent=ui.done;$('doneText').textContent=ui.doneText;document.documentElement.lang=lang.code||'en'
@@ -150,32 +161,81 @@ document.querySelectorAll('.langBtn').forEach(b=>b.onclick=()=>choose(b.dataset.
 $('otherBtn').onclick=()=>{const v=$('otherLang').value.trim();if(!v)return;lang={code:'',name:v};ui=PRESETS.en;applyUi();show('formCard')};
 $('mode').onchange=()=>{$('nameField').classList.toggle('hidden',$('mode').value!=='named')};
 
+const VOICE_FIELDS={
+  content:{button:'voiceBtn',dot:'voiceDot',status:'voiceStatus',error:'voiceError'},
+  improveIdea:{button:'improveVoiceBtn',dot:'improveVoiceDot',status:'improveVoiceStatus',error:'improveVoiceError'},
+  selfAction:{button:'selfVoiceBtn',dot:'selfVoiceDot',status:'selfVoiceStatus',error:'selfVoiceError'}
+};
 function speechLocale(){return ({ja:'ja-JP',en:'en-US',vi:'vi-VN',id:'id-ID',km:'km-KH'})[lang.code]||navigator.language||'en-US'}
-function startVoice(){
-  $('voiceError').textContent='';
-  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-  if(!SR){$('voiceError').textContent='このブラウザでは音声入力を利用できません。文字入力をご利用ください。';return}
-  recognition=new SR();recognition.lang=speechLocale();recognition.continuous=true;recognition.interimResults=true;
-  let base=$('content').value.trim();let finalChunk='';
-  recognition.onstart=()=>{listening=true;$('voiceBtn').classList.add('on');$('voiceDot').classList.add('on');$('voiceStatus').textContent='Listening…';$('voiceBtn').textContent=ui.voiceStop};
-  recognition.onresult=e=>{
-    let interim='';for(let i=e.resultIndex;i<e.results.length;i++){const t=e.results[i][0].transcript;if(e.results[i].isFinal)finalChunk+=t;else interim+=t}
-    const sep=base&&!(base.endsWith('\n')||base.endsWith(' '))?' ':'';
-    $('content').value=(base+sep+finalChunk+(interim?' '+interim:'')).trim();
-  };
-  recognition.onerror=e=>{$('voiceError').textContent='音声入力を継続できません。文字入力はそのまま利用できます。';stopVoice()};
-  recognition.onend=()=>{if(listening){base=$('content').value.trim();finalChunk='';try{recognition.start()}catch(_){stopVoice()}}};
-  try{recognition.start()}catch(e){$('voiceError').textContent='音声入力を開始できません。文字入力をご利用ください。'}
+function resetVoiceUi(){
+  Object.entries(VOICE_FIELDS).forEach(([id,cfg])=>{
+    $(cfg.button).classList.remove('on');
+    $(cfg.dot).classList.remove('on');
+    $(cfg.button).textContent=ui.voiceStart;
+    $(cfg.status).textContent=ui.voiceIdle;
+  });
 }
-function stopVoice(){listening=false;try{recognition&&recognition.stop()}catch(_){}$('voiceBtn').classList.remove('on');$('voiceDot').classList.remove('on');$('voiceStatus').textContent=ui.voiceIdle;$('voiceBtn').textContent=ui.voiceStart}
-$('voiceBtn').onclick=()=>listening?stopVoice():startVoice();
+function startVoice(targetId){
+  const cfg=VOICE_FIELDS[targetId];
+  if(!cfg)return;
+  if(listening)stopVoice();
+  Object.values(VOICE_FIELDS).forEach(x=>$(x.error).textContent='');
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!SR){$(cfg.error).textContent='このブラウザでは音声入力を利用できません。文字入力をご利用ください。';return}
+  voiceTarget=targetId;
+  recognition=new SR();recognition.lang=speechLocale();recognition.continuous=true;recognition.interimResults=true;
+  let base=$(targetId).value.trim();let finalChunk='';
+  recognition.onstart=()=>{
+    listening=true;resetVoiceUi();
+    $(cfg.button).classList.add('on');$(cfg.dot).classList.add('on');
+    $(cfg.status).textContent='Listening…';$(cfg.button).textContent=ui.voiceStop;
+  };
+  recognition.onresult=e=>{
+    let interim='';
+    for(let i=e.resultIndex;i<e.results.length;i++){
+      const t=e.results[i][0].transcript;
+      if(e.results[i].isFinal)finalChunk+=t;else interim+=t;
+    }
+    const sep=base&&!(base.endsWith('\n')||base.endsWith(' '))?' ':'';
+    $(targetId).value=(base+sep+finalChunk+(interim?' '+interim:'')).trim();
+  };
+  recognition.onerror=()=>{
+    $(cfg.error).textContent='音声入力を継続できません。文字入力はそのまま利用できます。';
+    stopVoice();
+  };
+  recognition.onend=()=>{
+    if(listening&&voiceTarget===targetId){
+      base=$(targetId).value.trim();finalChunk='';
+      try{recognition.start()}catch(_){stopVoice()}
+    }
+  };
+  try{recognition.start()}catch(e){
+    $(cfg.error).textContent='音声入力を開始できません。文字入力をご利用ください。';
+    stopVoice();
+  }
+}
+function stopVoice(){
+  listening=false;
+  try{recognition&&recognition.stop()}catch(_){}
+  recognition=null;voiceTarget=null;resetVoiceUi();
+}
+Object.entries(VOICE_FIELDS).forEach(([id,cfg])=>{
+  $(cfg.button).onclick=()=>listening&&voiceTarget===id?stopVoice():startVoice(id);
+});
 
 $('reviewBtn').onclick=()=>{
   $('formError').textContent='';
   if($('mode').value==='named'&&!$('name').value.trim()){$('formError').textContent=ui.nameLabel;return}
   if(!$('content').value.trim()){$('formError').textContent=ui.content;return}
   if(!$('consent').checked){$('formError').textContent=ui.consent;return}
-  stopVoice();$('reviewContent').textContent=$('content').value.trim();
+  stopVoice();
+  const mainContent=$('content').value.trim();
+  const improve=$('improveIdea').value.trim();
+  const selfAction=$('selfAction').value.trim();
+  const reviewParts=[ui.content+':\n'+mainContent];
+  if(improve)reviewParts.push(ui.improveLabel.replace('（任意）','').replace(' (optional)','')+':\n'+improve);
+  if(selfAction)reviewParts.push(ui.selfActionLabel.replace('（任意）','').replace(' (optional)','')+':\n'+selfAction);
+  $('reviewContent').textContent=reviewParts.join('\n\n');
   const subjectText=$('subjectLevel').selectedOptions[0]?.textContent||'';
   $('reviewMeta').textContent=(lang.name||lang.code)+' / '+($('mode').value==='anonymous'?ui.anonymous:ui.named)+(subjectText?' / '+subjectText:'')+($('affiliation').value.trim()?' / '+$('affiliation').value.trim():'')+($('shareAvoid').value.trim()?' / '+ui.shareAvoidLabel+': '+$('shareAvoid').value.trim():'');
   show('reviewCard')
