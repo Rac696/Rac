@@ -8,18 +8,34 @@
 <section id="login" class="card login"><h1>管理者ログイン</h1><div style="color:#aeb9b2;font-size:13px">管理PINを入力してください。</div><input id="pin" class="pin" type="password" inputmode="numeric" autocomplete="one-time-code"><button id="loginBtn" class="btn primary">ログイン</button><div id="loginErr" class="err"></div></section>
 <section id="app" class="hidden"><div class="card"><div class="toolbar"><div><h1>相談一覧</h1><div id="count" class="meta"></div></div><button id="refresh" class="btn refresh">更新</button></div><div class="grid"><div id="list" class="list"></div><div id="detail" class="detail card" style="margin-top:0"><div class="empty">相談を選択してください。</div></div></div></div></section>
 </div><script>
-const $=x=>document.getElementById(x);let cases=[],selected='';
+const $=x=>document.getElementById(x);let cases=[],selected='';const translating=new Set();
 async function login(){ $('loginErr').textContent='';const r=await fetch('/api/counsel-admin-login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({pin:$('pin').value})});if(!r.ok){$('loginErr').textContent='PINが違います。';return}await load()}
 async function load(){const r=await fetch('/api/counsel-admin-cases',{cache:'no-store'});if(r.status===401){$('login').classList.remove('hidden');$('app').classList.add('hidden');return}const d=await r.json();cases=d.cases||[];$('login').classList.add('hidden');$('app').classList.remove('hidden');$('count').textContent=cases.length+'件';renderList();if(selected){const c=cases.find(x=>x.consultationId===selected);if(c)renderDetail(c)}}
 function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
 function subject(v){return({unknown:'わからない・その他',coworker:'同僚',leader:'職長・リーダー',manager:'管理職',officer:'役員',vice_president:'副社長',president:'社長',company:'会社・制度全体'})[v]||v}
 function renderList(){if(!cases.length){$('list').innerHTML='<div class="empty">まだ相談はありません。</div>';return}$('list').innerHTML=cases.map(c=>'<div class="case '+(c.consultationId===selected?'active':'')+'" data-id="'+esc(c.consultationId)+'"><div class="caseId">'+esc(c.consultationId)+' <span class="badge">'+esc(c.status||'未確認')+'</span></div><div class="meta">'+esc(new Date(c.receivedAt).toLocaleString('ja-JP'))+' / '+esc(c.identityMode==='named'?'記名':'匿名')+' / '+esc(subject(c.subjectLevel))+'</div></div>').join('');document.querySelectorAll('.case').forEach(el=>el.onclick=()=>{selected=el.dataset.id;renderList();renderDetail(cases.find(x=>x.consultationId===selected))})}
+async function ensureJapaneseTranslation(c){
+  if(!c||c.languageCode==='ja'||c.languageName==='日本語'||c.contentJa||translating.has(c.consultationId))return;
+  translating.add(c.consultationId);
+  try{
+    const r=await fetch('/api/counsel-admin-translate',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({consultationId:c.consultationId})
+    });
+    const d=await r.json();
+    if(r.ok&&d.record){
+      Object.assign(c,d.record);
+      renderDetail(c);
+    }
+  }catch(_){}
+  finally{translating.delete(c.consultationId)}
+}
 function renderDetail(c){if(!c)return;$('detail').innerHTML='<div class="caseId">'+esc(c.consultationId)+'</div><div class="row"><b>受付:</b> '+esc(new Date(c.receivedAt).toLocaleString('ja-JP'))+'</div><div class="row"><b>言語:</b> '+esc(c.languageName||c.languageCode)+'</div><div class="row"><b>相談方法:</b> '+esc(c.identityMode==='named'?'記名':'匿名')+(c.employeeName?' / '+esc(c.employeeName):'')+'</div><div class="row"><b>所属・現場:</b> '+esc(c.affiliation||'—')+'</div><div class="row"><b>相談対象:</b> '+esc(subject(c.subjectLevel))+'</div><div class="row"><b>共有してほしくない相手:</b> '+esc(c.shareAvoid||'—')+'</div><div class="row"><b>対応状況:</b> <select id="status" class="status"><option>未確認</option><option>確認済</option><option>対応中</option><option>対応済</option></select></div><div class="row" style="margin-top:18px"><b>相談内容（原文）</b></div><div class="content">'+esc(c.content)+'</div>'
   +(c.contentJa&&c.contentJa!==c.content?'<div class="row" style="margin-top:12px"><b>相談内容（日本語訳）</b></div><div class="content">'+esc(c.contentJa)+'</div>':'')
   +(c.improveIdea?'<div class="row" style="margin-top:18px"><b>あなたはどうすればよくなると考えるか（原文）</b></div><div class="content">'+esc(c.improveIdea)+'</div>':'')
   +(c.improveIdeaJa&&c.improveIdeaJa!==c.improveIdea?'<div class="row" style="margin-top:12px"><b>どうすればよくなると考えるか（日本語訳）</b></div><div class="content">'+esc(c.improveIdeaJa)+'</div>':'')
   +(c.selfAction?'<div class="row" style="margin-top:18px"><b>あなたにできることは何か（原文）</b></div><div class="content">'+esc(c.selfAction)+'</div>':'')
   +(c.selfActionJa&&c.selfActionJa!==c.selfAction?'<div class="row" style="margin-top:12px"><b>あなたにできること（日本語訳）</b></div><div class="content">'+esc(c.selfActionJa)+'</div>':'')
-  +((c.languageCode&&c.languageCode!=='ja'&&!c.contentJa)?'<div class="row" style="margin-top:12px;color:#ffb7b2"><b>日本語訳：</b>未生成（原文は保存済み）</div>':''); $('status').value=c.status||'未確認';$('status').onchange=async()=>{const status=$('status').value;const r=await fetch('/api/counsel-admin-update',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({consultationId:c.consultationId,status})});if(r.ok){c.status=status;renderList()}}}
+  +((c.languageCode&&c.languageCode!=='ja'&&!c.contentJa)?'<div class="row" style="margin-top:12px;color:#d8eadf"><b>日本語訳：</b>生成中…</div>':''); $('status').value=c.status||'未確認';ensureJapaneseTranslation(c);$('status').onchange=async()=>{const status=$('status').value;const r=await fetch('/api/counsel-admin-update',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({consultationId:c.consultationId,status})});if(r.ok){c.status=status;renderList()}}}
 $('loginBtn').onclick=login;$('pin').onkeydown=e=>{if(e.key==='Enter')login()};$('refresh').onclick=load;load();
 </script></body></html>
