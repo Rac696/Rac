@@ -13,6 +13,43 @@ function makeConsultationId() {
 }
 const SUBJECTS=new Set(['unknown','coworker','leader','manager','officer','vice_president','president','company']);
 
+async function sendNotification(record){
+  const apiKey=process.env.RESEND_API_KEY;
+  const to=process.env.HIRAGUMI_NOTIFY_TO;
+  if(!apiKey||!to)return {sent:false,reason:'not_configured'};
+  const adminUrl='https://hiragumi-ai-consultation.vercel.app/hiragumi/admin';
+  const subject='【平組 社内相談窓口】新規相談 '+record.consultationId;
+  const text=[
+    '新しい相談が届きました。',
+    '',
+    '相談ID：'+record.consultationId,
+    '受付日時：'+new Date(record.receivedAt).toLocaleString('ja-JP',{timeZone:'Asia/Tokyo'}),
+    '',
+    '相談本文はメールには記載していません。',
+    '管理画面で確認してください。',
+    adminUrl
+  ].join('\n');
+  const r=await fetch('https://api.resend.com/emails',{
+    method:'POST',
+    headers:{
+      'Authorization':'Bearer '+apiKey,
+      'Content-Type':'application/json'
+    },
+    body:JSON.stringify({
+      from:process.env.HIRAGUMI_NOTIFY_FROM||'平組 社内相談窓口 <onboarding@resend.dev>',
+      to:[to],
+      subject,
+      text
+    })
+  });
+  if(!r.ok){
+    const body=await r.text();
+    console.error('notification failed',r.status,body.slice(0,500));
+    return {sent:false,reason:'send_failed'};
+  }
+  return {sent:true};
+}
+
 export default async function handler(req,res){
   res.setHeader('Cache-Control','no-store');
   if(req.method!=='POST') return res.status(405).json({ok:false,error:'Method Not Allowed'});
@@ -46,6 +83,9 @@ export default async function handler(req,res){
       addRandomSuffix:false,
       contentType:'application/json; charset=utf-8'
     });
+
+    // Notification is best-effort: a mail failure must never lose the consultation.
+    sendNotification(record).catch(e=>console.error('notification exception',e?.message||e));
 
     return res.status(200).json({ok:true,consultationId});
   }catch(e){
