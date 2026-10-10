@@ -11,6 +11,7 @@ function makeConsultationId() {
   }).format(d).replaceAll('-','');
   return `HG-${parts}-${crypto.randomBytes(4).toString('hex').toUpperCase()}`;
 }
+const CATEGORIES=new Set(['safety_harassment','labor_rules','relationship','workplace_improvement','company_proposal','personal_request','other']);
 const SUBJECTS=new Set(['unknown','coworker','leader','manager','officer','vice_president','president','company']);
 
 
@@ -156,6 +157,7 @@ export default async function handler(req,res){
       languageName:clean(p.languageName,120),
       languageCode:clean(p.languageCode,16),
       subjectLevel,
+      consultationCategory:CATEGORIES.has(clean(p.consultationCategory,50))?clean(p.consultationCategory,50):'other',
       shareAvoidType:clean(p.shareAvoidType,60),
       shareAvoid:clean(p.shareAvoid,500),
       shareScope:['anonymized','summary_only','confirm_first','external_only'].includes(clean(p.shareScope,40))?clean(p.shareScope,40):'anonymized',
