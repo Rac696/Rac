@@ -58,17 +58,32 @@ export default async function handler(req,res){
     scopeExternal:'まずは外部相談対応者だけに相談したい',
     scopeNote:'「まずは外部相談対応者だけ」を選んだ場合、この段階では会社側へ共有しません。会社への共有や対応が必要な場合は、原則としてあなたに確認してから進めます。共有を制限するほど、事実確認や具体的な改善対応が難しくなる場合があります。'
   };
+  const policySource={
+    categoryLabel:'相談の種類',
+    catSafety:'安全・暴力・重大なハラスメント等',
+    catLabor:'労働条件・勤務・賃金・会社ルール',
+    catRelationship:'人間関係・指示のされ方',
+    catImprovement:'現場・設備・教育・情報共有の改善',
+    catProposal:'会社への提案・改善案',
+    catPersonal:'個人的な希望・待遇に関する要望',
+    catOther:'その他',
+    title:'この窓口について',
+    body:'この窓口は、相談や要望をすべてそのまま実現するための窓口ではありません。内容を確認し、必要に応じて「優先確認・対応」「事実確認・会社判断」「助言・調整」「組織改善として検討」「意見として記録」「対応対象外」のいずれかで取り扱います。相談内容によっては、ご希望どおりの対応ができない場合があります。',
+    emergency:'生命・身体に差し迫った危険がある場合は、この窓口だけに頼らず、現場責任者や緊急の連絡先へ直接連絡してください。'
+  };
 
   const uiKeys=Object.keys(uiSource);
   const shareKeys=Object.keys(shareSource);
+  const policyKeys=Object.keys(policySource);
   const strProps=keys=>Object.fromEntries(keys.map(k=>[k,{type:'string'}]));
   const schema={
     type:'object',additionalProperties:false,
     properties:{
       ui:{type:'object',additionalProperties:false,properties:strProps(uiKeys),required:uiKeys},
-      share:{type:'object',additionalProperties:false,properties:strProps(shareKeys),required:shareKeys}
+      share:{type:'object',additionalProperties:false,properties:strProps(shareKeys),required:shareKeys},
+      policy:{type:'object',additionalProperties:false,properties:strProps(policyKeys),required:policyKeys}
     },
-    required:['ui','share']
+    required:['ui','share','policy']
   };
 
   try{
@@ -80,8 +95,8 @@ export default async function handler(req,res){
         input:[
           {role:'system',content:[{type:'input_text',text:
             'Translate this employee workplace consultation interface into '+languageName+
-            '. Use plain, natural language for workers. Preserve privacy, consent, and sharing-scope meaning exactly. Do not add promises, legal conclusions, company names, or new restrictions. Keep emojis and symbols where present. Return only the required JSON.'}]},
-          {role:'user',content:[{type:'input_text',text:JSON.stringify({ui:uiSource,share:shareSource,languageCode})}]}
+            '. Use plain, natural language for workers. Preserve privacy, consent, sharing-scope, consultation-category, and handling-policy meaning exactly. Do not add promises, legal conclusions, company names, or new restrictions. Keep emojis and symbols where present. Return only the required JSON.'}]},
+          {role:'user',content:[{type:'input_text',text:JSON.stringify({ui:uiSource,share:shareSource,policy:policySource,languageCode})}]}
         ],
         text:{format:{type:'json_schema',name:'hiragumi_dynamic_ui_translation',strict:true,schema}},
         max_output_tokens:5000
