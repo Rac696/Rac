@@ -1,0 +1,20 @@
+{
+  "name": "平組 社内相談窓口",
+  "short_name": "平組相談",
+  "description": "有限会社 平組 社内相談窓口",
+  "id": "/hiragumi",
+  "start_url": "/hiragumi",
+  "scope": "/hiragumi",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0b0d0c",
+  "theme_color": "#0b0d0c",
+  "icons": [
+    {
+      "src": "https://hiragumi.rac-solution.com/wp-content/uploads/2026/10/平組流ロゴ.png",
+      "sizes": "any",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
