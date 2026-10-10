@@ -106,6 +106,20 @@ input,select,textarea{width:100%;padding:13px 14px;border-radius:12px;border:1px
         <option value="company" id="subjectCompany">会社・制度全体</option>
       </select>
     </div>
+
+    <div class="field">
+      <label id="categoryLabel">相談の種類</label>
+      <select id="consultationCategory">
+        <option value="safety_harassment" id="catSafety">安全・暴力・重大なハラスメント等</option>
+        <option value="labor_rules" id="catLabor">労働条件・勤務・賃金・会社ルール</option>
+        <option value="relationship" id="catRelationship">人間関係・指示のされ方</option>
+        <option value="workplace_improvement" id="catImprovement">現場・設備・教育・情報共有の改善</option>
+        <option value="company_proposal" id="catProposal">会社への提案・改善案</option>
+        <option value="personal_request" id="catPersonal">個人的な希望・待遇に関する要望</option>
+        <option value="other" id="catOther">その他</option>
+      </select>
+    </div>
+
     <div class="field">
       <label id="shareAvoidLabel">共有してほしくない相手（任意）</label>
       <select id="shareAvoidType">
@@ -153,6 +167,11 @@ input,select,textarea{width:100%;padding:13px 14px;border-radius:12px;border:1px
       <div id="selfVoiceError" class="error"></div>
     </div>
 
+    <div id="handlingPolicyBox" class="note" style="border-color:#59675f;background:#111713">
+      <b id="policyTitle">この窓口について</b>
+      <div id="policyBody" style="margin-top:7px">この窓口は、相談や要望をすべてそのまま実現するための窓口ではありません。内容を確認し、必要に応じて「優先確認・対応」「事実確認・会社判断」「助言・調整」「組織改善として検討」「意見として記録」「対応対象外」のいずれかで取り扱います。相談内容によっては、ご希望どおりの対応ができない場合があります。</div>
+      <div id="policyEmergency" style="margin-top:7px;color:#ffd1cc">生命・身体に差し迫った危険がある場合は、この窓口だけに頼らず、現場責任者や緊急の連絡先へ直接連絡してください。</div>
+    </div>
     <div id="privacy" class="note">本窓口は外部相談対応者が受付します。相談内容は、対応に必要な担当者に限って共有します。相談対象者本人へ自動的に共有することはありません。</div>
     <label class="consent"><input type="checkbox" id="consent"><span id="consentText">入力した相談内容を外部相談対応者が受け付け、必要に応じて日本語へ自動翻訳し、上で選択した共有範囲に従って取り扱うことに同意します。</span></label>
     <button id="reviewBtn" class="btn primary">内容を確認する</button>
@@ -239,6 +258,73 @@ km:{
   scopeNote:'បើអ្នកជ្រើសរើសថាសម្រាប់ពេលនេះចង់ពិគ្រោះតែជាមួយអ្នកទទួលបន្ទុកពិគ្រោះខាងក្រៅ ខ្លឹមសារនឹងមិនត្រូវចែករំលែកទៅក្រុមហ៊ុននៅដំណាក់កាលនេះទេ។ បើត្រូវការឱ្យក្រុមហ៊ុនដោះស្រាយ ជាទូទៅនឹងសួរអ្នកជាមុនសិន។ ការកំណត់ការចែករំលែកអាចធ្វើឱ្យការផ្ទៀងផ្ទាត់ ឬការកែលម្អជាក់ស្តែងពិបាកឡើង។'
 }
 };
+const POLICY_PRESETS={
+ja:{
+  categoryLabel:'相談の種類',
+  catSafety:'安全・暴力・重大なハラスメント等',
+  catLabor:'労働条件・勤務・賃金・会社ルール',
+  catRelationship:'人間関係・指示のされ方',
+  catImprovement:'現場・設備・教育・情報共有の改善',
+  catProposal:'会社への提案・改善案',
+  catPersonal:'個人的な希望・待遇に関する要望',
+  catOther:'その他',
+  title:'この窓口について',
+  body:'この窓口は、相談や要望をすべてそのまま実現するための窓口ではありません。内容を確認し、必要に応じて「優先確認・対応」「事実確認・会社判断」「助言・調整」「組織改善として検討」「意見として記録」「対応対象外」のいずれかで取り扱います。相談内容によっては、ご希望どおりの対応ができない場合があります。',
+  emergency:'生命・身体に差し迫った危険がある場合は、この窓口だけに頼らず、現場責任者や緊急の連絡先へ直接連絡してください。'
+},
+en:{
+  categoryLabel:'Type of consultation',
+  catSafety:'Safety, violence, serious harassment, etc.',
+  catLabor:'Working conditions, hours, pay, or company rules',
+  catRelationship:'Workplace relationships or how instructions are given',
+  catImprovement:'Worksite, equipment, training, or information-sharing improvements',
+  catProposal:'Proposal or idea to improve the company',
+  catPersonal:'Personal request or request about treatment/conditions',
+  catOther:'Other',
+  title:'About this consultation desk',
+  body:'This desk does not guarantee that every request or wish will be carried out. After reviewing the content, it may be handled as priority action, fact-checking and company decision, advice or coordination, organizational improvement review, recording as an opinion, or outside the scope of action. Depending on the content, the response may not match what you requested.',
+  emergency:'If there is an immediate threat to life or physical safety, do not rely only on this desk. Contact the worksite supervisor or an appropriate emergency contact directly.'
+},
+vi:{
+  categoryLabel:'Loại nội dung tư vấn',
+  catSafety:'An toàn, bạo lực, quấy rối nghiêm trọng, v.v.',
+  catLabor:'Điều kiện lao động, giờ làm, tiền lương hoặc quy định công ty',
+  catRelationship:'Quan hệ tại nơi làm việc hoặc cách chỉ đạo',
+  catImprovement:'Cải thiện công trường, thiết bị, đào tạo hoặc chia sẻ thông tin',
+  catProposal:'Đề xuất hoặc ý tưởng cải thiện công ty',
+  catPersonal:'Nguyện vọng cá nhân hoặc yêu cầu về chế độ/đãi ngộ',
+  catOther:'Khác',
+  title:'Về kênh tư vấn này',
+  body:'Kênh này không đảm bảo mọi yêu cầu hoặc mong muốn đều được thực hiện. Sau khi xem nội dung, công ty sẽ quyết định cách xử lý phù hợp như ưu tiên xác nhận và xử lý, xác minh và quyết định của công ty, tư vấn/điều chỉnh, xem xét cải thiện tổ chức, ghi nhận ý kiến hoặc xác định ngoài phạm vi xử lý. Tùy nội dung, có thể không xử lý đúng như mong muốn của bạn.',
+  emergency:'Nếu có nguy hiểm cấp bách đến tính mạng hoặc thân thể, không chỉ dựa vào kênh này. Hãy liên hệ trực tiếp với người phụ trách công trường hoặc nơi liên lạc khẩn cấp phù hợp.'
+},
+id:{
+  categoryLabel:'Jenis konsultasi',
+  catSafety:'Keselamatan, kekerasan, pelecehan serius, dll.',
+  catLabor:'Kondisi kerja, jam kerja, gaji, atau aturan perusahaan',
+  catRelationship:'Hubungan di tempat kerja atau cara pemberian instruksi',
+  catImprovement:'Perbaikan lokasi kerja, peralatan, pelatihan, atau berbagi informasi',
+  catProposal:'Usulan atau ide untuk memperbaiki perusahaan',
+  catPersonal:'Keinginan pribadi atau permintaan terkait perlakuan/kondisi',
+  catOther:'Lainnya',
+  title:'Tentang layanan konsultasi ini',
+  body:'Layanan ini tidak menjamin semua permintaan atau keinginan akan dilaksanakan. Setelah isi ditinjau, penanganan dapat berupa pemeriksaan dan tindakan prioritas, verifikasi fakta dan keputusan perusahaan, saran atau koordinasi, pertimbangan perbaikan organisasi, pencatatan sebagai pendapat, atau dinilai di luar cakupan tindakan. Tergantung isi konsultasi, penanganan mungkin tidak sesuai dengan keinginan Anda.',
+  emergency:'Jika ada bahaya langsung terhadap nyawa atau keselamatan fisik, jangan hanya mengandalkan layanan ini. Hubungi penanggung jawab lokasi kerja atau kontak darurat yang sesuai secara langsung.'
+},
+km:{
+  categoryLabel:'ប្រភេទនៃការពិគ្រោះ',
+  catSafety:'សុវត្ថិភាព អំពើហិង្សា ការរំខានធ្ងន់ធ្ងរ ជាដើម',
+  catLabor:'លក្ខខណ្ឌការងារ ម៉ោងធ្វើការ ប្រាក់ឈ្នួល ឬបទបញ្ជាក្រុមហ៊ុន',
+  catRelationship:'ទំនាក់ទំនងនៅកន្លែងធ្វើការ ឬរបៀបផ្តល់ការណែនាំ',
+  catImprovement:'ការកែលម្អការដ្ឋាន ឧបករណ៍ ការបណ្តុះបណ្តាល ឬការចែករំលែកព័ត៌មាន',
+  catProposal:'សំណើ ឬគំនិតដើម្បីកែលម្អក្រុមហ៊ុន',
+  catPersonal:'សំណើផ្ទាល់ខ្លួន ឬសំណើអំពីលក្ខខណ្ឌ/ការព្យាបាល',
+  catOther:'ផ្សេងទៀត',
+  title:'អំពីបណ្តាញពិគ្រោះនេះ',
+  body:'បណ្តាញនេះមិនធានាថាសំណើ ឬបំណងទាំងអស់នឹងត្រូវអនុវត្តតាមទេ។ បន្ទាប់ពីពិនិត្យខ្លឹមសារ នឹងសម្រេចវិធីដោះស្រាយសមស្រប ដូចជា ការពិនិត្យនិងដោះស្រាយជាអាទិភាព ការផ្ទៀងផ្ទាត់និងសេចក្តីសម្រេចរបស់ក្រុមហ៊ុន ការណែនាំឬសម្របសម្រួល ការពិចារណាកែលម្អអង្គការ កត់ត្រាជាមតិ ឬចាត់ទុកថាក្រៅវិសាលភាពដោះស្រាយ។ អាស្រ័យលើខ្លឹមសារ ការឆ្លើយតបអាចមិនត្រូវតាមបំណងរបស់អ្នក។',
+  emergency:'បើមានគ្រោះថ្នាក់បន្ទាន់ដល់ជីវិត ឬរាងកាយ សូមកុំពឹងផ្អែកតែលើបណ្តាញនេះ។ សូមទាក់ទងអ្នកទទួលខុសត្រូវនៅការដ្ឋាន ឬលេខទំនាក់ទំនងបន្ទាន់ដោយផ្ទាល់។'
+}
+};
 let lang={code:'ja',name:'日本語'},ui=PRESETS.ja,recognition=null,listening=false,voiceTarget=null;
 const $=id=>document.getElementById(id);
 function show(id){['languageCard','formCard','reviewCard','doneCard'].forEach(x=>$(x).classList.toggle('hidden',x!==id));scrollTo(0,0)}
@@ -252,6 +338,9 @@ function applyUi(){
   const shareUi=SHARE_PRESETS[lang.code]||SHARE_PRESETS.en;
   $('avoidNone').textContent=shareUi.avoidNone;$('avoidSupervisor').textContent=shareUi.avoidSupervisor;$('avoidSubject').textContent=shareUi.avoidSubject;$('avoidExecutive').textContent=shareUi.avoidExecutive;$('avoidOther').textContent=shareUi.avoidOther;
   $('shareAvoid').placeholder=shareUi.avoidPlaceholder;$('shareScopeLabel').textContent=shareUi.scopeLabel;$('scopeAnon').textContent=shareUi.scopeAnon;$('scopeSummary').textContent=shareUi.scopeSummary;$('scopeConfirm').textContent=shareUi.scopeConfirm;$('scopeExternal').textContent=shareUi.scopeExternal;$('shareScopeNote').textContent=shareUi.scopeNote;
+  const policyUi=POLICY_PRESETS[lang.code]||POLICY_PRESETS.en;
+  $('categoryLabel').textContent=policyUi.categoryLabel;$('catSafety').textContent=policyUi.catSafety;$('catLabor').textContent=policyUi.catLabor;$('catRelationship').textContent=policyUi.catRelationship;$('catImprovement').textContent=policyUi.catImprovement;$('catProposal').textContent=policyUi.catProposal;$('catPersonal').textContent=policyUi.catPersonal;$('catOther').textContent=policyUi.catOther;
+  $('policyTitle').textContent=policyUi.title;$('policyBody').textContent=policyUi.body;$('policyEmergency').textContent=policyUi.emergency;
   $('contentLabel').textContent=ui.content;$('content').placeholder=ui.placeholder;
   $('improveLabel').textContent=ui.improveLabel;$('improveIdea').placeholder=ui.improvePlaceholder;
   $('selfActionLabel').textContent=ui.selfActionLabel;$('selfAction').placeholder=ui.selfActionPlaceholder;
@@ -306,13 +395,15 @@ async function loadDynamicLanguage(code,name){
       body:JSON.stringify({languageName:name,languageCode:code})
     });
     const d=await r.json();
-    if(!r.ok||!d.ui||!d.share)throw new Error('translation failed');
+    if(!r.ok||!d.ui||!d.share||!d.policy)throw new Error('translation failed');
     lang={code,name};ui=d.ui;
     SHARE_PRESETS[code]=d.share;
+    POLICY_PRESETS[code]=d.policy;
     applyUi();show('formCard');
   }catch(e){
     lang={code,name};ui=PRESETS.en;
     SHARE_PRESETS[code]=SHARE_PRESETS.en;
+    POLICY_PRESETS[code]=POLICY_PRESETS.en;
     applyUi();show('formCard');
   }finally{
     $('languageLoading').textContent='';
@@ -411,10 +502,11 @@ $('reviewBtn').onclick=()=>{
   if(selfAction)reviewParts.push(ui.selfActionLabel.replace('（任意）','').replace(' (optional)','')+':\n'+selfAction);
   $('reviewContent').textContent=reviewParts.join('\n\n');
   const subjectText=$('subjectLevel').selectedOptions[0]?.textContent||'';
+  const categoryText=$('consultationCategory').selectedOptions[0]?.textContent||'';
   const shareUi=SHARE_PRESETS[lang.code]||SHARE_PRESETS.en;
   const avoidText=$('shareAvoidType').selectedOptions[0]?.textContent||'';
   const scopeText=$('shareScope').selectedOptions[0]?.textContent||'';
-  $('reviewMeta').textContent=(lang.name||lang.code)+' / '+($('mode').value==='anonymous'?ui.anonymous:ui.named)+(subjectText?' / '+subjectText:'')+($('affiliation').value.trim()?' / '+$('affiliation').value.trim():'')+(avoidText&&$('shareAvoidType').value?' / '+ui.shareAvoidLabel+': '+avoidText+($('shareAvoid').value.trim()?' '+$('shareAvoid').value.trim():''):'')+' / '+shareUi.scopeLabel+': '+scopeText;
+  $('reviewMeta').textContent=(lang.name||lang.code)+' / '+($('mode').value==='anonymous'?ui.anonymous:ui.named)+(subjectText?' / '+subjectText:'')+(categoryText?' / '+categoryText:'')+($('affiliation').value.trim()?' / '+$('affiliation').value.trim():'')+(avoidText&&$('shareAvoidType').value?' / '+ui.shareAvoidLabel+': '+avoidText+($('shareAvoid').value.trim()?' '+$('shareAvoid').value.trim():''):'')+' / '+shareUi.scopeLabel+': '+scopeText;
   show('reviewCard')
 };
 $('editBtn').onclick=()=>show('formCard');
@@ -422,7 +514,7 @@ $('editBtn').onclick=()=>show('formCard');
 function makeId(){const d=new Date();return 'HG-'+d.getFullYear()+String(d.getMonth()+1).padStart(2,'0')+String(d.getDate()).padStart(2,'0')+'-'+Math.random().toString(36).slice(2,8).toUpperCase()}
 $('sendBtn').onclick=async()=>{
   $('sendError').textContent='';$('sendBtn').disabled=true;
-  const payload={consultationId:makeId(),languageName:lang.name,languageCode:lang.code,identityMode:$('mode').value,employeeName:$('mode').value==='named'?$('name').value.trim():'',affiliation:$('affiliation').value.trim(),subjectLevel:$('subjectLevel').value,shareAvoidType:$('shareAvoidType').value,shareAvoid:$('shareAvoid').value.trim(),shareScope:$('shareScope').value,content:$('content').value.trim(),improveIdea:$('improveIdea').value.trim(),selfAction:$('selfAction').value.trim(),confirmed:true};
+  const payload={consultationId:makeId(),languageName:lang.name,languageCode:lang.code,identityMode:$('mode').value,employeeName:$('mode').value==='named'?$('name').value.trim():'',affiliation:$('affiliation').value.trim(),subjectLevel:$('subjectLevel').value,consultationCategory:$('consultationCategory').value,shareAvoidType:$('shareAvoidType').value,shareAvoid:$('shareAvoid').value.trim(),shareScope:$('shareScope').value,content:$('content').value.trim(),improveIdea:$('improveIdea').value.trim(),selfAction:$('selfAction').value.trim(),confirmed:true};
   try{
     const r=await fetch('/api/counsel-submit',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
     const d=await r.json().catch(()=>({}));
