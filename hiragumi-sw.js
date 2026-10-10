@@ -1,4 +1,4 @@
-const VERSION='hiragumi-consult-pwa-20261010-1';
+const VERSION='hiragumi-consult-pwa-20261010-2';
 
 self.addEventListener('install',event=>{
   self.skipWaiting();
