@@ -38,36 +38,36 @@ input,select,textarea{width:100%;padding:13px 14px;border-radius:12px;border:1px
       <button class="langBtn" data-code="km" data-name="ភាសាខ្មែរ">ភាសាខ្មែរ</button>
       <button class="langBtn" data-code="en" data-name="English">English</button>
       <button class="langBtn" data-code="auto" data-name="Auto detect">Auto detect</button>
+      <button id="otherToggleBtn" class="langBtn" type="button">その他 / Other</button>
     </div>
-    <div class="other">
-      <input id="otherLang" list="otherLanguageList" placeholder="Other language / その他の言語">
-      <datalist id="otherLanguageList">
-        <option value="ไทย / Thai"></option>
-        <option value="中文 / Chinese"></option>
-        <option value="한국어 / Korean"></option>
-        <option value="Filipino / Tagalog"></option>
-        <option value="नेपाली / Nepali"></option>
-        <option value="မြန်မာ / Burmese"></option>
-        <option value="हिन्दी / Hindi"></option>
-        <option value="বাংলা / Bengali"></option>
-        <option value="اردو / Urdu"></option>
-        <option value="Bahasa Melayu / Malay"></option>
-        <option value="ພາສາລາວ / Lao"></option>
-        <option value="Монгол / Mongolian"></option>
-        <option value="සිංහල / Sinhala"></option>
-        <option value="Español / Spanish"></option>
-        <option value="Português / Portuguese"></option>
-        <option value="Français / French"></option>
-        <option value="Deutsch / German"></option>
-        <option value="Русский / Russian"></option>
-        <option value="Українська / Ukrainian"></option>
-        <option value="العربية / Arabic"></option>
-        <option value="Türkçe / Turkish"></option>
-        <option value="O‘zbek / Uzbek"></option>
-      </datalist>
+
+    <div id="otherLanguagePanel" class="hidden" style="margin-top:14px">
+      <div class="small" style="margin-bottom:8px">建設業で利用の多い言語から選択してください。</div>
+      <div class="langs">
+        <button class="extraLangBtn" data-code="zh" data-name="中文">中文 / 中国語</button>
+        <button class="extraLangBtn" data-code="tl" data-name="Filipino">Filipino / フィリピン語</button>
+        <button class="extraLangBtn" data-code="my" data-name="မြန်မာ">မြန်မာ / ミャンマー語</button>
+        <button class="extraLangBtn" data-code="ne" data-name="नेपाली">नेपाली / ネパール語</button>
+        <button class="extraLangBtn" data-code="th" data-name="ไทย">ไทย / タイ語</button>
+        <button class="extraLangBtn" data-code="bn" data-name="বাংলা">বাংলা / ベンガル語</button>
+        <button class="extraLangBtn" data-code="si" data-name="සිංහල">සිංහල / シンハラ語</button>
+        <button class="extraLangBtn" data-code="mn" data-name="Монгол">Монгол / モンゴル語</button>
+        <button class="extraLangBtn" data-code="uz" data-name="O‘zbek">O‘zbek / ウズベク語</button>
+        <button class="extraLangBtn" data-code="hi" data-name="हिन्दी">हिन्दी / ヒンディー語</button>
+        <button class="extraLangBtn" data-code="ur" data-name="اردو">اردو / ウルドゥー語</button>
+        <button class="extraLangBtn" data-code="lo" data-name="ພາສາລາວ">ພາສາລາວ / ラオ語</button>
+        <button class="extraLangBtn" data-code="ms" data-name="Bahasa Melayu">Bahasa Melayu / マレー語</button>
+        <button class="extraLangBtn" data-code="ko" data-name="한국어">한국어 / 韓国語</button>
+        <button class="extraLangBtn" data-code="pt" data-name="Português">Português / ポルトガル語</button>
+        <button class="extraLangBtn" data-code="es" data-name="Español">Español / スペイン語</button>
+      </div>
+
+      <div class="other" style="margin-top:12px">
+        <input id="otherLang" placeholder="一覧にない言語名 / Other language">
+      </div>
+      <button id="customLangBtn" class="btn secondary" type="button">この言語を使う / Use this language</button>
     </div>
-    <button id="otherBtn" class="btn secondary">Use this language</button>
-    <div class="small">一覧にない言語も入力できます。選択した言語で次の画面を表示します。</div><div id="languageLoading" class="small"></div>
+    <div id="languageLoading" class="small"></div>
   </section>
 
   <section id="formCard" class="card hidden">
@@ -288,7 +288,7 @@ function resolveExtraLanguage(value){
 }
 async function loadDynamicLanguage(code,name){
   $('languageLoading').textContent='Translating interface… / 画面を翻訳しています…';
-  $('otherBtn').disabled=true;
+  $('customLangBtn').disabled=true;
   try{
     const r=await fetch('/api/counsel-ui-translate',{
       method:'POST',
@@ -306,7 +306,7 @@ async function loadDynamicLanguage(code,name){
     applyUi();show('formCard');
   }finally{
     $('languageLoading').textContent='';
-    $('otherBtn').disabled=false;
+    $('customLangBtn').disabled=false;
   }
 }
 function choose(code,name){
@@ -319,8 +319,10 @@ function choose(code,name){
   }
   lang={code,name};ui=PRESETS[code]||PRESETS.en;applyUi();show('formCard')
 }
-document.querySelectorAll('.langBtn').forEach(b=>b.onclick=()=>choose(b.dataset.code,b.dataset.name));
-$('otherBtn').onclick=()=>{const v=$('otherLang').value.trim();if(!v)return;const x=resolveExtraLanguage(v);loadDynamicLanguage(x.code,x.name)};
+document.querySelectorAll('.langBtn[data-code]').forEach(b=>b.onclick=()=>choose(b.dataset.code,b.dataset.name));
+$('otherToggleBtn').onclick=()=>{$('otherLanguagePanel').classList.toggle('hidden')};
+document.querySelectorAll('.extraLangBtn').forEach(b=>b.onclick=()=>loadDynamicLanguage(b.dataset.code,b.dataset.name));
+$('customLangBtn').onclick=()=>{const v=$('otherLang').value.trim();if(!v)return;const x=resolveExtraLanguage(v);loadDynamicLanguage(x.code,x.name)};
 $('mode').onchange=()=>{$('nameField').classList.toggle('hidden',$('mode').value!=='named')};
 
 const VOICE_FIELDS={
