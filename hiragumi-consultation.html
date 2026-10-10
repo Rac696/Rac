@@ -39,9 +39,35 @@ input,select,textarea{width:100%;padding:13px 14px;border-radius:12px;border:1px
       <button class="langBtn" data-code="en" data-name="English">English</button>
       <button class="langBtn" data-code="auto" data-name="Auto detect">Auto detect</button>
     </div>
-    <div class="other"><input id="otherLang" placeholder="Other language / その他の言語"></div>
+    <div class="other">
+      <input id="otherLang" list="otherLanguageList" placeholder="Other language / その他の言語">
+      <datalist id="otherLanguageList">
+        <option value="ไทย / Thai"></option>
+        <option value="中文 / Chinese"></option>
+        <option value="한국어 / Korean"></option>
+        <option value="Filipino / Tagalog"></option>
+        <option value="नेपाली / Nepali"></option>
+        <option value="မြန်မာ / Burmese"></option>
+        <option value="हिन्दी / Hindi"></option>
+        <option value="বাংলা / Bengali"></option>
+        <option value="اردو / Urdu"></option>
+        <option value="Bahasa Melayu / Malay"></option>
+        <option value="ພາສາລາວ / Lao"></option>
+        <option value="Монгол / Mongolian"></option>
+        <option value="සිංහල / Sinhala"></option>
+        <option value="Español / Spanish"></option>
+        <option value="Português / Portuguese"></option>
+        <option value="Français / French"></option>
+        <option value="Deutsch / German"></option>
+        <option value="Русский / Russian"></option>
+        <option value="Українська / Ukrainian"></option>
+        <option value="العربية / Arabic"></option>
+        <option value="Türkçe / Turkish"></option>
+        <option value="O‘zbek / Uzbek"></option>
+      </datalist>
+    </div>
     <button id="otherBtn" class="btn secondary">Use this language</button>
-    <div class="small">一覧にない言語も入力できます。</div>
+    <div class="small">一覧にない言語も入力できます。選択した言語で次の画面を表示します。</div><div id="languageLoading" class="small"></div>
   </section>
 
   <section id="formCard" class="card hidden">
@@ -229,12 +255,72 @@ function applyUi(){
   $('reviewLead').textContent=ui.reviewLead;$('editBtn').textContent=ui.edit;$('sendBtn').textContent=ui.send;
   $('doneTitle').textContent=ui.done;$('doneText').textContent=ui.doneText;document.documentElement.lang=lang.code||'en'
 }
+const EXTRA_LANGUAGES=[
+  {match:['ไทย','thai'],code:'th',locale:'th-TH',name:'ไทย'},
+  {match:['中文','chinese','mandarin'],code:'zh',locale:'zh-CN',name:'中文'},
+  {match:['한국어','korean'],code:'ko',locale:'ko-KR',name:'한국어'},
+  {match:['filipino','tagalog'],code:'tl',locale:'fil-PH',name:'Filipino'},
+  {match:['नेपाली','nepali'],code:'ne',locale:'ne-NP',name:'नेपाली'},
+  {match:['မြန်မာ','burmese','myanmar'],code:'my',locale:'my-MM',name:'မြန်မာ'},
+  {match:['हिन्दी','hindi'],code:'hi',locale:'hi-IN',name:'हिन्दी'},
+  {match:['বাংলা','bengali'],code:'bn',locale:'bn-BD',name:'বাংলা'},
+  {match:['اردو','urdu'],code:'ur',locale:'ur-PK',name:'اردو'},
+  {match:['bahasa melayu','malay'],code:'ms',locale:'ms-MY',name:'Bahasa Melayu'},
+  {match:['ພາສາລາວ','lao'],code:'lo',locale:'lo-LA',name:'ພາສາລາວ'},
+  {match:['монгол','mongolian'],code:'mn',locale:'mn-MN',name:'Монгол'},
+  {match:['සිංහල','sinhala'],code:'si',locale:'si-LK',name:'සිංහල'},
+  {match:['español','spanish'],code:'es',locale:'es-ES',name:'Español'},
+  {match:['português','portuguese'],code:'pt',locale:'pt-BR',name:'Português'},
+  {match:['français','french'],code:'fr',locale:'fr-FR',name:'Français'},
+  {match:['deutsch','german'],code:'de',locale:'de-DE',name:'Deutsch'},
+  {match:['русский','russian'],code:'ru',locale:'ru-RU',name:'Русский'},
+  {match:['українська','ukrainian'],code:'uk',locale:'uk-UA',name:'Українська'},
+  {match:['العربية','arabic'],code:'ar',locale:'ar-SA',name:'العربية'},
+  {match:['türkçe','turkish'],code:'tr',locale:'tr-TR',name:'Türkçe'},
+  {match:['o‘zbek','o\'zbek','uzbek'],code:'uz',locale:'uz-UZ',name:'O‘zbek'}
+];
+const EXTRA_LOCALES=Object.fromEntries(EXTRA_LANGUAGES.map(x=>[x.code,x.locale]));
+function resolveExtraLanguage(value){
+  const raw=String(value||'').trim();
+  const low=raw.toLowerCase();
+  const found=EXTRA_LANGUAGES.find(x=>x.match.some(m=>low.includes(String(m).toLowerCase())));
+  return found||{code:'other',locale:'',name:raw};
+}
+async function loadDynamicLanguage(code,name){
+  $('languageLoading').textContent='Translating interface… / 画面を翻訳しています…';
+  $('otherBtn').disabled=true;
+  try{
+    const r=await fetch('/api/counsel-ui-translate',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({languageName:name,languageCode:code})
+    });
+    const d=await r.json();
+    if(!r.ok||!d.ui||!d.share)throw new Error('translation failed');
+    lang={code,name};ui=d.ui;
+    SHARE_PRESETS[code]=d.share;
+    applyUi();show('formCard');
+  }catch(e){
+    lang={code,name};ui=PRESETS.en;
+    SHARE_PRESETS[code]=SHARE_PRESETS.en;
+    applyUi();show('formCard');
+  }finally{
+    $('languageLoading').textContent='';
+    $('otherBtn').disabled=false;
+  }
+}
 function choose(code,name){
-  if(code==='auto'){const b=(navigator.language||'en').split('-')[0];code=PRESETS[b]?b:'en';name=code}
+  if(code==='auto'){
+    const browserLang=(navigator.language||'en');
+    const b=browserLang.split('-')[0].toLowerCase();
+    if(PRESETS[b]){lang={code:b,name:b};ui=PRESETS[b];applyUi();show('formCard');return}
+    const known=EXTRA_LANGUAGES.find(x=>x.code===b);
+    return loadDynamicLanguage(known?.code||b,known?.name||browserLang);
+  }
   lang={code,name};ui=PRESETS[code]||PRESETS.en;applyUi();show('formCard')
 }
 document.querySelectorAll('.langBtn').forEach(b=>b.onclick=()=>choose(b.dataset.code,b.dataset.name));
-$('otherBtn').onclick=()=>{const v=$('otherLang').value.trim();if(!v)return;lang={code:'',name:v};ui=PRESETS.en;applyUi();show('formCard')};
+$('otherBtn').onclick=()=>{const v=$('otherLang').value.trim();if(!v)return;const x=resolveExtraLanguage(v);loadDynamicLanguage(x.code,x.name)};
 $('mode').onchange=()=>{$('nameField').classList.toggle('hidden',$('mode').value!=='named')};
 
 const VOICE_FIELDS={
@@ -242,7 +328,7 @@ const VOICE_FIELDS={
   improveIdea:{button:'improveVoiceBtn',dot:'improveVoiceDot',status:'improveVoiceStatus',error:'improveVoiceError'},
   selfAction:{button:'selfVoiceBtn',dot:'selfVoiceDot',status:'selfVoiceStatus',error:'selfVoiceError'}
 };
-function speechLocale(){return ({ja:'ja-JP',en:'en-US',vi:'vi-VN',id:'id-ID',km:'km-KH'})[lang.code]||navigator.language||'en-US'}
+function speechLocale(){return ({ja:'ja-JP',en:'en-US',vi:'vi-VN',id:'id-ID',km:'km-KH',...EXTRA_LOCALES})[lang.code]||navigator.language||'en-US'}
 function resetVoiceUi(){
   Object.entries(VOICE_FIELDS).forEach(([id,cfg])=>{
     $(cfg.button).classList.remove('on');
