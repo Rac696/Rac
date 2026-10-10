@@ -4,6 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow,noarchive">
+<meta name="theme-color" content="#0b0d0c">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="平組相談">
+<link rel="manifest" href="/hiragumi.webmanifest">
+<link rel="apple-touch-icon" href="https://hiragumi.rac-solution.com/wp-content/uploads/2026/10/平組流ロゴ.png">
 <title>平組 社内相談窓口</title>
 <style>
 :root{--bg:#0b0d0c;--card:#151917;--line:#303833;--text:#f7f8f7;--muted:#aeb8b2;--accent:#d8eadf;--accentText:#122018;--warn:#ffb7b2;--ok:#bfe3ce}
@@ -26,6 +32,10 @@ input,select,textarea{width:100%;padding:13px 14px;border-radius:12px;border:1px
   <div class="head">
     <img class="logo" src="https://hiragumi.rac-solution.com/wp-content/uploads/2026/10/平組流ロゴ.png" alt="平組流">
     <div><div class="brand">HIRAGUMI / EMPLOYEE SUPPORT</div><div class="corp">有限会社 平組</div><div class="brand" style="margin-top:5px;letter-spacing:.06em">外部相談対応者が受付</div></div>
+  </div>
+  <div id="installArea" style="margin-top:8px">
+    <button id="installAppBtn" class="btn secondary" type="button" style="padding:9px 12px;font-size:13px">ホーム画面に追加 / Install</button>
+    <div id="installHint" class="small" style="margin-top:6px"></div>
   </div>
 
   <section id="languageCard" class="card">
@@ -420,6 +430,79 @@ $('sendBtn').onclick=async()=>{
     $('caseId').textContent=d.consultationId||payload.consultationId;show('doneCard');
   }catch(e){$('sendError').textContent='送信できませんでした。内容は送信されていません。通信状況を確認して、もう一度送信してください。';$('sendBtn').disabled=false}
 };
+
+// PWA install + safe automatic updates.
+// Consultation text is never cached by the service worker.
+let deferredInstallPrompt=null;
+const isStandalone=()=>window.matchMedia('(display-mode: standalone)').matches||window.navigator.standalone===true;
+const isIOS=()=>/iphone|ipad|ipod/i.test(navigator.userAgent);
+
+function updateInstallUi(){
+  if(isStandalone()){
+    $('installArea').classList.add('hidden');
+    return;
+  }
+  $('installArea').classList.remove('hidden');
+  if(isIOS()&&!deferredInstallPrompt){
+    $('installHint').textContent='iPhone / iPad：Safariの共有ボタン →「ホーム画面に追加」でアプリのように使えます。';
+  }else{
+    $('installHint').textContent='一度追加すれば、システム更新は再インストール不要で自動反映されます。';
+  }
+}
+window.addEventListener('beforeinstallprompt',e=>{
+  e.preventDefault();
+  deferredInstallPrompt=e;
+  updateInstallUi();
+});
+window.addEventListener('appinstalled',()=>{
+  deferredInstallPrompt=null;
+  $('installArea').classList.add('hidden');
+});
+$('installAppBtn').onclick=async()=>{
+  if(deferredInstallPrompt){
+    deferredInstallPrompt.prompt();
+    try{await deferredInstallPrompt.userChoice}catch(_){}
+    deferredInstallPrompt=null;
+    updateInstallUi();
+    return;
+  }
+  if(isIOS()){
+    $('installHint').textContent='Safariの共有ボタン（□↑）→「ホーム画面に追加」を選んでください。';
+  }else{
+    $('installHint').textContent='ブラウザのメニューから「アプリをインストール」または「ホーム画面に追加」を選んでください。';
+  }
+};
+updateInstallUi();
+
+function hasUnsavedConsultation(){
+  return ['name','affiliation','shareAvoid','content','improveIdea','selfAction']
+    .some(id=>$(id)&&String($(id).value||'').trim());
+}
+if('serviceWorker' in navigator){
+  window.addEventListener('load',async()=>{
+    let refreshing=false;
+    navigator.serviceWorker.addEventListener('controllerchange',()=>{
+      if(refreshing)return;
+      if(hasUnsavedConsultation()){
+        $('installHint').textContent='最新版があります。入力内容を守るため、次回起動時に自動反映します。';
+        return;
+      }
+      refreshing=true;
+      location.reload();
+    });
+    try{
+      const reg=await navigator.serviceWorker.register('/hiragumi-sw.js',{
+        scope:'/hiragumi',
+        updateViaCache:'none'
+      });
+      await reg.update();
+      setInterval(()=>reg.update().catch(()=>{}),5*60*1000);
+    }catch(e){
+      console.error('service worker registration failed',e);
+    }
+  });
+}
+
 applyUi();
 </script>
 </body>
