@@ -1,0 +1,27 @@
+<!-- 平組AI採用ガイドに追加する職種別面接導線：既存の動画とQ&Aはそのまま残す -->
+<section class="hiragumi-interview-entry" aria-labelledby="hiragumi-interview-title" style="max-width:970px;margin:24px auto;padding:24px;background:#fff;border:1px solid #dbe3eb;border-radius:20px;color:#172737;">
+<h2 id="hiragumi-interview-title">平組の仕事に合わせて面接を練習する</h2>
+<p>希望する職種を選ぶと、平組専用の模擬面接が開きます。無料で練習でき、回答は採用企業へ送信されません。</p>
+<label for="hg-job" style="display:block;font-weight:700;margin-bottom:8px">希望する職種</label>
+<select id="hg-job" style="width:100%;max-width:540px;padding:13px;font-size:16px;border-radius:8px;border:1px solid #b5c3ce">
+<option value="ashiba">足場組立解体技術職</option>
+<option value="civil">土工・重機オペレーター職</option>
+<option value="driver">8t・4tユニック運転技術職</option>
+<option value="warehouse">倉庫管理技術職</option>
+<option value="office">総務事務職</option>
+<option value="sales">営業技術職</option>
+</select>
+<div style="margin-top:16px"><button type="button" id="hg-interview-open" style="border:0;border-radius:11px;background:#122b45;color:white;padding:14px 24px;font-size:16px;font-weight:700;cursor:pointer">選んだ職種で模擬面接を始める ↗</button></div>
+<p style="font-size:12px;color:#697b8c">試作版：職種別質問・ルールベースの追加質問。生成AIによる意味理解はまだ未接続です。音声入力はブラウザにより異なります。</p>
+</section>
+<script>
+(function(){
+ var btn=document.getElementById("hg-interview-open");
+ if(!btn)return;
+ btn.addEventListener("click",function(){
+  var role=document.getElementById("hg-job").value;
+  var url="https://rac-ai-interview-v2-b2b06jny8-llcracsolution-1909.vercel.app/?role="+encodeURIComponent(role);
+  window.open(url,"_blank","noopener,noreferrer");
+ });
+})();
+</script>
