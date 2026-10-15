@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>平組｜職種別 模擬面接（Rac）</title>
+<meta name="robots" content="noindex,nofollow">
+<style>
+:root{--navy:#122b45;--navy2:#203c55;--gold:#d19c47;--ink:#172737;--muted:#5a6b7a;--line:#dce5eb;--bg:#f3f6f8;--white:#fff}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;background:var(--bg);color:var(--ink)}
+button,input,select,textarea{font:inherit}button{cursor:pointer}button:disabled{opacity:.48;cursor:not-allowed}
+.header{background:var(--navy);color:white}.hwrap{max-width:1050px;margin:auto;display:flex;align-items:center;justify-content:space-between;padding:17px 22px;gap:12px}.brand{font-weight:800;letter-spacing:.06em;font-size:17px}.mark{color:#eac480}.small{font-size:12px;color:#c6d2df}.wrap{max-width:1050px;margin:auto;padding:30px 18px 70px}.hero{background:linear-gradient(128deg,#122b45,#31516a);border-radius:20px;padding:32px;color:#fff;position:relative;overflow:hidden}.hero:after{content:"";position:absolute;right:-75px;top:-110px;border:42px solid #ffffff10;width:260px;height:260px;border-radius:50%;pointer-events:none}.kicker{color:#f4ce90;font-size:12px;font-weight:800;letter-spacing:.16em}h1{font-size:clamp(26px,4vw,40px);line-height:1.45;margin:12px 0}.hero p{max-width:660px;line-height:1.8;color:#e4edf4;font-size:14px}
+.notice{background:#fff9e9;border:1px solid #eed39c;border-radius:12px;padding:13px 15px;color:#554018;font-size:13px;line-height:1.7;margin-top:16px}
+.steps{display:flex;flex-wrap:wrap;gap:9px;margin-top:15px}.step{border:1px solid #dbe5eb;border-radius:999px;background:#fff;padding:7px 12px;font-size:12px;font-weight:700;color:#5e7081}.step.on{background:var(--navy);border-color:var(--navy);color:white}
+.panel{background:#fff;border:1px solid var(--line);border-radius:18px;margin-top:20px;padding:24px;box-shadow:0 12px 28px #142b4410}.panel h2{font-size:22px;margin:0 0 8px}.sub{color:var(--muted);font-size:13px;line-height:1.8;margin:4px 0 18px}
+.jobs{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.job{border:2px solid #e2e8ed;background:#fbfcfd;border-radius:13px;padding:16px;text-align:left;min-height:116px}.job:hover{border-color:#91a6b8}.job.on{border-color:#c28b38;background:#fff8e9}.job .tag{font-size:11px;letter-spacing:.05em;color:#7b8791}.job strong{display:block;margin:8px 0;font-size:15px;line-height:1.5}.job .desc{font-size:12px;color:#647486;line-height:1.5}
+.controls{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:19px 0}.label{display:block;font-size:12px;font-weight:800;margin-bottom:8px}.select,.entry{width:100%;border:1px solid #c7d4dd;border-radius:11px;background:white;padding:12px;min-height:46px;color:var(--ink)}.primary{border:0;background:var(--navy);color:white;border-radius:11px;padding:14px 22px;font-weight:800;min-height:48px}.primary:hover{background:#284c6d}.secondary{border:1px solid #c7d5de;background:#fff;color:var(--navy);border-radius:11px;padding:12px 17px;font-weight:800;min-height:45px}.gold{background:var(--gold);color:#1b2630}
+.hidden{display:none!important}.progress-track{height:8px;background:#e7edf1;border-radius:9px;overflow:hidden;margin:12px 0 22px}.progress-bar{height:100%;width:0%;background:var(--gold);transition:width .25s}.question{font-size:22px;line-height:1.7;font-weight:800;background:#f1f5f7;border-left:4px solid var(--gold);padding:21px;border-radius:0 12px 12px 0;margin:8px 0 20px}.hint{border-radius:11px;background:#eef4f8;padding:12px 15px;font-size:12px;color:#496176;line-height:1.8}
+textarea{display:block;width:100%;height:160px;resize:vertical;border:1px solid #bdcdd8;border-radius:12px;padding:14px;font-size:16px;line-height:1.8;color:var(--ink)}textarea:focus{outline:2px solid #8caac1}.row{display:flex;gap:9px;flex-wrap:wrap;align-items:center;margin-top:16px}.status{color:#657587;font-size:12px}.tagbar{display:flex;gap:8px;flex-wrap:wrap}.pill{border-radius:999px;border:1px solid #dce4e9;background:#f4f7f8;padding:5px 10px;font-size:12px}.result-box{border:1px solid var(--line);border-radius:12px;padding:17px;margin:13px 0}.result-box h3{font-size:15px;margin:0 0 10px;color:var(--navy)}.result-box p,.result-box li{font-size:13px;line-height:1.8;color:#42596a}.result-box ul{margin:0;padding-left:22px}
+a{color:#1c587f}.foot{font-size:12px;color:#647686;line-height:1.8;text-align:center;padding:12px}.validity{font-size:12px;color:#9f6128}
+@media(max-width:760px){.jobs{grid-template-columns:1fr 1fr}.controls{grid-template-columns:1fr}.panel{padding:18px}.hero{padding:23px}h1{font-size:29px}}@media(max-width:470px){.jobs{grid-template-columns:1fr}.job{min-height:unset}.hwrap{padding:13px}.wrap{padding:16px 12px 45px}.question{font-size:19px}.panel h2{font-size:19px}}
+</style>
+</head>
+<body>
+<header class="header"><div class="hwrap"><div class="brand">HIRAGUMI <span class="mark">×</span> Rac <span class="small">｜採用ガイド</span></div><span class="small">企業別面接練習・確認用</span></div></header>
+<main class="wrap">
+<section class="hero"><div class="kicker">HIRAGUMI / PRACTICE INTERVIEW</div><h1>平組の仕事を知って、<br>面接を練習しよう。</h1><p>会社紹介の内容を踏まえ、希望職種に合わせた質問を出します。回答に応じて追加質問し、自分の言葉で伝える練習ができます。採用選考ではなく、応募前の自主練習です。</p></section>
+<div class="notice"><strong>無料の確認版です。</strong> 合否判定は行いません。現段階は職種別質問とルールベースの追加質問・振り返りです。回答の意味を理解する生成AIの評価機能は未接続。回答はこの画面から送信・保存されません。平組の実際の面接質問と一致する保証はありません。</div>
+<div class="steps" id="stepnav"><span class="step on">01 職種選択</span><span class="step">02 模擬面接</span><span class="step">03 振り返り</span></div>
+<section class="panel" id="setup">
+<h2>練習する仕事を選ぶ</h2><p class="sub">平組の会社説明資料で紹介している6職種から選択します。職種を選ぶと仕事内容と面接の質問内容が切り替わります。</p>
+<div class="jobs" id="jobs"></div>
+<div class="controls">
+<div><label class="label" for="difficulty">練習の難易度</label><select class="select" id="difficulty"><option value="0">1｜やさしい：未経験でも答えやすい</option><option value="1" selected>2｜標準：理由や具体例を確認</option><option value="2">3｜実践：状況判断も質問</option><option value="3">4｜応用：想定外の対応を深掘り</option></select></div>
+<div><label class="label" for="experience">職務経験</label><select class="select" id="experience"><option value="none">未経験・異業種から</option><option value="some">一部経験あり</option><option value="full">経験あり</option></select></div>
+</div>
+<div id="roleinfo" class="hint"></div>
+<div class="row"><button class="primary" id="start">この職種で面接を始める →</button><a href="https://hiragumi.co.jp/" target="_blank" rel="noopener">平組の公式サイトへ</a></div>
+</section>
+<section class="panel hidden" id="interview" aria-live="polite">
+<div class="tagbar"><span class="pill" id="rolepill"></span><span class="pill" id="diffpill"></span><span class="pill" id="count"></span></div>
+<div class="progress-track"><div class="progress-bar" id="progress"></div></div>
+<p class="sub" id="interview-info">企業別の練習問題です。経験に正解を作る必要はありません。</p>
+<div class="question" id="question"></div>
+<label class="label" for="answer">あなたの回答（音声入力または文字入力）</label>
+<textarea id="answer" placeholder="どのように考え、何を行うか。できれば具体例を含めて答えてください。"></textarea>
+<div class="row"><button class="secondary" id="listen">🎙 音声で入力する</button><button class="secondary" id="stop" style="display:none">停止</button><span class="status" id="speech-state">文字入力はすべての端末で利用できます。</span></div>
+<div class="hint">※音声入力は対応するブラウザでのみ動作します。ブラウザの音声認識サービスに音声データが送信される場合があります。利用しない場合は文字入力してください。</div>
+<div class="row"><button class="primary" id="next">回答を確定して進む →</button><button class="secondary" id="back">職種選択へ戻る</button></div>
+<div id="answer-error" class="validity"></div>
+</section>
+<section class="panel hidden" id="result" aria-live="polite"><h2>模擬面接の振り返り</h2><p class="sub" id="resultlead"></p>
+<div id="resultbody"></div>
+<div class="row"><button class="primary" id="download">回答・振り返りを保存</button><button class="secondary" id="retry">同じ職種でもう一度</button><button class="secondary" id="changejob">別の職種を選ぶ</button></div>
+<div class="result-box"><h3>引き続き音声面接を試したい方</h3><p>Rac共通AI面接の無料テスト版も利用できます。ただし、現時点では平組の職種設定は自動引継ぎされません。</p><a id="genericlink" href="https://rac-ai-interview-v2-4661ymupy-llcracsolution-1909.vercel.app/" rel="noopener noreferrer" target="_blank">Rac共通AI面接を開く ↗</a></div>
+<div class="result-box"><h3>平組への応募・お問い合わせ</h3><p>実際の募集職種・条件・応募方法は公式サイトでご確認ください。練習の評価は平組へ送信しません。</p><a href="https://hiragumi.co.jp/" rel="noopener noreferrer" target="_blank">平組公式サイト ↗</a></div>
+</section>
+<div class="foot">© Rac solution / Hiragumi 採用支援試作｜企業の公式採用判断を代行するものではありません。<br>本ページはテスト用で、インターネットへの回答送信・有料決済は行いません。</div>
+</main>
+<script>
+"use strict";
+var ROLE_DATA=[
+{id:"ashiba",name:"足場組立解体技術職",tag:"仮設工事",short:"現場の足場を組み立て・解体",desc:"建設現場で足場の組立と解体を行います。声掛けや手順確認、仲間との協力が重要です。",keys:["安全","声","確認","止め","相談","報告","手順"],qs:[
+"足場の仕事に興味を持った理由と、平組で働いてみたいと思った理由を教えてください。",
+"仲間が危険な作業をしていることに気づいたら、どう対応しますか。",
+"初めての作業を任され、やり方が十分に分からない場合、どう行動しますか。",
+"複数人で仕事を進めるとき、あなたが大切にすることを教えてください。"],probe:"相手が経験豊富な先輩であっても、安全のためにどう対応しますか？"},
+{id:"civil",name:"土工・重機オペレーター職",tag:"土工・重機",short:"整地・基礎床掘・打設など",desc:"土工、重機オペレーターの仕事です。初めての作業では指示・資格・安全を確認することが大切です。",keys:["安全","資格","確認","相談","手順","誘導","止め"],qs:[
+"土工や重機の仕事を選んだ理由を教えてください。",
+"経験のない重機作業を求められた場合、最初に何を確認しますか。",
+"重機の周囲で人が近づいてきたことに気づいたら、どう対応しますか。",
+"未経験の作業を覚えるため、どのような行動を取りますか。"],probe:"予定が遅れている状況でも、安全確認をどう優先しますか？"},
+{id:"driver",name:"8t・4tユニック運転技術職",tag:"運転・配送",short:"資機材を安全に届ける",desc:"仮設資機材の運搬や積み込み・荷下ろしなどを想定する職種です。免許・資格条件は最新の募集要項で確認してください。",keys:["安全","確認","連絡","積荷","時間","報告","運転"],qs:[
+"運転・配送の仕事を志望する理由を教えてください。",
+"現場への到着が遅れそうになったら、どのように連絡・調整しますか。",
+"積み荷の固定に不安がある場合、どのように判断しますか。",
+"配送先の現場担当者との連携で大切にしたいことは何ですか。"],probe:"急ぐように求められても、安全上の不安があるときはどうしますか？"},
+{id:"warehouse",name:"倉庫管理技術職",tag:"資機材管理",short:"資材管理・段取り・出庫準備",desc:"倉庫で資機材の数量・状態・出入庫などを管理する仕事です。正確さと現場への連携が重要です。",keys:["数","確認","報告","整理","記録","相談","優先"],qs:[
+"倉庫管理の仕事に興味を持った理由を教えてください。",
+"出庫前に必要な資材の数量が足りないと気づいたら、どう対応しますか。",
+"複数の現場から急ぎの準備依頼が重なったとき、どう調整しますか。",
+"資材の紛失や取り違いを防ぐため、どんな工夫をしますか。"],probe:"現場から急ぐよう求められても、数量が確認できない場合はどうしますか？"},
+{id:"office",name:"総務事務職",tag:"管理・事務",short:"社内事務・情報管理・調整",desc:"事務業務、書類・情報の管理、部署間の連携を想定した練習です。担当業務は募集内容で確認してください。",keys:["確認","期限","優先","記録","共有","報告","個人情報"],qs:[
+"総務事務の仕事を希望する理由を教えてください。",
+"複数の部署から急ぎの仕事を同時に頼まれたら、どう優先順位を決めますか。",
+"社内の個人情報が含まれる資料を扱うとき、何に注意しますか。",
+"提出期限のある書類にミスを見つけた場合、どう対応しますか。"],probe:"上司が不在で、今日中に対応を決める必要がある場合はどうしますか？"},
+{id:"sales",name:"営業技術職",tag:"顧客・提案",short:"顧客対応・見積・現場調整",desc:"営業活動や見積り、現場との連携を想定した練習です。仕事内容の詳細は求人で確認してください。",keys:["確認","提案","顧客","現場","調整","共有","見積"],qs:[
+"平組の営業技術職に興味を持った理由を教えてください。",
+"お客様の希望する工期が現場の対応可能日程と合わない場合、どう対応しますか。",
+"見積依頼で不明点が残っているとき、どのように情報を集めますか。",
+"営業と現場が連携するため、どのような情報共有が必要だと思いますか。"],probe:"お客様にその場で即答を求められても、現場確認が必要な場合はどう伝えますか？"}]};
+var role=ROLE_DATA[0], qIndex=0,follow=false,items=[],answers=[],currentQuestion="",recognition=null,progressTotal=8;
+var $=id=>document.getElementById(id), all=s=>document.querySelectorAll(s);
+function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
+function setStep(n){all(".step").forEach(function(e,i){e.classList.toggle("on",i===n)})}
+function show(id){["setup","interview","result"].forEach(function(n){$(n).classList.toggle("hidden",n!==id)});setStep(id==="setup"?0:id==="interview"?1:2);window.scrollTo(0,0)}
+function renderRoles(){var selected=role.id;$("jobs").innerHTML=ROLE_DATA.map(function(r){return '<button type="button" class="job '+(r.id===selected?"on":"")+'" data-role="'+r.id+'"><span class="tag">'+esc(r.tag)+'</span><strong>'+esc(r.name)+'</strong><span class="desc">'+esc(r.short)+'</span></button>'}).join("");all(".job").forEach(function(el){el.addEventListener("click",function(){role=ROLE_DATA.find(r=>r.id===el.dataset.role)||role;renderRoles()})});$("roleinfo").textContent="仕事内容の概要："+role.desc}
+function parsePref(){var p=new URLSearchParams(location.search);var id=p.get("role")||p.get("job")||"";if(id){var got=ROLE_DATA.find(function(r){return r.id===id||r.name===id});if(got)role=got}}
+function getQuestions(){var level=Number($("difficulty").value), exp=$("experience").value;var prefix=exp==="none"?"未経験でも構いません。":exp==="full"?"ご自身の実務経験を交えて、":"ご自身の経験や考えを交えて、";
+return [
+{id:"common1",text:prefix+role.qs[0],tag:"志望動機"},
+{id:"role1",text:role.qs[1],tag:"仕事への理解"},
+{id:"role2",text:role.qs[2],tag:"判断と対応"},
+{id:"role3",text:role.qs[3],tag:"連携・成長"},
+{id:"common2",text:level>=2?"これまで失敗した経験がある場合、その後どう改善しましたか。未経験なら、失敗を防ぐためにどう行動しますか。":"新しい仕事を覚えるときに、普段どのように取り組みますか。",tag:"成長"},
+{id:"common3",text:level>=3?"入社後に考え方の違う同僚と意見が対立したら、仕事と安全をどう守りますか。":"仕事を始める前に、平組へ確認しておきたいことを教えてください。",tag:"相互理解"}]}
+function renderQ(){var item=items[qIndex];if(!item){finish();return} var answeredCount=answers.length;$("count").textContent="回答 "+(answeredCount+1)+" / 最大12";$("progress").style.width=Math.min(100,Math.round(answeredCount/12*100))+"%";$("rolepill").textContent=role.name;$("diffpill").textContent="難易度 "+(Number($("difficulty").value)+1);$("question").textContent=currentQuestion;$("interview-info").textContent=(follow?"追加質問｜":"基本質問｜")+item.tag+"（"+(qIndex+1)+" / "+items.length+"）";$("answer").value="";$("answer-error").textContent="";$("answer").focus()}
+function start(){items=getQuestions();answers=[];qIndex=0;follow=false;currentQuestion=items[0].text;show("interview");renderQ()}
+function decideFollowup(text,item){var n=Number($("difficulty").value),hasSpecific=/たとえば|以前|ときに|経験|現場|実際|具体|まず|その後|最後|結果/.test(text),length=text.replace(/\s/g,"").length;
+ if(length<30)return "その考えに至った理由と、実際に取る行動を、もう少し具体的に説明できますか。";
+ if(item.tag==="志望動機")return "平組のどのような仕事内容に魅力を感じ、その仕事で何を身につけたいですか。";
+ if(item.tag==="仕事への理解" || item.tag==="判断と対応"){if(n>=2)return role.probe; return hasSpecific?"もし相手の反応が想定と違った場合、次にどう対応しますか。":"最初に誰へ、何を確認するか具体的に教えてください。"}
+ if(item.tag==="連携・成長")return "実際にその行動を取った経験があれば、あなたの役割と結果を教えてください。なければ入社後の取り組みを説明してください。";
+ if(n>=3)return role.probe;
+ return hasSpecific?"その後、結果をどのように振り返りますか。":"そのときの行動を一つ具体的に挙げてください。"
+}
+function saveAnswer(){var text=$("answer").value.trim();if(!text){$("answer-error").textContent="回答を入力してください。";return}stopRecognition();var item=items[qIndex];answers.push({q:currentQuestion,a:text,tag:item.tag,followup:follow});
+ if(!follow){follow=true;currentQuestion=decideFollowup(text,item)}else{follow=false;qIndex++;currentQuestion=qIndex<items.length?items[qIndex].text:""}
+ if(qIndex>=items.length){finish();return}renderQ()}
+function analyze(){var body=$("resultbody");var alltext=answers.map(a=>a.a).join("。");var count=answers.filter(a=>!a.followup).length;var good=[],todo=[];
+ if(answers.filter(a=>a.a.length>=65).length>=3)good.push("複数の質問で説明の量を確保できています。");
+ if(role.keys.some(k=>alltext.indexOf(k)>=0))good.push("職種に関わる重要な観点について言及しています。");
+ if(/経験|以前|具体|まず|例えば|例え|報告|確認|相談/.test(alltext))good.push("行動や判断の説明につながる表現が含まれています。");
+ if(!good.length)good.push("最後まで自分の言葉で回答できました。");
+ if(answers.filter(a=>a.a.length<30).length>=2)todo.push("短い回答には「理由」「自分の行動」「具体例」の3点を足してみましょう。");
+ if(!role.keys.some(k=>alltext.indexOf(k)>=0))todo.push("この職種の仕事に必要な確認・連携・安全などについて、自分の考えを説明してみましょう。");
+ if(!/例えば|たとえば|経験|以前|実際|とき|まず/.test(alltext))todo.push("状況を1つ具体的に挙げると、回答が相手に伝わりやすくなります。");
+ if(!todo.length)todo.push("経験を話すときは、状況・自分の役割・行動・結果の順に短く整理してみましょう。");
+ var list=function(items){return "<ul>"+items.map(x=>"<li>"+esc(x)+"</li>").join("")+"</ul>"};
+ body.innerHTML='<div class="result-box"><h3>練習の実施状況</h3><p>職種：'+esc(role.name)+'｜基本質問 '+count+'問｜追加質問 '+answers.filter(a=>a.followup).length+'問</p><p>※採点や合否の推定ではありません。文字数・特徴語に基づく練習上のヒントです。</p></div>'+
+ '<div class="result-box"><h3>今回伝わった点</h3>'+list(good)+'</div>'+
+ '<div class="result-box"><h3>次回の改善ポイント</h3>'+list(todo)+'</div>'+
+ '<div class="result-box"><h3>各質問とあなたの回答</h3>'+answers.map((a,i)=>'<p><strong>Q'+(i+1)+': '+esc(a.q)+'</strong></p><p style="white-space:pre-wrap">'+esc(a.a)+'</p>').join("")+'</div>';
+ $("resultlead").textContent="お疲れさまでした。回答はこの画面に表示するだけで、サーバーへ送信していません。";
+ return {good,todo}
+}
+var lastAnalysis=null;function finish(){stopRecognition();show("result");lastAnalysis=analyze()}
+function download(){var lines=["平組｜職種別模擬面接","職種："+role.name,"難易度："+(Number($("difficulty").value)+1),"※採用合否を評価するものではありません。",""];answers.forEach(function(a,i){lines.push("Q"+(i+1)+" "+a.q,"A "+a.a,"")});if(lastAnalysis){lines.push("伝わった点",...lastAnalysis.good,"","改善ポイント",...lastAnalysis.todo)}var blob=new Blob([lines.join("\n")],{type:"text/plain;charset=utf-8"});var a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="hiragumi-interview-practice.txt";document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},500)}
+function stopRecognition(){if(recognition){try{recognition.stop()}catch(e){}recognition=null}$("stop").style.display="none";$("speech-state").textContent="音声入力は停止しました。"}
+function startRecognition(){var SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){$("speech-state").textContent="このブラウザでは音声入力に対応していません。文字入力をご利用ください。";return}stopRecognition();try{recognition=new SR();recognition.lang="ja-JP";recognition.interimResults=false;recognition.continuous=true;recognition.onresult=function(e){var t=Array.from(e.results).slice(e.resultIndex).map(x=>x[0].transcript).join(" ");$("answer").value+=($("answer").value?" ":"")+t};recognition.onerror=function(e){$("speech-state").textContent="音声入力に失敗しました（"+e.error+"）。文字入力をご利用ください。"};recognition.onend=function(){$("stop").style.display="none";$("speech-state").textContent="音声入力を終了しました。"};recognition.start();$("stop").style.display="inline-block";$("speech-state").textContent="音声を聞き取っています…";}catch(e){$("speech-state").textContent="音声入力を開始できませんでした。文字入力でお答えください。"}}
+$("start").addEventListener("click",start);$("next").addEventListener("click",saveAnswer);$("back").addEventListener("click",()=>{stopRecognition();show("setup")});$("download").addEventListener("click",download);$("retry").addEventListener("click",start);$("changejob").addEventListener("click",()=>show("setup"));$("listen").addEventListener("click",startRecognition);$("stop").addEventListener("click",stopRecognition);
+parsePref();renderRoles();
+</script>
+</body></html>
